@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+import { LoginRequest } from '../types/Auth';
 
 @Injectable({
   providedIn: 'root'

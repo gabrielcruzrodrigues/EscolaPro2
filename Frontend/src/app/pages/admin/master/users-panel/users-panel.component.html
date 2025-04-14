@@ -1,0 +1,61 @@
+<app-admin-master-navbar></app-admin-master-navbar>
+<section class="main-section appear">
+     <!-- <app-top-user-infos [title]="title"></app-top-user-infos> -->
+     <section class="first-options">
+          <div class="option" [routerLink]="['/admin/create-user']">
+               <div class="icon-div green">
+                    <i class="fa-solid fa-user-plus icon"></i>
+               </div>
+               <p class="option-title">Cadastrar</p>
+          </div>
+          <div class="option" [routerLink]="['/admin/show-users']">
+               <div class="icon-div blue">
+                    <i class="fa-solid fa-eye icon"></i>
+               </div>
+               <p class="option-title">Exibir usuários</p>
+          </div>
+          <div class="option" [routerLink]="['/admin/users/show-results/edit']">
+               <div class="icon-div yellow">
+                    <i class="fa-solid fa-pen-to-square icon"></i>
+               </div>
+               <p class="option-title">Atualizar</p>
+          </div>
+          <div *ngIf="userRole === 0" class="option" [routerLink]="['/admin/users/show-results/trash']">
+               <div class="icon-div red">
+                    <i class="fa-solid fa-trash icon"></i>
+               </div>
+               <p class="option-title">Desativar</p>
+          </div>
+     </section>
+
+     <!-- <app-main-search-user-box></app-main-search-user-box> -->
+
+     <div class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-list icon"></i>
+               <h2>Últimos usuários ativos</h2>
+          </div>
+
+          <table class="custom-table">
+               <thead>
+                    <tr>
+                         <th>Nome</th>
+                         <th>Role</th>
+                         <th>Data de acesso</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    <tr>
+                         <td>Gabriel Cruz Rodrigues</td>
+                         <td>Admin</td>
+                         <td>22/03/2025 - 09:03:22</td>
+                    </tr>
+                    <tr>
+                         <td>Gabriel Cruz Rodrigues</td>
+                         <td>Admin</td>
+                         <td>22/03/2025 - 09:03:22</td>
+                    </tr>
+               </tbody>
+          </table>
+     </div>
+</section>

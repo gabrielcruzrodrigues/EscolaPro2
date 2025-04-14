@@ -1,14 +1,16 @@
 import { afterNextRender, Component, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-main-navbar',
-  standalone: true,
-  imports: [],
-  templateUrl: './main-navbar.component.html',
-  styleUrl: './main-navbar.component.sass'
+  selector: 'app-admin-master-navbar',
+  imports: [
+    CommonModule
+  ],
+  templateUrl: './admin-master-navbar.component.html',
+  styleUrl: './admin-master-navbar.component.sass'
 })
-export class MainNavbarComponent {
+export class AdminMasterNavbarComponent {
   admin: boolean = false;
   moderador: boolean = false;
   user: boolean = false;
@@ -37,10 +39,6 @@ export class MainNavbarComponent {
         console.error("Erro ao obter a role do usuário:", error);
       }
     })
-  }
-
-  ngOnInit(): void {
-    
   }
 
   logout(): void {

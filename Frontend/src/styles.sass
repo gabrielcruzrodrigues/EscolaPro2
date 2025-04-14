@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'sass/color-variables' as *
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap')
+
+*
+     margin: 0
+     padding: 0
+     box-sizing: border-box
+     font-family: 'Poppins', sans-serif
+
+.main-section
+     width: 86%
+     height: 100vh
+     padding: 2%
+     margin-left: auto
+
+.appear
+     opacity: 0
+     transform: translateY(10px)
+     animation: fadeIn 0.8s ease-in-out forwards
+
+@keyframes fadeIn
+     from
+          opacity: 0
+          transform: translateY(20px)
+     to
+          opacity: 1
+          transform: translateY(0)
+
+.full-div
+     width: 100%
+     margin-top: 25px
+     background-color: white
+     border-radius: 6px
+     border: 1px solid #ccc
+     padding: 1% 5%
+     box-shadow: 0px 2px 5px rgba(0,0,0,0.3)
+
+.full-div .title 
+     display: flex
+     align-items: center
+     justify-content: center
+     padding: 0.5% 0
+     font-size: 12px
+     color: $text
+
+.full-div .icon 
+     font-size: 25px
+     margin-right: 1%
