@@ -1,4 +1,4 @@
-import { afterNextRender, Component, ElementRef, ViewChild } from '@angular/core';
+import { afterNextRender, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -18,23 +18,23 @@ export class AdminMasterNavbarComponent {
   @ViewChild('callsToggle') callsToggleElement!: ElementRef;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     afterNextRender(() => {
-      const userRole = this.authService.getRole();
+      // const userRole = this.authService.getRole();
+      const userRole: number = 0;
 
       try {
         switch (userRole) {
           case 0:
             this.admin = true;
             break;
-          case 1:
-            this.user = true;
-            break;
           case 2:
             this.moderador = true;
             break;
         }
+        this.cdr.detectChanges();
       } catch (error) {
         console.error("Erro ao obter a role do usuário:", error);
       }
