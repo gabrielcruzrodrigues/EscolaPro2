@@ -131,7 +131,7 @@ builder.Services.AddScoped<IAppDbContextFactory, AppDbContextFactory>();
 //builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 //builder.Services.AddScoped<ISectorRepository, SectorRepository>();
 //builder.Services.AddScoped<ICallRepository, CallRepository>();
-//builder.Services.AddScoped<ISaltRepository, SaltRepository>();
+builder.Services.AddScoped<ISaltRepository, SaltRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUsersGeneralRepository, UsersGeneralRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

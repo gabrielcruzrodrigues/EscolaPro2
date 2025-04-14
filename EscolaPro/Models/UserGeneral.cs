@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EscolaPro.Models.Dtos;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EscolaPro.Models
@@ -27,11 +28,16 @@ namespace EscolaPro.Models
         public required DateTime LastUpdatedAt { get; set; }
 
         [Required]
+        public required Roles Role { get; set; }
+
+        [Required]
         public required bool Status { get; set; }
 
         public string? RefreshToken { get; set; }
 
         public DateTime? RefreshTokenExpiryTime { get; set; }
+        public required int CompanieId { get; set; }
+
         public Companies Companie { get; set; }
     }
 }

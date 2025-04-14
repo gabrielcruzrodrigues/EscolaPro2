@@ -8,7 +8,7 @@ namespace EscolaPro.Models
         public int Id { get; set; }
 
         [Required]
-        public long UserId { get; set; }
+        public long UserGeneralId { get; set; }
 
         [Required]
         [StringLength(256)]

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EscolaPro.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSaltsMigration : Migration
+    public partial class initialCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,11 @@ namespace EscolaPro.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ConnectionString = table.Column<string>(type: "text", nullable: false)
+                    ConnectionString = table.Column<string>(type: "text", nullable: false),
+                    CNPJ = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,13 +41,21 @@ namespace EscolaPro.Migrations
                     Password = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Role = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<bool>(type: "boolean", nullable: false),
                     RefreshToken = table.Column<string>(type: "text", nullable: true),
-                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CompanieId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsersGeneral", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UsersGeneral_Companies_CompanieId",
+                        column: x => x.CompanieId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,9 +64,8 @@ namespace EscolaPro.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    SaltHash = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    UserGeneralId = table.Column<long>(type: "bigint", nullable: false)
+                    UserGeneralId = table.Column<long>(type: "bigint", nullable: false),
+                    SaltHash = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,22 +79,33 @@ namespace EscolaPro.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Companies_CNPJ",
+                table: "Companies",
+                column: "CNPJ",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Salts_UserGeneralId",
                 table: "Salts",
                 column: "UserGeneralId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersGeneral_CompanieId",
+                table: "UsersGeneral",
+                column: "CompanieId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Companies");
-
-            migrationBuilder.DropTable(
                 name: "Salts");
 
             migrationBuilder.DropTable(
                 name: "UsersGeneral");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }

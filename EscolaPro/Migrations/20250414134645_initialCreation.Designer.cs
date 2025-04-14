@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EscolaPro.Migrations
 {
     [DbContext(typeof(GeneralDbContext))]
-    [Migration("20250411165958_AddSaltsMigration")]
-    partial class AddSaltsMigration
+    [Migration("20250414134645_initialCreation")]
+    partial class initialCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,15 +33,31 @@ namespace EscolaPro.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ConnectionString")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CNPJ")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -62,9 +78,6 @@ namespace EscolaPro.Migrations
                     b.Property<long>("UserGeneralId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserGeneralId");
@@ -79,6 +92,9 @@ namespace EscolaPro.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("CompanieId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -106,10 +122,15 @@ namespace EscolaPro.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanieId");
 
                     b.ToTable("UsersGeneral");
                 });
@@ -123,6 +144,17 @@ namespace EscolaPro.Migrations
                         .IsRequired();
 
                     b.Navigation("UserGeneral");
+                });
+
+            modelBuilder.Entity("EscolaPro.Models.UserGeneral", b =>
+                {
+                    b.HasOne("EscolaPro.Models.Companies", "Companie")
+                        .WithMany()
+                        .HasForeignKey("CompanieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Companie");
                 });
 #pragma warning restore 612, 618
         }

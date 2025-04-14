@@ -50,7 +50,7 @@ public class AuthRepository : IAuthRepository
             {
                 salt = await _context.Salts
                     .AsNoTracking()
-                    .Where(s => s.UserId.Equals(emailVerify.Id))
+                    .Where(s => s.UserGeneralId.Equals(emailVerify.Id))
                     .Select(s => s.SaltHash)
                     .FirstAsync();
             }
@@ -58,7 +58,7 @@ public class AuthRepository : IAuthRepository
             {
                 salt = await _context.Salts
                     .AsNoTracking()
-                    .Where(s => s.UserId.Equals(userNameVerify.Id))
+                    .Where(s => s.UserGeneralId.Equals(userNameVerify.Id))
                     .Select(s => s.SaltHash)
                     .FirstAsync();
             }
@@ -77,8 +77,7 @@ public class AuthRepository : IAuthRepository
                 throw new HttpResponseException(400, "Senha incorreta!");
             }
 
-            //var userRole = emailVerify.Role
-            var userRole = Roles.ADMIN; //Trocar depois pela role do usuário específico.
+            var userRole = emailVerify.Role;
             IEnumerable<Claim> authClaims = new List<Claim>();
 
             if (userRole.Equals(Roles.ADMIN))
@@ -88,6 +87,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, emailVerify.Name!),
                 new Claim(ClaimTypes.Email, emailVerify.Email!),
+                new Claim("Companie", emailVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.ADMIN.ToString().ToLower()),
                 new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
@@ -102,6 +102,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, emailVerify.Name!),
                 new Claim(ClaimTypes.Email, emailVerify.Email!),
+                new Claim("Companie", emailVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
                 new Claim("Role", Roles.USER.ToString().ToLower()),
@@ -115,6 +116,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, emailVerify.Name!),
                 new Claim(ClaimTypes.Email, emailVerify.Email!),
+                new Claim("Companie", emailVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.USER.ToString().ToLower()),
             };
@@ -162,8 +164,7 @@ public class AuthRepository : IAuthRepository
                 throw new HttpResponseException(400, "Senha incorreta!");
             }
 
-            //var userRole = emailVerify.Role
-            var userRole = Roles.ADMIN; //Trocar depois pela role do usuário específico.var userRole = userNameVerify.Role;
+            var userRole = userNameVerify.Role;
             IEnumerable<Claim> authClaims = new List<Claim>();
 
             if (userRole.Equals(Roles.ADMIN))
@@ -173,6 +174,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, userNameVerify.Name!),
                 new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                new Claim("Companie", userNameVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.ADMIN.ToString().ToLower()),
                 new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
@@ -187,6 +189,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, userNameVerify.Name!),
                 new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                new Claim("Companie", userNameVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
                 new Claim("Role", Roles.USER.ToString().ToLower()),
@@ -200,6 +203,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
                 new Claim(ClaimTypes.Name, userNameVerify.Name!),
                 new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                new Claim("Companie", userNameVerify.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Role", Roles.USER.ToString().ToLower()),
             };

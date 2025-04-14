@@ -75,9 +75,6 @@ namespace EscolaPro.Migrations
                     b.Property<long>("UserGeneralId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserGeneralId");
@@ -121,6 +118,9 @@ namespace EscolaPro.Migrations
 
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
