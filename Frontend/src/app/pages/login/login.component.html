@@ -1,0 +1,18 @@
+<div class="login-container">
+     <div class="login-box">
+          <!-- <div class="image">
+               <img src="expert-logo.png">
+          </div> -->
+          <h2>Faça login para continuar!</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+               <div class="input-group">
+                    <input formControlName="login" type="text" id="text" placeholder="Digite seu usuário ou email" required />
+               </div>               
+               <div class="input-group">
+                    <input formControlName="password" type="password" id="password" placeholder="Digite sua senha" required />
+               </div>
+               <button type="submit">Login</button>
+          </form>
+     </div>
+</div>
+<app-spinning [isLoading]="isLoading"></app-spinning>
