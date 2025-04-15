@@ -1,30 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SpinningComponent } from '../../../../components/layout/spinning/spinning.component';
-import { AdminMasterNavbarComponent } from "../../../../components/layout/admin/master/admin-master-navbar/admin-master-navbar.component";
+import { AdminMasterNavbarComponent } from '../../../../components/layout/admin/master/admin-master-navbar/admin-master-navbar.component';
+import { InputErrorMessageComponent } from '../../../../components/layout/input-error-message/input-error-message.component';
+import { Companie } from '../../../../types/Companie';
 import { UserService } from '../../../../services/user.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../../../types/User';
-import { InputErrorMessageComponent } from "../../../../components/layout/input-error-message/input-error-message.component";
+import { CompanieService } from '../../../../services/companie.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { nameValidators } from '../../../../validators/nameValidator';
 import { passwordValidator } from '../../../../validators/passwordValidator';
-import { Companie } from '../../../../types/Companie';
-import { CompanieService } from '../../../../services/companie.service';
 import { HttpResponse } from '@angular/common/http';
+import { ErrorResponseCreateUser, UpdateUser, User } from '../../../../types/User';
+import { map } from 'rxjs';
 
 @Component({
-  selector: 'app-users-create',
+  selector: 'app-users-edit',
   imports: [
     ReactiveFormsModule,
     SpinningComponent,
     AdminMasterNavbarComponent,
     InputErrorMessageComponent
-],
-  templateUrl: './users-create.component.html',
-  styleUrl: './users-create.component.sass'
+  ],
+  templateUrl: './users-edit.component.html',
+  styleUrl: './users-edit.component.sass'
 })
-export class UsersCreateComponent implements OnInit {
+export class UsersEditComponent implements OnInit {
   userForm: FormGroup;
   title: string = 'Users';
   companies: Companie[] = [];
@@ -50,19 +51,45 @@ export class UsersCreateComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    private companieService: CompanieService
+    private companieService: CompanieService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.userForm = this.fb.group({
+      id: [''],
       name: ['', [Validators.required, nameValidators()]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, passwordValidator()]],
-      passwordVerify: ['', Validators.required],
+      password: ['', passwordValidator()],
+      passwordVerify: [''],
       role: [2, Validators.required],
       companieId: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('userId') ?? '0';
+    this.userService.getById(id).pipe(map(response => response.body))
+    .subscribe({
+      next: (user: User | null) => {
+        if (user) {
+          this.userForm.patchValue({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            companieId: user.companieId
+          });
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        if (error.status === 500) {
+          this.toastr.error("Houve um erro ao buscar os dados do usuário, contate um administrador do sistema!");
+          this.isLoading = false;
+          this.router.navigate(['/users']); 
+        } 
+      }
+    })
+
     this.isLoading = true;
     this.companieService.getAll().subscribe({
       next: (response: HttpResponse<Companie[]>) => {
@@ -85,7 +112,7 @@ export class UsersCreateComponent implements OnInit {
   }
 
   Submit(): void {
-    console.log(this.userForm.get('companieId')?.value)
+    console.log(this.userForm.value)
     if (this.userForm.invalid || !this.verifyPassword()) {
       this.getNameErrors();
       this.getEmailErrors();
@@ -93,15 +120,19 @@ export class UsersCreateComponent implements OnInit {
       this.getPasswordVerifyErrors();
       this.getCompaniesErrors();
     } else {
+      alert('oi')
       this.isLoading = true;
-      const user: CreateUser = this.userForm.value as CreateUser;
-      user.role = Number(user.role);
+      const user: UpdateUser = this.userForm.value as UpdateUser;
 
-      this.userService.create(user).subscribe({
-        next: (response: ResponseCreateUser) => {
-          this.toastr.success(`O usuário ${response.name} foi criado com sucesso!`);
-          this.router.navigate(['/admin/master/users-panel']);
-          this.isLoading = false;
+      this.userService.update(user).subscribe({
+        next: (response: HttpResponse<any>) => {
+          if (response.status === 204) {
+            this.toastr.success(`O usuário foi atualizado com sucesso!`);
+            this.router.navigate(['/admin/master/users-panel']);
+            this.isLoading = false;
+          } else {
+            this.toastr.info("Uma resposta inesperada foi recebida do servidor, contate um administrador do sistema!")
+          }
         },
         error: (error: ErrorResponseCreateUser) => {
           console.log(error);
@@ -110,13 +141,13 @@ export class UsersCreateComponent implements OnInit {
             if (error.error.type == 'name') {
               this.nameErrors = ['Este nome já foi registrado, tente outro nome!'];
             } else {
-              this.emailErrros = ['Este email já foi registrado, tente outro email!'];
+              this.emailErrros = ['Este CNPJ já foi registrado, tente outro CNPJ!'];
             }
           } else {
-            this.toastr.error("Houve um erro ao tentar criar um novo usuário, procure o administrador do sistema!");
+            this.toastr.error("Houve um erro ao tentar atualizar o usuário, procure o administrador do sistema!");
             console.log(error);
             this.isLoading = false;
-            this.router.navigate(['/users'])
+            this.router.navigate(['/admin/master/user-panel'])
             return;
           }
         }

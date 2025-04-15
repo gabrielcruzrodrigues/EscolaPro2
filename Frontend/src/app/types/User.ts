@@ -10,7 +10,8 @@ export type UpdateUser = {
      name: string,
      email: string,
      password: string,
-     role: number
+     role: number,
+     companieId: Number
 }
 
 export type ResponseCreateUser = {
@@ -31,7 +32,9 @@ export type User = {
      role: number,
      createdAt: string,
      lastUpdatedAt: string
-     lastAccess: string
+     lastAccess: string,
+     companieId: number,
+     companieName: string
 }
 
 export type ErrorResponseCreateUser = {

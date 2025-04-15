@@ -14,13 +14,13 @@
                </div>
                <p class="option-title">Exibir usuários</p>
           </div>
-          <div class="option" [routerLink]="['/admin/users/show-results/edit']">
+          <div class="option" [routerLink]="['/admin/master/users-search-edit']">
                <div class="icon-div yellow">
                     <i class="fa-solid fa-pen-to-square icon"></i>
                </div>
                <p class="option-title">Atualizar</p>
           </div>
-          <div *ngIf="userRole === 0" class="option" [routerLink]="['/admin/users/show-results/trash']">
+          <div *ngIf="userRole === 0" class="option" [routerLink]="['/admin/master/users-search-delete']">
                <div class="icon-div red">
                     <i class="fa-solid fa-trash icon"></i>
                </div>

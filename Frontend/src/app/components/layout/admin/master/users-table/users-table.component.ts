@@ -61,6 +61,6 @@ export class UsersTableComponent {
   }
 
   goToEditPage(userId: number): void {
-    this.router.navigate([`/admin/users/edit/${userId}`]);
+    this.router.navigate([`/admin/master/users-edit/${userId}`]);
   }
 }
