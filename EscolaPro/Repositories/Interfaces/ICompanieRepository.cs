@@ -1,4 +1,5 @@
 ﻿using EscolaPro.Models;
+using EscolaPro.Models.Dtos;
 
 namespace EscolaPro.Repositories.Interfaces;
 
@@ -11,4 +12,5 @@ public interface ICompanieRepository
     Task<Companies> GetByCnpjAsync(string companieName);
     Task Update(Companies userForUpdate);
     Task Disable(int companieId);
+    Task<IEnumerable<Companies>> Search(string param);
 }

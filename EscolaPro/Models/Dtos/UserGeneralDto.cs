@@ -9,5 +9,7 @@
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public DateTime LastAccess { get; set; }
+        public int? CompanieId { get; set; }
+        public string? CompanieName { get; set; }
     }
 }

@@ -1,0 +1,43 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-admin-master-navbar></app-admin-master-navbar>
+<section class="main-section appear">
+     <section class="full-div">
+          <div class="title">
+               <h2>Cadastrar uma nova empresa</h2>
+          </div>
+
+          <form class="main-form" [formGroup]="companieForm" (ngSubmit)="submit()">
+               <label>Nome:</label>
+               <input 
+                    type="text" 
+                    formControlName="name" 
+                    placeholder="Digite o Nome da nova empresa" 
+                    name="name"
+                    (input)="clearInputErrors('name')"
+                    (change)="getNameErrors()">
+               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+
+               <label>CNPJ:</label>
+               <input 
+                    type="text" 
+                    formControlName="cnpj" 
+                    placeholder="Digite o CNPJ da nova empresa" 
+                    name="cnpj"
+                    (input)="clearInputErrors('cnpj')"
+                    (change)="getCnpjErrors()">
+               <app-input-error-message [errors]="cnpjErrors"></app-input-error-message>
+
+               <label>String de conexão:</label>
+               <input 
+                    type="text" 
+                    formControlName="connectionString" 
+                    placeholder="Digite a string de conexão do banco de dados da empresa" 
+                    name="connectionString"
+                    (input)="clearInputErrors('connection')"
+                    (change)="getConnectionErrors()">
+               <app-input-error-message [errors]="connectionStringErrors"></app-input-error-message>
+
+               <button type="submit">Cadastrar</button>
+          </form>
+     </section>
+</section>

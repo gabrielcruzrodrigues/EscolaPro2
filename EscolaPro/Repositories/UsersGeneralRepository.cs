@@ -38,6 +38,7 @@ public class UsersGeneralRepository : IUsersGeneralRepository
     public async Task<IEnumerable<UserGeneralDto>> Search(string param)
     {
         var users = await _context.UsersGeneral
+                .Include(u => u.Companie)
                 .Where(u => u.Name.Contains(param) && u.Status.Equals(true) || u.Email.Contains(param) && u.Status.Equals(true))
                 .ToListAsync();
 
@@ -65,6 +66,7 @@ public class UsersGeneralRepository : IUsersGeneralRepository
     {
         var users = await _context.UsersGeneral
             .AsNoTracking()
+            .Include(u => u.Companie)
             .Where(u => u.Status.Equals(true))
             .ToListAsync();
 
@@ -75,6 +77,7 @@ public class UsersGeneralRepository : IUsersGeneralRepository
     {
         var user = await _context.UsersGeneral
             .AsNoTracking()
+            .Include(u => u.Companie)
             .Where(u => u.Status.Equals(true) && u.Id.Equals(userId))
             .FirstOrDefaultAsync();
 
@@ -104,7 +107,7 @@ public class UsersGeneralRepository : IUsersGeneralRepository
     {
         var user = await _context.UsersGeneral
             .AsNoTracking()
-            .Where(u => u.Email.Equals(email))
+            .Where(u => u.Email.Equals(email) && u.Status.Equals(true))
             .FirstOrDefaultAsync();
 
         return user;
@@ -114,7 +117,7 @@ public class UsersGeneralRepository : IUsersGeneralRepository
     {
         var user = await _context.UsersGeneral
             .AsNoTracking()
-            .Where(u => u.Name.Equals(name))
+            .Where(u => u.Name.Equals(name) && u.Status.Equals(true))
             .FirstOrDefaultAsync();
 
         return user;

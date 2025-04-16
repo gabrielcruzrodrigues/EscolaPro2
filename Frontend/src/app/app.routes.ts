@@ -7,13 +7,22 @@ import { UsersCreateComponent } from './pages/admin/master/users-create/users-cr
 import { UsersSearchEditComponent } from './pages/admin/master/users-search-edit/users-search-edit.component';
 import { UsersSearchDeleteComponent } from './pages/admin/master/users-search-delete/users-search-delete.component';
 import { UsersEditComponent } from './pages/admin/master/users-edit/users-edit.component';
+import { CompaniesPanelComponent } from './pages/admin/master/companies-panel/companies-panel.component';
+import { CompaniesCreateComponent } from './pages/admin/master/companies-create/companies-create.component';
+import { CompaniesShowComponent } from './pages/admin/master/companies-show/companies-show.component';
+import { CompaniesSearchEditComponent } from './pages/admin/master/companies-search-edit/companies-search-edit.component';
+import { CompaniesSearchDeleteComponent } from './pages/admin/master/companies-search-delete/companies-search-delete.component';
 
 export const routes: Routes = [
      //admin/master
+
      {
           path: 'admin/master/dashboard',
           component: DashboardComponent
      },
+
+     // === Users ===
+
      {
           path: 'admin/master/users-panel',
           component: UsersPanelComponent
@@ -39,7 +48,30 @@ export const routes: Routes = [
           component: UsersSearchDeleteComponent
      },
 
-     //publico
+     // === Companies ===
+
+     {
+          path: 'admin/master/companies-panel',
+          component: CompaniesPanelComponent
+     },
+     {
+          path: 'admin/master/companies-create',
+          component: CompaniesCreateComponent
+     },
+     {
+          path: 'admin/master/companies-show',
+          component: CompaniesShowComponent
+     },
+     {
+          path: 'admin/master/companies-search-edit',
+          component: CompaniesSearchEditComponent
+     },
+     {
+          path: 'admin/master/companies-search-delete',
+          component: CompaniesSearchDeleteComponent
+     },
+
+     // === Puublic ===
      {
           path: 'login',
           component: LoginComponent

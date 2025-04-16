@@ -1,0 +1,14 @@
+<app-admin-master-navbar></app-admin-master-navbar>
+<section class="main-section appear">
+     <div class="div">
+          <app-companies-main-search-box
+               [title]="titleUsersSearchInput"
+               (searchCompanie)="onSearchCompanie($event)">
+          </app-companies-main-search-box>
+     
+          <app-companies-table
+               [companies]="companies"
+               [typeActions]="typeActions">
+          </app-companies-table>
+     </div>
+</section>

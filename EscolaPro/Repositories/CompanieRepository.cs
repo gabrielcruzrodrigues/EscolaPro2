@@ -4,6 +4,7 @@ using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Database;
 using EscolaPro.Extensions;
 using Microsoft.EntityFrameworkCore;
+using EscolaPro.Models.Dtos;
 
 namespace EscolaPro.Repositories;
 
@@ -102,5 +103,14 @@ public class CompanieRepository : ICompanieRepository
             _logger.LogError($"Um erro aconteceu ao tentar atualizar uma empresa! err: {ex.Message}");
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar atualizar uma empresa!");
         }
+    }
+
+    public async Task<IEnumerable<Companies>> Search(string param)
+    {
+        var companie = await _context.Companies
+                .Where(u => u.Name.Contains(param) && u.Status.Equals(true) || u.CNPJ.Contains(param) && u.Status.Equals(true))
+                .ToListAsync();
+
+        return companie;
     }
 }

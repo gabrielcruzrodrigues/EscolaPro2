@@ -7,10 +7,9 @@
           </div>
           <div class="full-div buttons-options">
                <button (click)="orderListAZ('name')" #nameOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ nameButtonOrderListAZ }}</button>
-               <button (click)="orderListAZ('email')" #emailOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ emailButtonOrderListAZ }}</button>
           </div>
 
-          <app-users-table [users]="users"></app-users-table>
+          <app-companies-table [companies]="companies"></app-companies-table>
      </div>
 
 </section>

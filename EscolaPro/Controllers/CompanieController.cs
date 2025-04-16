@@ -1,5 +1,6 @@
 ﻿using EscolaPro.Extensions;
 using EscolaPro.Models;
+using EscolaPro.Repositories;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +43,7 @@ namespace EscolaPro.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Companies>> CreateAsync(CreateCompanieViewModel request)
         {
-            if (await _companieRepository.GetByCnpjAsync(request.Name) != null)
+            if (await _companieRepository.GetByCnpjAsync(request.Cnpj) != null)
             {
                 return Conflict(new { message = "Esse CNPJ já foi cadastrado", type = "cnpj", code = 409 });
             }
@@ -97,6 +98,14 @@ namespace EscolaPro.Controllers
         {
             await _companieRepository.Disable(companieId);
             return StatusCode(204);
+        }
+
+        [HttpGet("search/{param}")]
+        [Authorize(policy: "admin")]
+        public async Task<ActionResult> Search(string param)
+        {
+            var companie = await _companieRepository.Search(param);
+            return Ok(companie);
         }
     }
 }

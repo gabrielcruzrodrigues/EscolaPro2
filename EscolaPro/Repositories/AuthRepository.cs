@@ -15,19 +15,19 @@ using System.Security.Claims;
 
 public class AuthRepository : IAuthRepository
 {
-    private readonly IUsersGeneralRepository _userRepository;
+    private readonly IUsersGeneralRepository _userGeneralRepository;
     private readonly ILogger<AuthRepository> _logger;
     private readonly ITokenService _tokenService;
     private readonly GeneralDbContext _context;
 
     public AuthRepository(
-        IUsersGeneralRepository userRepository,
+        IUsersGeneralRepository userGeneralRepository,
         ILogger<AuthRepository> logger,
         ITokenService tokenService,
         GeneralDbContext context
     )
     {
-        _userRepository = userRepository;
+        _userGeneralRepository = userGeneralRepository;
         _logger = logger;
         _tokenService = tokenService;
         _context = context;
@@ -35,8 +35,8 @@ public class AuthRepository : IAuthRepository
 
     public async Task<LoginResponseDto> LoginAsync(LoginViewModel loginViewModel)
     {
-        var emailVerify = await _userRepository.GetByEmailAsync(loginViewModel.Login);
-        var userNameVerify = await _userRepository.GetByNameAsync(loginViewModel.Login);
+        var emailVerify = await _userGeneralRepository.GetByEmailAsync(loginViewModel.Login);
+        var userNameVerify = await _userGeneralRepository.GetByNameAsync(loginViewModel.Login);
 
         if (emailVerify is null && userNameVerify is null)
         {

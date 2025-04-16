@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { Companie } from '../types/Companie';
+import { Companie, CreateCompanie } from '../types/Companie';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,25 @@ export class CompanieService {
     const accessToken = this.authService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.get<Companie[]>(this.url, { headers: headers, observe: 'response' });
+  }
+
+  create(data: CreateCompanie): Observable<HttpResponse<Companie>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    return this.http.post<Companie>(this.url, data, { headers: headers, observe: 'response' });
+  }
+
+  delete(id: number): Observable<any> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/${id}`;
+    return this.http.delete(urlForRequest, { headers: headers, observe: 'response' });
+  }
+
+  search(param: string): Observable<HttpResponse<Companie[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/search/${param}`;
+    return this.http.get<Companie[]>(urlForRequest, { headers: headers, observe: 'response' });
   }
 }

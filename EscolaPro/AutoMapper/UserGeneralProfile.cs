@@ -8,7 +8,8 @@ namespace EscolaPro.AutoMapper
     {
         public UserGeneralProfile()
         {
-            CreateMap<UserGeneral, UserGeneralDto>();
+            CreateMap<UserGeneral, UserGeneralDto>()
+                .ForMember(dest => dest.CompanieName, opt => opt.MapFrom(src => src.Companie.Name));
         }
     }
 }

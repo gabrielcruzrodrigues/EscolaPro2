@@ -122,6 +122,12 @@ public class UserGeneralController : ControllerBase
         user.Name = request.Name ?? user.Name;
         user.Email = request.Email ?? user.Email;
 
+        if (request.CompanieId != null)
+        {
+            var companie = await _companieRepository.GetByIdAsync(request.CompanieId.Value);
+            user.CompanieId = companie.Id;
+        }
+
         if (request.Role != null)
         {
             if (request.Role == 0)
