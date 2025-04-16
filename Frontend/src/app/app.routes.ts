@@ -12,6 +12,7 @@ import { CompaniesCreateComponent } from './pages/admin/master/companies-create/
 import { CompaniesShowComponent } from './pages/admin/master/companies-show/companies-show.component';
 import { CompaniesSearchEditComponent } from './pages/admin/master/companies-search-edit/companies-search-edit.component';
 import { CompaniesSearchDeleteComponent } from './pages/admin/master/companies-search-delete/companies-search-delete.component';
+import { CompaniesEditComponent } from './pages/admin/master/companies-edit/companies-edit.component';
 
 export const routes: Routes = [
      //admin/master
@@ -69,6 +70,10 @@ export const routes: Routes = [
      {
           path: 'admin/master/companies-search-delete',
           component: CompaniesSearchDeleteComponent
+     },
+     {
+          path: 'admin/master/companies-edit/:companieId',
+          component: CompaniesEditComponent
      },
 
      // === Puublic ===

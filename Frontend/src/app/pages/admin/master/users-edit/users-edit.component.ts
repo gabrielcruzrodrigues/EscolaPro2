@@ -120,7 +120,6 @@ export class UsersEditComponent implements OnInit {
       this.getPasswordVerifyErrors();
       this.getCompaniesErrors();
     } else {
-      alert('oi')
       this.isLoading = true;
       const user: UpdateUser = this.userForm.value as UpdateUser;
 

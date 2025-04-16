@@ -21,3 +21,10 @@ export type ErrorResponseCreateCompanie = {
         code: number
     }
 }
+
+export type UpdateCompanie = {
+    id: number,
+    name: string,
+    cnpj: string,
+    connectionString: string
+}

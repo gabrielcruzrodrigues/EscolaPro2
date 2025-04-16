@@ -56,7 +56,7 @@ export class CompaniesTableComponent {
     }
   }
 
-  goToEditPage(userId: number): void {
-    this.router.navigate([`/admin/master/users-edit/${userId}`]);
+  goToEditPage(companieId: number): void {
+    this.router.navigate([`/admin/master/companies-edit/${companieId}`]);
   }
 }

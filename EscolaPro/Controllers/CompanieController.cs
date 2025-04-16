@@ -67,12 +67,11 @@ namespace EscolaPro.Controllers
             return StatusCode(201, response);
         }
 
-        [HttpPut("{companieId:int}")]
-        //[Authorize(policy: "admin")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UpdateAsync(int companieId, UpdateCompanieViewModel request)
+        [HttpPut]
+        [Authorize(policy: "admin")]
+        public async Task<IActionResult> UpdateAsync(UpdateCompanieViewModel request)
         {
-            var companie = await _companieRepository.GetByIdAsync(companieId);
+            var companie = await _companieRepository.GetByIdAsync(request.Id.Value);
             var cnpjVerify = await _companieRepository.GetByCnpjAsync(request.Cnpj);
             var nameVerify = await _companieRepository.GetByNameAsync(request.Name);
 
@@ -84,6 +83,7 @@ namespace EscolaPro.Controllers
 
             companie.Name = request.Name ?? companie.Name;
             companie.CNPJ = request.Cnpj ?? companie.CNPJ;
+            companie.ConnectionString = request.ConnectionString ?? companie.ConnectionString;
 
             companie.LastUpdatedAt = DateTime.UtcNow;
 
