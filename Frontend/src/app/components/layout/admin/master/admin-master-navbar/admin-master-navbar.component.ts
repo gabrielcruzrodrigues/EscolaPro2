@@ -74,11 +74,8 @@ export class AdminMasterNavbarComponent implements OnInit, AfterViewInit {
     this.callsToggleElement.nativeElement.classList.toggle('selected-li');
   }
 
-
-
-
   checkWindowSize() {
-    this.isMobile = window.innerWidth <= 600;
+    this.isMobile = window.innerWidth <= 1024;
     if (!this.isMobile) {
       this.isMenuOpen = true; // manter o menu aberto no desktop
     }
