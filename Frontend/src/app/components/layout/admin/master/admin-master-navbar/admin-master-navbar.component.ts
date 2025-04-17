@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { afterNextRender, AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
   templateUrl: './admin-master-navbar.component.html',
   styleUrl: './admin-master-navbar.component.sass'
 })
-export class AdminMasterNavbarComponent {
+export class AdminMasterNavbarComponent implements OnInit, AfterViewInit {
   admin: boolean = false;
   moderador: boolean = false;
   user: boolean = false;
@@ -20,10 +20,14 @@ export class AdminMasterNavbarComponent {
   @ViewChild('callsToggle') callsToggleElement!: ElementRef;
   currentRoute: string = '';
 
+  isMenuOpen = false;
+  isMobile = false;
+
   constructor(
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -51,6 +55,16 @@ export class AdminMasterNavbarComponent {
     })
   }
 
+  ngOnInit(): void {
+    this.checkWindowSize();
+  }
+
+  ngAfterViewInit() {
+    window.addEventListener('resize', () => {
+      this.ngZone.run(() => this.checkWindowSize());
+    });
+  }
+
   logout(): void {
     this.authService.logout();
   }
@@ -58,5 +72,19 @@ export class AdminMasterNavbarComponent {
   callsToggleDropdown() {
     this.callsDropdownOpen = !this.callsDropdownOpen;
     this.callsToggleElement.nativeElement.classList.toggle('selected-li');
+  }
+
+
+
+
+  checkWindowSize() {
+    this.isMobile = window.innerWidth <= 600;
+    if (!this.isMobile) {
+      this.isMenuOpen = true; // manter o menu aberto no desktop
+    }
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
