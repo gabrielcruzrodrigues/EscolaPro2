@@ -15,7 +15,7 @@ import { User } from '../../../../types/User';
   styleUrl: './users-search-edit.component.sass'
 })
 export class UsersSearchEditComponent {
-  titleUsersSearchInput: string = 'Buscar usuários para a edição';
+  titleUsersSearchInput: string = 'Usuários para editar';
   users: User[] = [];
   typeActions: string = 'edit';
   title: string = 'Users';

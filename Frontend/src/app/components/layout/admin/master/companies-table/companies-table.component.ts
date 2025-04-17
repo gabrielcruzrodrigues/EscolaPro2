@@ -42,9 +42,11 @@ export class CompaniesTableComponent {
         next: (response: HttpResponse<any>) => {
           if (response.status == 204) {
             this.toastr.success("Usuário desabilitado com sucesso!");
+            this.isLoading = false
             this.companies = [...this.companies.filter(companie => companie.id !== this.companieId)];
           } else {
             this.toastr.info("Uma resposta inesperada foi retornada pelo sistema, contate um administrador do sistema!");
+            this.isLoading = false;
           }
           this.isLoading = false;
         },
@@ -54,6 +56,7 @@ export class CompaniesTableComponent {
         }
       })
     }
+    this.isLoading = false;
   }
 
   goToEditPage(companieId: number): void {

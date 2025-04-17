@@ -58,6 +58,7 @@ export class UsersTableComponent {
         }
       })
     }
+    this.isLoading = false;
   }
 
   goToEditPage(userId: number): void {

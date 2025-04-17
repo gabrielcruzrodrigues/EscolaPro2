@@ -11,7 +11,7 @@ import { Companie } from '../../../../types/Companie';
   styleUrl: './companies-search-edit.component.sass'
 })
 export class CompaniesSearchEditComponent {
-  titleUsersSearchInput: string = 'Buscar empresas para a edição';
+  titleUsersSearchInput: string = 'Empresas para edição';
   companies: Companie[] = [];
   typeActions: string = 'edit';
 

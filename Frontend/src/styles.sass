@@ -63,6 +63,29 @@ body
      font-size: 25px
      margin-right: 1%
 
+.buttons-options
+     display: flex
+     flex-direction: row
+     justify-content: start
+     gap: 2%
+
+.search-options
+     padding: 10px
+     border-radius: 10px
+     border: 1px solid #ccc
+     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3)
+     cursor: pointer
+
+@media (max-width: 600px) 
+     .full-div
+          width: 100%
+          padding: 2% 1%
+
+     .buttons-options
+          padding: 10px
+          justify-content: space-around
+
+
 //============= Estilo padrão para formulários dentro do main-form ===============
 
 .main-form
@@ -96,19 +119,9 @@ body
      &:hover
           background-color: $secundary
 
-.selects
-     display: flex
-     justify-content: space-between
-     margin-top: 10px
-
-     .select
-          // background-color: red
-          width: 48%
-          display: flex
-          flex-direction: column
-
-          select
-               width: 100%
+@media (max-width: 600px)
+.main-form
+     width: 80%
 
 //============= Estilo padrão para opções flutuantes de menu =============
 
@@ -155,9 +168,10 @@ body
 .first-options .option-title
      text-align: end
      align-items: center
-     font-size: 18px
+     font-size: 20px
      width: 70%
      text-align: center
+     color: $text
 
 .first-options .exibir
      width: 90%
@@ -178,3 +192,120 @@ body
      .first-options
           display: flex
           flex-direction: column
+
+//============= Estilo padrão para tabelas =============
+
+.custom-table
+     width: 100%
+     border-collapse: collapse
+     margin: 15px 0
+     font-size: 14px
+     text-align: left
+     cursor: pointer
+     background-color: white
+
+     thead
+          background-color: #333
+          color: white
+
+     th, td
+          padding: 10px
+          border: 1px solid #ddd
+          text-align: center
+
+     tbody tr:nth-child(even) // Linhas pares com cor diferente
+          background-color: #efefef
+
+     tbody tr:hover
+          background-color: #ddd
+
+.actions
+     display: flex
+     gap: 8%
+     align-items: center
+     justify-content: center
+
+.action
+     padding: 5px
+     width: 30px
+     height: 30px
+     border: 1px solid #2e2e2e
+     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3)
+     border-radius: 5px
+     cursor: pointer
+
+.edit
+     background-color: yellow
+
+.trash
+     color: white
+     background-color: red
+
+@media (max-width: 600px) 
+     .table-case
+          overflow-x: auto
+
+//============= Estilo padrão para box de pesquisa =============
+
+.search-student 
+     width: 100%
+     margin-top: 25px
+     background-color: white
+     border-radius: 6px
+     border: 1px solid #ccc
+     padding: 1% 5%
+     box-shadow: 0px 2px 5px rgba(0,0,0,0.3)
+
+
+.search-student .title 
+     display: flex
+     align-items: center
+     justify-content: center
+     padding: 0.5% 0
+     font-size: 14px  
+     color: $text   
+
+
+.input 
+     display: flex
+     justify-content: center
+     margin-top: 1%
+     padding-bottom: 2%
+
+
+.input input 
+     width: 80%
+     padding: 15px
+     border: 1px solid #ccc
+     border-radius: 8px 0 0 8px
+
+
+.input .input-button 
+     padding: 15px
+     width: 15%
+     font-size: 18px
+     border: 1px solid #ccc
+     background-color: $primary
+     border-radius: 0 8px 8px 0
+     color: white
+     cursor: pointer
+
+     &:hover
+          background-color: $secundary
+
+.search-student .icon 
+     font-size: 25px
+     margin-right: 1%
+
+@media (max-width: 600px)
+     .search-student 
+          margin-top: 0px
+          padding: 2% 5%
+
+     .search-student .title 
+          width: 100%    
+          text-align: center
+
+     .input .input-button 
+          width: 35%
+          padding: 15px 10px

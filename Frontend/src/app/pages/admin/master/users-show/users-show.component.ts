@@ -21,11 +21,11 @@ export class UsersShowComponent implements OnInit{
   title: string = 'Users';
 
   orderNameListAZToggle: boolean = false;
-  nameButtonOrderListAZ: string = 'Ordenar Nome por A - Z';
+  nameButtonOrderListAZ: string = 'Ordenar Nome A - Z';
   @ViewChild('nameOrderAZ') nameOrderAZ!: ElementRef;
 
   orderEmailListAZToggle: boolean = false;
-  emailButtonOrderListAZ: string = 'Ordenar Email por A - Z';
+  emailButtonOrderListAZ: string = 'Ordenar Email A - Z';
   @ViewChild('emailOrderAZ') emailOrderAZ!: ElementRef;
 
   // orderRoleListAZToggle: boolean = false;
@@ -69,7 +69,7 @@ export class UsersShowComponent implements OnInit{
           this.users.sort((a, b) => a.name.localeCompare(b.name));
         } else {
           this.orderNameListAZToggle = false;
-          this.nameButtonOrderListAZ = 'Ordenar Nome por A - Z';
+          this.nameButtonOrderListAZ = 'Ordenar Nome A - Z';
           this.users.sort((a, b) => b.name.localeCompare(a.name));
         }
         break;
@@ -81,7 +81,7 @@ export class UsersShowComponent implements OnInit{
           this.users.sort((a, b) => a.email.localeCompare(b.email));
         } else {
           this.orderEmailListAZToggle = false;
-          this.emailButtonOrderListAZ = 'Ordenar Email por A - Z';
+          this.emailButtonOrderListAZ = 'Ordenar Email A - Z';
           this.users.sort((a, b) => b.email.localeCompare(a.email));
         }
         break;

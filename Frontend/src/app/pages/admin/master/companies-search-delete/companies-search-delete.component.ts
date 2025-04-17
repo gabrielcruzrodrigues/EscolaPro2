@@ -15,7 +15,7 @@ import { Companie } from '../../../../types/Companie';
   styleUrl: './companies-search-delete.component.sass'
 })
 export class CompaniesSearchDeleteComponent {
-  titleUsersSearchInput: string = 'Buscar empresas para desativar';
+  titleUsersSearchInput: string = 'Empresas para desativar';
   companies: Companie[] = [];
   typeActions: string = 'trash';
 

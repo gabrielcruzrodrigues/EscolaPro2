@@ -11,7 +11,7 @@ import { User } from '../../../../types/User';
   styleUrl: './users-search-delete.component.sass'
 })
 export class UsersSearchDeleteComponent {
-  titleUsersSearchInput: string = 'Buscar usuários para desativar';
+  titleUsersSearchInput: string = 'Usuários para deletar';
   users: User[] = [];
   typeActions: string = 'trash';
   title: string = 'Users';
