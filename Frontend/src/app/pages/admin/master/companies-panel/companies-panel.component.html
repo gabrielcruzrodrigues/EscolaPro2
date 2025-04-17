@@ -2,25 +2,25 @@
 <section class="main-section appear">
      <!-- <app-top-user-infos [title]="title"></app-top-user-infos> -->
      <section class="first-options">
-          <div class="option" [routerLink]="['/admin/master/companies-create']">
+          <div class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/companies-create'}">
                <div class="icon-div green">
                     <i class="fa-solid fa-building icon"></i>
                </div>
                <p class="option-title">Cadastrar</p>
           </div>
-          <div class="option" [routerLink]="['/admin/master/companies-show']">
+          <div class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/companies-show'}">
                <div class="icon-div blue">
                     <i class="fa-solid fa-eye icon"></i>
                </div>
                <p class="option-title">Empresas</p>
           </div>
-          <div class="option" [routerLink]="['/admin/master/companies-search-edit']">
+          <div class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/companies-search-edit'}">
                <div class="icon-div yellow">
                     <i class="fa-solid fa-pen-to-square icon"></i>
                </div>
                <p class="option-title">Atualizar</p>
           </div>
-          <div *ngIf="userRole === 0" class="option" [routerLink]="['/admin/master/companies-search-delete']">
+          <div *ngIf="userRole === 0" class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/companies-search-delete'}">
                <div class="icon-div red">
                     <i class="fa-solid fa-trash icon"></i>
                </div>

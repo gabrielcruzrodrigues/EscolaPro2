@@ -38,7 +38,7 @@ export class UsersMainSearchBoxComponent {
           }
           
           this.searchUser.emit(users);
-          // this.isLoading = false;
+          this.isLoading = false;
         },
         error: (error) => {
           if (error.status == 500) {
