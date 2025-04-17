@@ -1,17 +1,32 @@
 <header>
      <nav>
-          @if (admin) {
-          <ul>
-               <li><a href="/admin/master/dashboard"><i class="fa-solid fa-gauge icon"></i>Dashboard</a></li>
-               <li><a href="/admin/master/users-panel"><i class="fa-solid fa-user icon"></i>Usuários</a></li>
-               <li><a href="/admin/master/companies-panel"><i class="fa-solid fa-building icon"></i>Empresas</a></li>
+          <!-- <p style="color: white;">{{ currentRoute }}</p> -->
+          <ul *ngIf="admin">
+               <li [ngClass]="{ 'selected-li': currentRoute === '/admin/master/dashboard' }">
+                    <a [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/dashboard' }">
+                         <i class="fa-solid fa-gauge icon"></i>Dashboard
+                    </a>
+               </li>
+
+               <li [ngClass]="{ 'selected-li': currentRoute.startsWith('/admin/master/users') }">
+                    <a [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/users-panel'}">
+                         <i class="fa-solid fa-user icon"></i>
+                         Usuários
+                    </a>
+               </li>
+
+               <li [ngClass]="{ 'selected-li': currentRoute.startsWith('/admin/master/companies') }">
+                    <a [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/companies-panel'}">
+                         <i class="fa-solid fa-building icon"></i>
+                         Empresas
+                    </a>
+               </li>
+
                <li (click)="logout()"><a><i class="fa-solid fa-door-open icon"></i>Sair</a></li>
           </ul>
-          }
-          @if (moderador) {
-          <ul>
+
+          <ul *ngIf="moderador">
                <li (click)="logout()"><a><i class="fa-solid fa-door-open icon"></i>Sair</a></li>
           </ul>
-          }
      </nav>
 </header>

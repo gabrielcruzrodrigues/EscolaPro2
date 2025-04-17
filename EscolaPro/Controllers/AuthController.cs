@@ -32,4 +32,12 @@ public class AuthController : ControllerBase
     {
         return Ok(new { message = "Logout realizado com sucesso!" });
     }
+
+    [HttpGet("verify")]
+    [Authorize(policy: "admin")]
+    public async Task<IActionResult> TokenVerify()
+    {
+        return Ok();
+    }
+
 }

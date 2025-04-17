@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -20,6 +20,22 @@ export class AuthService {
     private cookieService: CookieService
   ) { }
 
+  loggedVerify(): boolean {
+    const cookieValue = this.cookieService.get('token');
+    if (cookieValue) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  tokenVerify(): Observable<any> {
+    const accessToken = this.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + '/verify';
+    return this.http.get(urlForRequest, { headers: headers, observe: 'response' });
+  }
+
   login(data: LoginRequest): Observable<any> {
     const urlForRequest = this.url + '/login';
     return this.http.post(urlForRequest, data, { observe: 'response' });
@@ -39,55 +55,60 @@ export class AuthService {
 
   saveCookiesLogin(body: any): void {
     this.cookieService.set('token', body.token, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('refreshToken', body.refreshToken, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('expiration', body.expiration, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('role', body.role, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('name', body.name, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('userId', body.userId, {
-      path: '/', 
+      path: '/',
       secure: false, // Trocar para true em prod
-      sameSite: 'Lax', 
+      sameSite: 'Lax',
       expires: 1 // Alterar em prod
     });
   }
 
   getAccessToken(): string {
     const cookieValue = this.cookieService.get('token');
-    return cookieValue; 
+    return cookieValue;
   }
 
   logout(): void {
-    this.cookieService.deleteAll();
+    this.cookieService.delete('token', '/');
+    this.cookieService.delete('refreshToken', '/');
+    this.cookieService.delete('expiration', '/');
+    this.cookieService.delete('role', '/');
+    this.cookieService.delete('name', '/');
+    this.cookieService.delete('userId', '/');
     this.router.navigate(['/login']);
   }
 }

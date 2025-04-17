@@ -13,72 +13,102 @@ import { CompaniesShowComponent } from './pages/admin/master/companies-show/comp
 import { CompaniesSearchEditComponent } from './pages/admin/master/companies-search-edit/companies-search-edit.component';
 import { CompaniesSearchDeleteComponent } from './pages/admin/master/companies-search-delete/companies-search-delete.component';
 import { CompaniesEditComponent } from './pages/admin/master/companies-edit/companies-edit.component';
+import { masterGuard } from './guards/master.guard';
+import { AuthLoadingComponent } from './components/layout/auth-loading/auth-loading.component';
 
 export const routes: Routes = [
+     // === Public config ===
+
+     {
+          path: 'verify',
+          component: AuthLoadingComponent,
+          pathMatch: 'full'
+     },
+
      //admin/master
 
      {
           path: 'admin/master/dashboard',
-          component: DashboardComponent
+          component: DashboardComponent,
+          canActivate: [masterGuard]
      },
 
-     // === Users ===
+     // === MASTER - Users ===
 
      {
           path: 'admin/master/users-panel',
-          component: UsersPanelComponent
+          component: UsersPanelComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/users-show',
-          component: UsersShowComponent
+          component: UsersShowComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/users-create',
-          component: UsersCreateComponent
+          component: UsersCreateComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/users-search-edit',
-          component: UsersSearchEditComponent
+          component: UsersSearchEditComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/users-edit/:userId',
-          component: UsersEditComponent
+          component: UsersEditComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/users-search-delete',
-          component: UsersSearchDeleteComponent
+          component: UsersSearchDeleteComponent,
+          canActivate: [masterGuard]
      },
 
-     // === Companies ===
+     // === MASTER - Companies ===
 
      {
           path: 'admin/master/companies-panel',
-          component: CompaniesPanelComponent
+          component: CompaniesPanelComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/companies-create',
-          component: CompaniesCreateComponent
+          component: CompaniesCreateComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/companies-show',
-          component: CompaniesShowComponent
+          component: CompaniesShowComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/companies-search-edit',
-          component: CompaniesSearchEditComponent
+          component: CompaniesSearchEditComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/companies-search-delete',
-          component: CompaniesSearchDeleteComponent
+          component: CompaniesSearchDeleteComponent,
+          canActivate: [masterGuard]
      },
      {
           path: 'admin/master/companies-edit/:companieId',
-          component: CompaniesEditComponent
+          component: CompaniesEditComponent,
+          canActivate: [masterGuard]
      },
 
-     // === Puublic ===
+     // === Public ===
      {
           path: 'login',
           component: LoginComponent
-     }
+     },
+
+     // === Public config ===
+
+     // {
+     //      path: '**',
+     //      component: AuthLoadingComponent
+     // },
 ];

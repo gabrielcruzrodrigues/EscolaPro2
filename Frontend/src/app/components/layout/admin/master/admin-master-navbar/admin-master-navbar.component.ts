@@ -1,11 +1,13 @@
 import { afterNextRender, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-master-navbar',
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './admin-master-navbar.component.html',
   styleUrl: './admin-master-navbar.component.sass'
@@ -16,11 +18,19 @@ export class AdminMasterNavbarComponent {
   user: boolean = false;
   callsDropdownOpen = false;
   @ViewChild('callsToggle') callsToggleElement!: ElementRef;
+  currentRoute: string = '';
 
   constructor(
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
+
     afterNextRender(() => {
       // const userRole = this.authService.getRole();
       const userRole: number = 0;

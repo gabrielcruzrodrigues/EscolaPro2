@@ -44,7 +44,10 @@ export class LoginComponent {
         next: (response: HttpResponse<any>) => {
           this.authService.saveCookiesLogin(response.body);
           this.isLoading = false;
-          this.router.navigate(['/admin/master/dashboard']);
+          
+          this.router.navigate(['/verify'], {
+            queryParams: { next: '/admin/master/dashboard' }
+          });
         },
         error: (err) => {
           if (err.status === 404) {
