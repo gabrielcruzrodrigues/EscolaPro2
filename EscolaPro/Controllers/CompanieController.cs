@@ -24,7 +24,7 @@ namespace EscolaPro.Controllers
         [HttpGet]
         //[Authorize(policy: "admin")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Companies>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<Companie>>> GetAllAsync()
         {
             var response = await _companieRepository.GetAllAsync();
             return Ok(response);
@@ -33,7 +33,7 @@ namespace EscolaPro.Controllers
         [HttpGet("{companieId:int}")]
         //[Authorize(policy: "admin")]
         [AllowAnonymous]
-        public async Task<ActionResult<Companies>> GetByIdAsync(int companieId)
+        public async Task<ActionResult<Companie>> GetByIdAsync(int companieId)
         {
             var user = await _companieRepository.GetByIdAsync(companieId);
             return Ok(user);
@@ -41,7 +41,7 @@ namespace EscolaPro.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<Companies>> CreateAsync(CreateCompanieViewModel request)
+        public async Task<ActionResult<Companie>> CreateAsync(CreateCompanieViewModel request)
         {
             if (await _companieRepository.GetByCnpjAsync(request.Cnpj) != null)
             {
@@ -53,7 +53,7 @@ namespace EscolaPro.Controllers
                 return Conflict(new { message = "Esse nome já foi cadastrado", type = "name", code = 409 });
             }
 
-            var companie = new Companies
+            var companie = new Companie
             {
                 Name = request.Name,
                 CreatedAt = DateTime.UtcNow,

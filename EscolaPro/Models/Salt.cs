@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EscolaPro.Models
 {
-    public class Salts
+    [Table("Salts")]
+    public class Salt
     {
         [Key]
         public int Id { get; set; }

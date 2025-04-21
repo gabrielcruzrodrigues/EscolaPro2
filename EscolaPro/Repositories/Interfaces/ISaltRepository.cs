@@ -4,8 +4,8 @@ namespace EscolaPro.Repositories.Interfaces
 {
     public interface ISaltRepository
     {
-        Task Create(Salts salt);
-        Task<Salts> GetByUserId(long userId);
+        Task Create(Salt salt);
+        Task<Salt> GetByUserId(long userId);
         Task Update(long userId, string newSalt);
     }
 }

@@ -78,7 +78,7 @@ public class UserGeneralController : ControllerBase
 
         var response = await _userGeneralRepository.CreateAsync(user);
 
-        var saltObj = new Salts()
+        var saltObj = new Salt()
         {
             UserGeneralId = user.Id,
             SaltHash = salt

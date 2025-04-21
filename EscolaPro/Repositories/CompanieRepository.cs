@@ -19,7 +19,7 @@ public class CompanieRepository : ICompanieRepository
         _logger = logger;
     }
 
-    public async Task<Companies> CreateAsync(Companies companie)
+    public async Task<Companie> CreateAsync(Companie companie)
     {
         try
         {
@@ -51,7 +51,7 @@ public class CompanieRepository : ICompanieRepository
         }
     }
 
-    public async Task<IEnumerable<Companies>> GetAllAsync()
+    public async Task<IEnumerable<Companie>> GetAllAsync()
     {
         return await _context.Companies
                 .AsNoTracking()
@@ -59,7 +59,7 @@ public class CompanieRepository : ICompanieRepository
                 .ToListAsync();
     }
 
-    public async Task<Companies> GetByIdAsync(int companieId)
+    public async Task<Companie> GetByIdAsync(int companieId)
     {
         var companie = await _context.Companies
                 .Where(u => u.Status.Equals(true) && u.Id.Equals(companieId))
@@ -73,7 +73,7 @@ public class CompanieRepository : ICompanieRepository
         return companie;
     }
 
-    public async Task<Companies> GetByNameAsync(string companieName)
+    public async Task<Companie> GetByNameAsync(string companieName)
     {
         var companie = await _context.Companies
                 .Where(u => u.Status.Equals(true) && u.Name.Equals(companieName))
@@ -82,7 +82,7 @@ public class CompanieRepository : ICompanieRepository
         return companie;
     }
 
-    public async Task<Companies> GetByCnpjAsync(string companieCnpj)
+    public async Task<Companie> GetByCnpjAsync(string companieCnpj)
     {
         var companie = await _context.Companies
                 .Where(u => u.Status.Equals(true) && u.CNPJ.Equals(companieCnpj))
@@ -91,7 +91,7 @@ public class CompanieRepository : ICompanieRepository
         return companie;
     }
 
-    public async Task Update(Companies companieForUpdate)
+    public async Task Update(Companie companieForUpdate)
     {
         try
         {
@@ -105,7 +105,7 @@ public class CompanieRepository : ICompanieRepository
         }
     }
 
-    public async Task<IEnumerable<Companies>> Search(string param)
+    public async Task<IEnumerable<Companie>> Search(string param)
     {
         var companie = await _context.Companies
                 .Where(u => u.Name.Contains(param) && u.Status.Equals(true) || u.CNPJ.Contains(param) && u.Status.Equals(true))

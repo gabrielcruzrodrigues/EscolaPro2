@@ -38,6 +38,6 @@ namespace EscolaPro.Models
         public DateTime? RefreshTokenExpiryTime { get; set; }
         public required int CompanieId { get; set; }
 
-        public Companies Companie { get; set; }
+        public Companie Companie { get; set; }
     }
 }

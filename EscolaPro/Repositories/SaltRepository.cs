@@ -17,7 +17,7 @@ public class SaltRepository : ISaltRepository
         _logger = logger;
     }
 
-    public async Task Create(Salts salt)
+    public async Task Create(Salt salt)
     {
         try
         {
@@ -31,7 +31,7 @@ public class SaltRepository : ISaltRepository
         }
     }
 
-    public async Task<Salts> GetByUserId(long userId)
+    public async Task<Salt> GetByUserId(long userId)
     {
         var salt = await _context.Salts
             .Where(s => s.UserGeneralId.Equals(userId))
