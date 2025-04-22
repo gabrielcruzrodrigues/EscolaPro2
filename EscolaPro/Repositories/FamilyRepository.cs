@@ -37,13 +37,13 @@ public class FamilyRepository : IFamilyRepository
 
     public async Task Disable(string companieName, long familyId)
     {
-        var companie = await GetByIdAsync(companieName, familyId);
-        companie.Status = false;
+        var family = await GetByIdAsync(companieName, familyId);
+        family.Status = false;
 
         try
         {
             using var _context = _contextFactory.Create(companieName);
-            _context.Families.Entry(companie).State = EntityState.Modified;
+            _context.Families.Entry(family).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
         catch (Exception ex)

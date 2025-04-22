@@ -9,6 +9,7 @@ namespace EscolaPro.Database
 
         public DbSet<Family> Families { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Allergie> Allergies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,7 +20,12 @@ namespace EscolaPro.Database
                 entity.HasIndex(f => f.Rg).IsUnique();
                 entity.HasIndex(f => f.Cpf).IsUnique();
                 entity.HasIndex(f => f.Phone).IsUnique();
-            });       
+            });
+
+            modelBuilder.Entity<Allergie>(entity =>
+            {
+                entity.HasIndex(a => a.Name).IsUnique();
+            });
         }
     }
 }
