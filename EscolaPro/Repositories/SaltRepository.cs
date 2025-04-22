@@ -26,7 +26,7 @@ public class SaltRepository : ISaltRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Um erro aconteceu ao tentar salvar o Salts no banco de dados! err: {ex.Message}");
+            _logger.LogError(ex, "Erro ao criar Salt. {Message}", ex.InnerException?.Message ?? ex.Message);
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar salvar o Salts no banco de dados!");
         }
     }

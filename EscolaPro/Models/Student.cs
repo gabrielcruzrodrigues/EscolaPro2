@@ -9,7 +9,8 @@ namespace EscolaPro.Models
         [Key]
         public required long Id { get; set; }
 
-
+        [Required]
+        public required bool Status { get; set; }
 
 
         public ICollection<Family> Families { get; set; } = new List<Family>();

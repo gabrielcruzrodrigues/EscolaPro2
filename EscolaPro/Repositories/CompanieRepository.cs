@@ -25,11 +25,14 @@ public class CompanieRepository : ICompanieRepository
         {
             _ = await _context.Companies.AddAsync(companie);
             await _context.SaveChangesAsync();
+
+            CreateCompanieDatabase(companie.ConnectionString);
+
             return companie;
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Um erro aconteceu ao tentar criar uma empresa! Err: {ex.Message}");
+            _logger.LogError(ex, "Erro ao criar Empresa. {Message}", ex.InnerException?.Message ?? ex.Message);
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar criar uma empresa!");
         }
     }
@@ -112,5 +115,16 @@ public class CompanieRepository : ICompanieRepository
                 .ToListAsync();
 
         return companie;
+    }
+
+    public void CreateCompanieDatabase(string connectionString)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
+        optionsBuilder.UseNpgsql(connectionString);
+
+        using var context = new InternalDbContext(optionsBuilder.Options);
+
+        // Isso vai criar o banco (caso ainda não exista) e aplicar as migrations
+        context.Database.Migrate();
     }
 }

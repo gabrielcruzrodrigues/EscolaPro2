@@ -1,15 +1,10 @@
 ﻿using EscolaPro.Models.Dtos;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EscolaPro.Models
+namespace EscolaPro.ViewModels
 {
-    [NotMapped]
-    public class UserInternal
+    public class CreateUserInternalViewModel
     {
-        [Key]
-        public long Id { get; set; }
-
         public string? Image { get; set; }
 
         [Required]
@@ -62,13 +57,5 @@ namespace EscolaPro.Models
 
         [Required]
         public required Roles Role { get; set; }
-
-        [Required]
-        public required bool Status { get; set; }
-
-        [Required]
-        public required DateTime CreatedAt { get; set; }
-
-        public DateTime? LastUpdatedAt { get; set; }
     }
 }

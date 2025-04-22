@@ -8,8 +8,9 @@ namespace EscolaPro.Models;
 public class Family : UserInternal
 {
     public string? WorkAddress { get; set; }
+
     public string? Ocupation { get; set; }
-    public string? UF { get; set; }
+
     public long StudentId { get; set; }
 
     [Required]

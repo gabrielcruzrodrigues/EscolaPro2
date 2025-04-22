@@ -17,5 +17,10 @@ public class GeneralDbContext : DbContext
         modelBuilder.Entity<Companie>()
             .HasIndex(e => e.CNPJ)
             .IsUnique();
+
+        modelBuilder.Entity<UserGeneral>(entity =>
+        {
+            entity.HasIndex(u => u.Email).IsUnique();
+        });
     }
 }

@@ -12,6 +12,7 @@ using EscolaPro.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 
 using System.Security.Claims;
+using EscolaPro.Models;
 
 public class AuthRepository : IAuthRepository
 {
@@ -78,49 +79,9 @@ public class AuthRepository : IAuthRepository
             }
 
             var userRole = emailVerify.Role;
+
             IEnumerable<Claim> authClaims = new List<Claim>();
-
-            if (userRole.Equals(Roles.ADMIN))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, emailVerify.Name!),
-                    new Claim(ClaimTypes.Email, emailVerify.Email!),
-                    new Claim("Companie", emailVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.ADMIN.ToString().ToLower()),
-                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
-
-            if (userRole.Equals(Roles.MODERADOR))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, emailVerify.Name!),
-                    new Claim(ClaimTypes.Email, emailVerify.Email!),
-                    new Claim("Companie", emailVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
-
-            if (userRole.Equals(Roles.USER))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, emailVerify.Name!),
-                    new Claim(ClaimTypes.Email, emailVerify.Email!),
-                    new Claim("Companie", emailVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
+            authClaims = GetClaims(userRole, emailVerify);
 
             var token = _tokenService.GenerateAccessToken(authClaims);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -165,53 +126,12 @@ public class AuthRepository : IAuthRepository
             }
 
             var userRole = userNameVerify.Role;
+
             IEnumerable<Claim> authClaims = new List<Claim>();
-
-            if (userRole.Equals(Roles.ADMIN))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.ADMIN.ToString().ToLower()),
-                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
-
-            if (userRole.Equals(Roles.MODERADOR))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
-
-            if (userRole.Equals(Roles.USER))
-            {
-                authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Role", Roles.USER.ToString().ToLower()),
-                };
-            }
+            authClaims = GetClaims(userRole, userNameVerify);
 
             var token = _tokenService.GenerateAccessToken(authClaims);
             var refreshToken = _tokenService.GenerateRefreshToken();
-
 
             var verify = int.TryParse(Environment.GetEnvironmentVariable("JWT_REFRESH_TOKEN_VALIDITY_IN_MINUTES"),
                 out int refreshTokenValidityInMinutes);
@@ -244,5 +164,69 @@ public class AuthRepository : IAuthRepository
                 Name = userNameVerify.Name
             };
         }
+    }
+
+    private IEnumerable<Claim> GetClaims(Roles userRole, UserGeneral userGeneral)
+    {
+        IEnumerable<Claim> authClaims = new List<Claim>();
+
+        if (userRole.Equals(Roles.ADMIN))
+        {
+            authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userGeneral.Id.ToString()),
+                new Claim(ClaimTypes.Name, userGeneral.Name!),
+                new Claim(ClaimTypes.Email, userGeneral.Email!),
+                new Claim("CompanieId", userGeneral.CompanieId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("Role", Roles.ADMIN.ToString().ToLower()),
+                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                new Claim("Role", Roles.USER.ToString().ToLower()),
+                new Claim("Role", Roles.ADMIN_INTERNAL.ToString().ToLower()),
+            };
+        }
+
+        if (userRole.Equals(Roles.MODERADOR))
+        {
+            authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userGeneral.Id.ToString()),
+                new Claim(ClaimTypes.Name, userGeneral.Name!),
+                new Claim(ClaimTypes.Email, userGeneral.Email!),
+                new Claim("CompanieId", userGeneral.CompanieId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                new Claim("Role", Roles.USER.ToString().ToLower()),
+            };
+        }
+
+        if (userRole.Equals(Roles.USER))
+        {
+            authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userGeneral.Id.ToString()),
+                new Claim(ClaimTypes.Name, userGeneral.Name!),
+                new Claim(ClaimTypes.Email, userGeneral.Email!),
+                new Claim("CompanieId", userGeneral.CompanieId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("Role", Roles.USER.ToString().ToLower()),
+            };
+        }
+
+        //Admin geral de cada empresa
+        if (userRole.Equals(Roles.ADMIN_INTERNAL))
+        {
+            authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userGeneral.Id.ToString()),
+                new Claim(ClaimTypes.Name, userGeneral.Name!),
+                new Claim(ClaimTypes.Email, userGeneral.Email!),
+                new Claim("CompanieId", userGeneral.CompanieId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("Role", Roles.ADMIN_INTERNAL.ToString().ToLower()),
+            };
+        }
+
+        return authClaims;
     }
 }

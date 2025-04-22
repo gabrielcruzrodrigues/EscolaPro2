@@ -30,7 +30,7 @@ public class FamilyRepository : IFamilyRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Um erro aconteceu ao tentar criar um familiar! Err: {ex.Message}");
+            _logger.LogError(ex, "Erro ao criar familiar. {Message}", ex.InnerException?.Message ?? ex.Message);
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar criar um familiar!");
         }
     }
@@ -73,7 +73,7 @@ public class FamilyRepository : IFamilyRepository
 
         if (family is null)
         {
-            throw new HttpResponseException(404, $"familiar não encontrado!");
+            throw new HttpResponseException(404, $"familiar não encontrado com esse nome!");
         }
 
         return family;
@@ -90,12 +90,56 @@ public class FamilyRepository : IFamilyRepository
         return family;
     }
 
+    public async Task<Family> GetByEmailAsync(string companieName, string familyEmail)
+    {
+        using var _context = _contextFactory.Create(companieName);
+
+        var family = await _context.Families
+                .Where(u => u.Status.Equals(true) && u.Email.Equals(familyEmail))
+                .FirstOrDefaultAsync();
+
+        return family;
+    }
+
+    public async Task<Family> GetByRgAsync(string companieName, string familyRg)
+    {
+        using var _context = _contextFactory.Create(companieName);
+
+        var family = await _context.Families
+                .Where(u => u.Status.Equals(true) && u.Rg.Equals(familyRg))
+                .FirstOrDefaultAsync();
+
+        return family;
+    }
+
+    public async Task<Family> GetByCpfAsync(string companieName, string familyCpf)
+    {
+        using var _context = _contextFactory.Create(companieName);
+
+        var family = await _context.Families
+                .Where(u => u.Status.Equals(true) && u.Cpf.Equals(familyCpf))
+                .FirstOrDefaultAsync();
+
+        return family;
+    }
+
+    public async Task<Family> GetByPhoneAsync(string companieName, string familyPhone)
+    {
+        using var _context = _contextFactory.Create(companieName);
+
+        var family = await _context.Families
+                .Where(u => u.Status.Equals(true) && u.Phone.Equals(familyPhone))
+                .FirstOrDefaultAsync();
+
+        return family;
+    }
+
     public async Task<IEnumerable<Family>> Search(string companieName, string param)
     {
         using var _context = _contextFactory.Create(companieName);
 
         var family = await _context.Families
-                .Where(u => u.Name.Contains(param) && u.Status.Equals(true) || u.CNPJ.Contains(param) && u.Status.Equals(true))
+                .Where(u => u.Name.Contains(param) && u.Status.Equals(true))
                 .ToListAsync();
 
         return family;

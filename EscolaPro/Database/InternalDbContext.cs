@@ -8,5 +8,18 @@ namespace EscolaPro.Database
         public InternalDbContext(DbContextOptions<InternalDbContext> options) : base(options) { }
 
         public DbSet<Family> Families { get; set; }
+        public DbSet<Student> Students { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Family>(entity =>
+            {
+                entity.HasIndex(f => f.Name).IsUnique();
+                entity.HasIndex(f => f.Email).IsUnique();
+                entity.HasIndex(f => f.Rg).IsUnique();
+                entity.HasIndex(f => f.Cpf).IsUnique();
+                entity.HasIndex(f => f.Phone).IsUnique();
+            });       
+        }
     }
 }

@@ -109,7 +109,11 @@ builder.Services.AddAuthorization(options =>
             context.User.HasClaim("Role", "moderador") &&
             context.User.HasClaim("Role", "user")));
 
-    options.AddPolicy("user", policy => policy.RequireClaim("Role", "user"));
+    options.AddPolicy("user", policy => 
+        policy.RequireClaim("Role", "user"));
+
+    options.AddPolicy("admin_internal", policy =>
+        policy.RequireClaim("Role", "admin_internal"));
 });
 
 // Adicionando políticas globais
@@ -138,6 +142,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanieRepository, CompanieRepository>();
 builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";
