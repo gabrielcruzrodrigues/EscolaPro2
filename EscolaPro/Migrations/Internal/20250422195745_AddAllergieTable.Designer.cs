@@ -3,6 +3,7 @@ using System;
 using EscolaPro.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EscolaPro.Migrations.Internal
 {
     [DbContext(typeof(InternalDbContext))]
-    partial class InternalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250422195745_AddAllergieTable")]
+    partial class AddAllergieTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

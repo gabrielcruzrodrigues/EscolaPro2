@@ -5,7 +5,7 @@ namespace EscolaPro.Models
     public class Allergie
     {
         [Key]
-        public required int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30, ErrorMessage = "O nome da alergia é obrigatório!")]

@@ -79,18 +79,40 @@ public class AllergieRepository : IAllergieRepository
         return allergie;
     }
 
-    public Task<Allergie> GetByNameAsync(string companieName, string allergieName)
+    public async Task<Allergie> GetByNameAsync(string companieName, string allergieName)
     {
-        throw new NotImplementedException();
+        using var _context = _contextFactory.Create(companieName);
+
+        var family = await _context.Allergies
+                .Where(u => u.Status.Equals(true) && u.Name.Equals(allergieName))
+                .FirstOrDefaultAsync();
+
+        return family;
     }
 
-    public Task<IEnumerable<Allergie>> Search(string companieName, string param)
+    public async Task<IEnumerable<Allergie>> Search(string companieName, string param)
     {
-        throw new NotImplementedException();
+        using var _context = _contextFactory.Create(companieName);
+
+        var allergie = await _context.Allergies
+                .Where(u => u.Name.Contains(param) && u.Status.Equals(true))
+                .ToListAsync();
+
+        return allergie;
     }
 
-    public Task Update(string companieName, Allergie allergieForUpdate)
+    public async Task Update(string companieName, Allergie allergieForUpdate)
     {
-        throw new NotImplementedException();
+        try
+        {
+            using var _context = _contextFactory.Create(companieName);
+            _context.Allergies.Entry(allergieForUpdate).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao atualizar alergia. {Message}", ex.InnerException?.Message ?? ex.Message);
+            throw new HttpResponseException(500, "Um erro aconteceu ao tentar atualizar uma alergia!");
+        }
     }
 }

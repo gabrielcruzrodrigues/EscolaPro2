@@ -5,6 +5,7 @@ using EscolaPro.Database;
 using EscolaPro.Extensions;
 using Microsoft.EntityFrameworkCore;
 using EscolaPro.Models.Dtos;
+using EscolaPro.Services.Interfaces;
 
 namespace EscolaPro.Repositories;
 
@@ -12,11 +13,13 @@ public class CompanieRepository : ICompanieRepository
 {
     private readonly GeneralDbContext _context;
     private readonly ILogger<CompanieRepository> _logger;
+    private readonly IDatabaseService _databaseService;
 
-    public CompanieRepository(GeneralDbContext context, ILogger<CompanieRepository> logger, IMapper mapper)
+    public CompanieRepository(GeneralDbContext context, ILogger<CompanieRepository> logger, IDatabaseService databaseService)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         _logger = logger;
+        _databaseService = databaseService;
     }
 
     public async Task<Companie> CreateAsync(Companie companie)
@@ -26,7 +29,7 @@ public class CompanieRepository : ICompanieRepository
             _ = await _context.Companies.AddAsync(companie);
             await _context.SaveChangesAsync();
 
-            CreateCompanieDatabase(companie.ConnectionString);
+            _databaseService.CreateDatabase(companie.ConnectionString);
 
             return companie;
         }
@@ -115,16 +118,5 @@ public class CompanieRepository : ICompanieRepository
                 .ToListAsync();
 
         return companie;
-    }
-
-    public void CreateCompanieDatabase(string connectionString)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
-        optionsBuilder.UseNpgsql(connectionString);
-
-        using var context = new InternalDbContext(optionsBuilder.Options);
-
-        // Isso vai criar o banco (caso ainda não exista) e aplicar as migrations
-        context.Database.Migrate();
     }
 }

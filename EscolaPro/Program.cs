@@ -129,7 +129,6 @@ builder.Services.AddMvc(config =>
 builder.Services.AddDbContext<GeneralDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("General")));
 
-builder.Services.AddScoped<IAppDbContextFactory, AppDbContextFactory>();
 
 // ----------------------- Inject container ------------------------------
 //builder.Services.AddScoped<IUsersRepository, UsersRepository>();
@@ -143,6 +142,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanieRepository, CompanieRepository>();
 builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IAllergieRepository, AllergieRepository>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+builder.Services.AddScoped<IAppDbContextFactory, AppDbContextFactory>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";

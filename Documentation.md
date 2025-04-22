@@ -7,6 +7,7 @@
 * O parametro usado para definir o nome do banco de dados é ```Database=nome_empresa```.
 * Na tabela de empresas ``` companies ``` existe um atributo chamado StringConnection. Ex: ``` "Host=localhost;Port=5432;Database=dummy_empresa;Username=postgres;Password=1234" ``` 
 * O comando usado para criar migrations para o ``` InternalDbContext ``` é ```dotnet ef migrations add InitialCreate --context InternalDbContext --output-dir Migrations/Internal```
+* O comando usado para rodar uma migration em um contexto específico é ``` dotnet ef database update --context InternalDbContext ```
 
 ## Informações relacionadas as Roles e níveis de acesso.
 
