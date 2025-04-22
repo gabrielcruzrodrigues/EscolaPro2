@@ -22,7 +22,7 @@ namespace EscolaPro.Controllers
         }
 
         [HttpGet]
-        //[Authorize(policy: "admin")]
+        [Authorize(policy: "admin")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Companie>>> GetAllAsync()
         {

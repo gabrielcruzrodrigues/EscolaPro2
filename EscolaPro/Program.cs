@@ -137,6 +137,7 @@ builder.Services.AddScoped<IUsersGeneralRepository, UsersGeneralRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanieRepository, CompanieRepository>();
+builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";

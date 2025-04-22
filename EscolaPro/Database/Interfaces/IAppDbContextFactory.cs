@@ -5,6 +5,6 @@ namespace EscolaPro.Database.Interfaces
 {
     public interface IAppDbContextFactory
     {
-        GeneralDbContext Create(string companie);
+        InternalDbContext Create(string companie);
     }
 }

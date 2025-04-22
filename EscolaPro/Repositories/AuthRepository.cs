@@ -83,43 +83,43 @@ public class AuthRepository : IAuthRepository
             if (userRole.Equals(Roles.ADMIN))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, emailVerify.Name!),
-                new Claim(ClaimTypes.Email, emailVerify.Email!),
-                new Claim("Companie", emailVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.ADMIN.ToString().ToLower()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, emailVerify.Name!),
+                    new Claim(ClaimTypes.Email, emailVerify.Email!),
+                    new Claim("Companie", emailVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.ADMIN.ToString().ToLower()),
+                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             if (userRole.Equals(Roles.MODERADOR))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, emailVerify.Name!),
-                new Claim(ClaimTypes.Email, emailVerify.Email!),
-                new Claim("Companie", emailVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, emailVerify.Name!),
+                    new Claim(ClaimTypes.Email, emailVerify.Email!),
+                    new Claim("Companie", emailVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             if (userRole.Equals(Roles.USER))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, emailVerify.Name!),
-                new Claim(ClaimTypes.Email, emailVerify.Email!),
-                new Claim("Companie", emailVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, emailVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, emailVerify.Name!),
+                    new Claim(ClaimTypes.Email, emailVerify.Email!),
+                    new Claim("Companie", emailVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             var token = _tokenService.GenerateAccessToken(authClaims);
@@ -170,43 +170,43 @@ public class AuthRepository : IAuthRepository
             if (userRole.Equals(Roles.ADMIN))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.ADMIN.ToString().ToLower()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
+                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.ADMIN.ToString().ToLower()),
+                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             if (userRole.Equals(Roles.MODERADOR))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
+                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             if (userRole.Equals(Roles.USER))
             {
                 authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
-                new Claim(ClaimTypes.Name, userNameVerify.Name!),
-                new Claim(ClaimTypes.Email, userNameVerify.Email!),
-                new Claim("Companie", userNameVerify.CompanieId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userNameVerify.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userNameVerify.Name!),
+                    new Claim(ClaimTypes.Email, userNameVerify.Email!),
+                    new Claim("Companie", userNameVerify.CompanieId.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Role", Roles.USER.ToString().ToLower()),
+                };
             }
 
             var token = _tokenService.GenerateAccessToken(authClaims);

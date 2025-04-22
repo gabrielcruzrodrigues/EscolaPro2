@@ -10,6 +10,7 @@ public class GeneralDbContext : DbContext
     public DbSet<Companie> Companies { get; set; }
     public DbSet<UserGeneral> UsersGeneral { get; set; }
     public DbSet<Salt> Salts { get; set; }
+    public DbSet<Family> Families { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

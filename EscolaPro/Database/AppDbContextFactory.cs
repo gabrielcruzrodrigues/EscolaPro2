@@ -13,20 +13,20 @@ namespace EscolaPro.Database
             _generalDbContext = generalDbContext;
         }
 
-        public GeneralDbContext Create(string companie)
+        public InternalDbContext Create(string companie)
         {
-            var tenant = _generalDbContext.Companies
+            var internalDb = _generalDbContext.Companies
                 .FirstOrDefault(t => t.Name == companie);
 
-            if (tenant == null)
+            if (internalDb == null)
             {
                 throw new Exception("Empresa não encontrada.");
             }
 
-            var optionsBuilder = new DbContextOptionsBuilder<GeneralDbContext>();
-            optionsBuilder.UseNpgsql(tenant.ConnectionString);
+            var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
+            optionsBuilder.UseNpgsql(internalDb.ConnectionString);
 
-            return new GeneralDbContext(optionsBuilder.Options);
+            return new InternalDbContext(optionsBuilder.Options);
         }
     }
 }
