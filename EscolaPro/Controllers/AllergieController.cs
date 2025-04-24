@@ -86,10 +86,9 @@ namespace EscolaPro.Controllers
 
             // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-
-            if (await _allergieRepository.GetByNameAsync(userCompanie.Name, request.Name) == null)
+            if (await _allergieRepository.GetByNameAsync(userCompanie.Name, request.Name) != null)
             {
-                return NotFound("Alergia não encontrada!");
+                return NotFound("Alergia já cadastrada no banco de dados!");
             }
 
             //Adicionar inserção de imagens aqui
