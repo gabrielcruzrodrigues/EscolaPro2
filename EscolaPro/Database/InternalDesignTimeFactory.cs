@@ -8,7 +8,7 @@ namespace EscolaPro.Database
         public InternalDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=dummy_empresa;Username=postgres;Password=1234");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=design_db;User Id=sa;Password=12345678;TrustServerCertificate=True;");
             return new InternalDbContext(optionsBuilder.Options);
         }
     }

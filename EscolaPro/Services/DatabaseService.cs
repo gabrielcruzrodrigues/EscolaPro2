@@ -17,7 +17,7 @@ public class DatabaseService : IDatabaseService
     public void CreateDatabase(string connectionString)
     {
         var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseSqlServer(connectionString);
 
         using var context = new InternalDbContext(optionsBuilder.Options);
 

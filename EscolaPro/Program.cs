@@ -127,7 +127,7 @@ builder.Services.AddMvc(config =>
 
 //----------------------------- Database -----------------------------
 builder.Services.AddDbContext<GeneralDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("General")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("General")));
 
 
 // ----------------------- Inject container ------------------------------

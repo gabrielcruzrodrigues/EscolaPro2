@@ -24,7 +24,7 @@ namespace EscolaPro.Database
             }
 
             var optionsBuilder = new DbContextOptionsBuilder<InternalDbContext>();
-            optionsBuilder.UseNpgsql(internalDb.ConnectionString);
+            optionsBuilder.UseSqlServer(internalDb.ConnectionString);
 
             return new InternalDbContext(optionsBuilder.Options);
         }
