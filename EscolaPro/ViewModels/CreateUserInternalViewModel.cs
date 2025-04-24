@@ -5,7 +5,7 @@ namespace EscolaPro.ViewModels
 {
     public class CreateUserInternalViewModel
     {
-        public string? Image { get; set; }
+        public IFormFile? Image { get; set; }
 
         [Required]
         [StringLength(30, ErrorMessage = "O nome não deve conter mais de 30 caracteres!")]

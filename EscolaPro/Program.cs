@@ -1,6 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
 using EscolaPro.Extensions;
-using Microsoft.EntityFrameworkCore.Internal;
 using EscolaPro.Database;
 using Microsoft.EntityFrameworkCore;
 using EscolaPro.Database.Interfaces;
@@ -14,6 +13,7 @@ using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -145,6 +145,7 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAllergieRepository, AllergieRepository>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IAppDbContextFactory, AppDbContextFactory>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";
@@ -165,6 +166,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
+
+// -------------------------- Configuring StaticFiles --------------------------
+
+app.UseStaticFiles(); // já serve wwwroot
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "uploads")),
+    RequestPath = "/uploads"
+});
 
 // --------- Active the HttpResponseException middleware ------------
 app.ConfigureExceptionHandler();
