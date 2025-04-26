@@ -144,8 +144,9 @@ builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAllergieRepository, AllergieRepository>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
-builder.Services.AddScoped<IAppDbContextFactory, AppDbContextFactory>();
+builder.Services.AddScoped<IDbContextFactory, DbContextFactory>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IFixedHealthRepository, FixedHealthRepository>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";

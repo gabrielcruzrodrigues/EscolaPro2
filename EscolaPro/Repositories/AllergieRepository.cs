@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 public class AllergieRepository : IAllergieRepository
 {
-    private readonly IAppDbContextFactory _contextFactory;
+    private readonly IDbContextFactory _contextFactory;
     private readonly ILogger<AllergieRepository> _logger;
 
-    public AllergieRepository(IAppDbContextFactory contextFactory, ILogger<AllergieRepository> logger)
+    public AllergieRepository(IDbContextFactory contextFactory, ILogger<AllergieRepository> logger)
     {
         _contextFactory = contextFactory;
         _logger = logger;
@@ -73,7 +73,7 @@ public class AllergieRepository : IAllergieRepository
 
         if (allergie is null)
         {
-            throw new HttpResponseException(404, $"alergia não encontrada com esse nome!");
+            throw new HttpResponseException(404, $"alergia não encontrada com esse Id!");
         }
 
         return allergie;

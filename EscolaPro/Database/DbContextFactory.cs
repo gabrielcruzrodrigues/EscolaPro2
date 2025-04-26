@@ -4,11 +4,11 @@ using System;
 
 namespace EscolaPro.Database
 {
-    public class AppDbContextFactory : IAppDbContextFactory
+    public class DbContextFactory : IDbContextFactory
     {
         private readonly GeneralDbContext _generalDbContext;
 
-        public AppDbContextFactory(GeneralDbContext generalDbContext)
+        public DbContextFactory(GeneralDbContext generalDbContext)
         {
             _generalDbContext = generalDbContext;
         }

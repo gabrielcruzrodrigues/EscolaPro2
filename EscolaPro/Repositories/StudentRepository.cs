@@ -8,10 +8,10 @@ namespace EscolaPro.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly IAppDbContextFactory _contextFactory;
+        private readonly IDbContextFactory _contextFactory;
         private readonly ILogger<StudentRepository> _logger;
 
-        public StudentRepository(IAppDbContextFactory contextFactory, ILogger<StudentRepository> logger)
+        public StudentRepository(IDbContextFactory contextFactory, ILogger<StudentRepository> logger)
         {
             _contextFactory = contextFactory;
             _logger = logger;

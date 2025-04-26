@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 public class FamilyRepository : IFamilyRepository
 {
-    private readonly IAppDbContextFactory _contextFactory;
+    private readonly IDbContextFactory _contextFactory;
     private readonly ILogger<FamilyRepository> _logger;
 
-    public FamilyRepository(IAppDbContextFactory contextFactory, ILogger<FamilyRepository> logger)
+    public FamilyRepository(IDbContextFactory contextFactory, ILogger<FamilyRepository> logger)
     {
         _contextFactory = contextFactory;
         _logger = logger;

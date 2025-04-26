@@ -38,7 +38,7 @@ namespace EscolaPro.Controllers
                 await _databaseService.UpdateDatabase(companie.Name);
             }
 
-            return Ok(new { message = "Update Finalizado!" });
+            return Ok(new { message = "Update dos bancos internos Finalizado!" });
         }
     }
 }

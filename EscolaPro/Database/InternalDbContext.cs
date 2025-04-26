@@ -10,6 +10,7 @@ namespace EscolaPro.Database
         public DbSet<Family> Families { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Allergie> Allergies { get; set; }
+        public DbSet<FixedHealth> FixedHealths { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

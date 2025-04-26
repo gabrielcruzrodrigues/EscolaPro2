@@ -7,9 +7,9 @@ namespace EscolaPro.Services;
 
 public class DatabaseService : IDatabaseService
 {
-    private readonly IAppDbContextFactory _appDbContextFactory;
+    private readonly IDbContextFactory _appDbContextFactory;
 
-    public DatabaseService(IAppDbContextFactory appDbContextFactory)
+    public DatabaseService(IDbContextFactory appDbContextFactory)
     {
         _appDbContextFactory = appDbContextFactory;
     }

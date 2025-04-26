@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EscolaPro.Models;
 
@@ -19,5 +20,6 @@ public class Allergie
     [Required]
     public required bool Status { get; set; }
 
+    [JsonIgnore]
     public ICollection<FixedHealth> FixedHealths { get; set; } = new List<FixedHealth>();
 }

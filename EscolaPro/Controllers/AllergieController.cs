@@ -20,7 +20,7 @@ namespace EscolaPro.Controllers
             IAllergieRepository allergieRepository,
             ICompanieRepository companieRepository,
             IUsersGeneralRepository userGeneralRepository
-            )
+        )
         {
             _allergieRepository = allergieRepository;
             _companieRepository = companieRepository;
@@ -48,9 +48,9 @@ namespace EscolaPro.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{allergie:int}")]
+        [HttpGet("{allergieId:int}")]
         [Authorize(policy: "admin_internal")]
-        public async Task<ActionResult<Allergie>> GetByIdAsync(int allergie)
+        public async Task<ActionResult<Allergie>> GetByIdAsync(int allergieId)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -65,7 +65,7 @@ namespace EscolaPro.Controllers
 
             // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-            var user = await _allergieRepository.GetByIdAsync(userCompanie.Name, allergie);
+            var user = await _allergieRepository.GetByIdAsync(userCompanie.Name, allergieId);
             return Ok(user);
         }
 
@@ -88,10 +88,8 @@ namespace EscolaPro.Controllers
 
             if (await _allergieRepository.GetByNameAsync(userCompanie.Name, request.Name) != null)
             {
-                return NotFound("Alergia já cadastrada no banco de dados!");
+                return BadRequest("Alergia já cadastrada no banco de dados!");
             }
-
-            //Adicionar inserção de imagens aqui
 
             var allergie = new Allergie
             {
@@ -172,7 +170,7 @@ namespace EscolaPro.Controllers
             }
 
             await _allergieRepository.Update(userCompanie.Name, allergie);
-            return Ok();
+            return NoContent();
         }
 
         private async Task<bool> CompanieValidation(long userId, int companieId)

@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EscolaPro.Models;
 
 public class FixedHealth
 {
-    [Key]
-    public int Id { get; set; }
+    [Key, ForeignKey("Student")]
+    public long StudentId { get; set; } //PK e FK
 
     [StringLength(3)]
     public string? BloodGroup { get; set; }
@@ -26,4 +27,5 @@ public class FixedHealth
     public required DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<Allergie> Allergies { get; set; } = new List<Allergie>();
+    public Student Student { get; set; } = null!;
 }
