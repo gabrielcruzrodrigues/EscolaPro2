@@ -103,7 +103,7 @@ public class FixedHealthController : ControllerBase
             return BadRequest("Este Estudante já tem uma fixa de saúde cadastrada!");
         }
 
-        List<Allergie> allergies = new List<Allergie>();
+        List<Allergy> allergies = new List<Allergy>();
         foreach(int allergieId in request.AllergiesId)
         {
             allergies.Add(await _allergieRepository.GetByIdAsync(userCompanie.Name, allergieId));
@@ -202,7 +202,7 @@ public class FixedHealthController : ControllerBase
         fixedHealth.ToGoOutAuthorization = request.ToGoOutAuthorization ?? fixedHealth.ToGoOutAuthorization;
         fixedHealth.UpdatedAt = DateTime.UtcNow;
 
-        fixedHealth.Allergies = new List<Allergie>();
+        fixedHealth.Allergies = new List<Allergy>();
         foreach (int allergieId in request.AllergiesId)
         {
             var allergie = await _allergieRepository.GetByIdAsync(userCompanie.Name, allergieId);

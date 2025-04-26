@@ -26,6 +26,6 @@ public class FixedHealth
     [Required]
     public required DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-    public ICollection<Allergie> Allergies { get; set; } = new List<Allergie>();
+    public ICollection<Allergy> Allergies { get; set; } = new List<Allergy>();
     public Student Student { get; set; } = null!;
 }

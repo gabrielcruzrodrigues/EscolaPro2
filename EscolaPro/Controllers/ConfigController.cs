@@ -33,7 +33,7 @@ namespace EscolaPro.Controllers
         {
             var companies = await _companieRepository.GetAllAsync();
 
-            foreach (Companie companie in companies)
+            foreach (Company companie in companies)
             {
                 await _databaseService.UpdateDatabase(companie.Name);
             }

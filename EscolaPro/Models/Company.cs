@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EscolaPro.Models
 {
     [Table("Companies")]
-    public class Companie
+    public class Company
     {
         [Key]
         public int Id { get; set; }

@@ -29,7 +29,7 @@ namespace EscolaPro.Controllers
 
         [HttpGet]
         [Authorize(policy: "admin_internal")]
-        public async Task<ActionResult<IEnumerable<Allergie>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<Allergy>>> GetAllAsync()
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -50,7 +50,7 @@ namespace EscolaPro.Controllers
 
         [HttpGet("{allergieId:int}")]
         [Authorize(policy: "admin_internal")]
-        public async Task<ActionResult<Allergie>> GetByIdAsync(int allergieId)
+        public async Task<ActionResult<Allergy>> GetByIdAsync(int allergieId)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -71,7 +71,7 @@ namespace EscolaPro.Controllers
 
         [HttpPost]
         [Authorize(policy: "admin_internal")]
-        public async Task<ActionResult<Allergie>> CreateAsync(CreateAllergieViewModel request)
+        public async Task<ActionResult<Allergy>> CreateAsync(CreateAllergieViewModel request)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -91,7 +91,7 @@ namespace EscolaPro.Controllers
                 return BadRequest("Alergia já cadastrada no banco de dados!");
             }
 
-            var allergie = new Allergie
+            var allergie = new Allergy
             {
                 Name = request.Name,
                 CreatedAt = DateTime.UtcNow,
@@ -162,7 +162,7 @@ namespace EscolaPro.Controllers
 
             // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-            Allergie allergie = await _allergieRepository.GetByIdAsync(userCompanie.Name, request.Id);
+            Allergy allergie = await _allergieRepository.GetByIdAsync(userCompanie.Name, request.Id);
             
             if (request.Name.IsNullOrEmpty())
             {

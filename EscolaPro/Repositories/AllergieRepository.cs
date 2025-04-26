@@ -19,7 +19,7 @@ public class AllergieRepository : IAllergieRepository
         _logger = logger;
     }
 
-    public async Task<Allergie> CreateAsync(string companieName, Allergie allergie)
+    public async Task<Allergy> CreateAsync(string companieName, Allergy allergie)
     {
         try
         {
@@ -53,7 +53,7 @@ public class AllergieRepository : IAllergieRepository
         }
     }
 
-    public async Task<IEnumerable<Allergie>> GetAllAsync(string companieName)
+    public async Task<IEnumerable<Allergy>> GetAllAsync(string companieName)
     {
         using var _context = _contextFactory.Create(companieName);
 
@@ -63,7 +63,7 @@ public class AllergieRepository : IAllergieRepository
                 .ToListAsync();
     }
 
-    public async Task<Allergie> GetByIdAsync(string companieName, int allergieId)
+    public async Task<Allergy> GetByIdAsync(string companieName, int allergieId)
     {
         using var _context = _contextFactory.Create(companieName);
 
@@ -79,7 +79,7 @@ public class AllergieRepository : IAllergieRepository
         return allergie;
     }
 
-    public async Task<Allergie> GetByNameAsync(string companieName, string allergieName)
+    public async Task<Allergy> GetByNameAsync(string companieName, string allergieName)
     {
         using var _context = _contextFactory.Create(companieName);
 
@@ -90,7 +90,7 @@ public class AllergieRepository : IAllergieRepository
         return family;
     }
 
-    public async Task<IEnumerable<Allergie>> Search(string companieName, string param)
+    public async Task<IEnumerable<Allergy>> Search(string companieName, string param)
     {
         using var _context = _contextFactory.Create(companieName);
 
@@ -101,7 +101,7 @@ public class AllergieRepository : IAllergieRepository
         return allergie;
     }
 
-    public async Task Update(string companieName, Allergie allergieForUpdate)
+    public async Task Update(string companieName, Allergy allergieForUpdate)
     {
         try
         {

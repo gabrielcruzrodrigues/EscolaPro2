@@ -12,6 +12,9 @@ namespace EscolaPro.Models
         [Required]
         public required bool Status { get; set; }
 
+        [Required]
+        public required string ResponsibleEmail { get; set; }
+
         public ICollection<Family> Families { get; set; } = new List<Family>();
         public FixedHealth FixedHealth { get; set; }
     }

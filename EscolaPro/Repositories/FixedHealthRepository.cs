@@ -18,7 +18,7 @@ public class FixedHealthRepository : IFixedHealthRepository
         _contextFactory = dbContextFactory;
         _logger = logger;
     }
-
+    
     public async Task<FixedHealth> CreateAsync(string companieName, FixedHealth fixedHealth)
     {
         try

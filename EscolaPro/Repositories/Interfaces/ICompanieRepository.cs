@@ -5,12 +5,12 @@ namespace EscolaPro.Repositories.Interfaces;
 
 public interface ICompanieRepository
 {
-    Task<Companie> CreateAsync(Companie user);
-    Task<IEnumerable<Companie>> GetAllAsync();
-    Task<Companie> GetByIdAsync(int companieId);
-    Task<Companie> GetByNameAsync(string companieName);
-    Task<Companie> GetByCnpjAsync(string companieName);
-    Task Update(Companie userForUpdate);
+    Task<Company> CreateAsync(Company user);
+    Task<IEnumerable<Company>> GetAllAsync();
+    Task<Company> GetByIdAsync(int companieId);
+    Task<Company> GetByNameAsync(string companieName);
+    Task<Company> GetByCnpjAsync(string companieName);
+    Task Update(Company userForUpdate);
     Task Disable(int companieId);
-    Task<IEnumerable<Companie>> Search(string param);
+    Task<IEnumerable<Company>> Search(string param);
 }

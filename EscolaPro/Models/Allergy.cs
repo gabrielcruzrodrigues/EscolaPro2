@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace EscolaPro.Models;
 
-public class Allergie
+public class Allergy
 {
     [Key]
     public int Id { get; set; }

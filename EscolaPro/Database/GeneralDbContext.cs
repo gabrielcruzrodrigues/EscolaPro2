@@ -7,14 +7,14 @@ public class GeneralDbContext : DbContext
 {
     public GeneralDbContext(DbContextOptions<GeneralDbContext> options) : base(options) { }
 
-    public DbSet<Companie> Companies { get; set; }
+    public DbSet<Company> Companies { get; set; }
     public DbSet<UserGeneral> UsersGeneral { get; set; }
     public DbSet<Salt> Salts { get; set; }
     public DbSet<Family> Families { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Companie>()
+        modelBuilder.Entity<Company>()
             .HasIndex(e => e.CNPJ)
             .IsUnique();
 
