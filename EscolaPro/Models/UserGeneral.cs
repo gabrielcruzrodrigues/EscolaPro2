@@ -1,4 +1,4 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,7 +28,7 @@ namespace EscolaPro.Models
         public required DateTime LastUpdatedAt { get; set; }
 
         [Required]
-        public required Roles Role { get; set; }
+        public required RolesEnum Role { get; set; }
 
         [Required]
         public required bool Status { get; set; }

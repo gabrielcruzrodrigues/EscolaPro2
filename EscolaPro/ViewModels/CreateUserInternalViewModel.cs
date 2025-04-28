@@ -1,4 +1,4 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace EscolaPro.ViewModels
@@ -35,7 +35,7 @@ namespace EscolaPro.ViewModels
         public required string Naturalness { get; set; }
 
         [Required]
-        public required Sexs Sex { get; set; }
+        public required SexsEnum Sex { get; set; }
 
         public string? Cep { get; set; }
 
@@ -56,6 +56,6 @@ namespace EscolaPro.ViewModels
         public required string State { get; set; }
 
         [Required]
-        public required Roles Role { get; set; }
+        public required RolesEnum Role { get; set; }
     }
 }

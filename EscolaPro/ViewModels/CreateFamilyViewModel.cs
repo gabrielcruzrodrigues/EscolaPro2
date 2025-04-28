@@ -1,4 +1,4 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace EscolaPro.ViewModels
@@ -11,7 +11,7 @@ namespace EscolaPro.ViewModels
         public required string Ocupation { get; set; }
 
         [Required(ErrorMessage = "O tipo do familiar é obrigatório!")]
-        public required FamilyType Type { get; set; }
+        public required FamilyTypeEnum Type { get; set; }
 
         [Required(ErrorMessage = "O estudante relacionado a este familiar é obrigatório!")]
         public required long StudentId { get; set; }

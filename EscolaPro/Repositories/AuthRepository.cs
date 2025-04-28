@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 using System.Security.Claims;
 using EscolaPro.Models;
+using EscolaPro.Enums;
 
 public class AuthRepository : IAuthRepository
 {
@@ -166,11 +167,11 @@ public class AuthRepository : IAuthRepository
         }
     }
 
-    private IEnumerable<Claim> GetClaims(Roles userRole, UserGeneral userGeneral)
+    private IEnumerable<Claim> GetClaims(RolesEnum userRole, UserGeneral userGeneral)
     {
         IEnumerable<Claim> authClaims = new List<Claim>();
 
-        if (userRole.Equals(Roles.ADMIN))
+        if (userRole.Equals(RolesEnum.ADMIN))
         {
             authClaims = new List<Claim>
             {
@@ -179,14 +180,14 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.Email, userGeneral.Email!),
                 new Claim("CompanieId", userGeneral.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.ADMIN.ToString().ToLower()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
-                new Claim("Role", Roles.ADMIN_INTERNAL.ToString().ToLower()),
+                new Claim("Role", RolesEnum.ADMIN.ToString().ToLower()),
+                new Claim("Role", RolesEnum.MODERADOR.ToString().ToLower()),
+                new Claim("Role", RolesEnum.USER.ToString().ToLower()),
+                new Claim("Role", RolesEnum.ADMIN_INTERNAL.ToString().ToLower()),
             };
         }
 
-        if (userRole.Equals(Roles.MODERADOR))
+        if (userRole.Equals(RolesEnum.MODERADOR))
         {
             authClaims = new List<Claim>
             {
@@ -195,12 +196,12 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.Email, userGeneral.Email!),
                 new Claim("CompanieId", userGeneral.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.MODERADOR.ToString().ToLower()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
+                new Claim("Role", RolesEnum.MODERADOR.ToString().ToLower()),
+                new Claim("Role", RolesEnum.USER.ToString().ToLower()),
             };
         }
 
-        if (userRole.Equals(Roles.USER))
+        if (userRole.Equals(RolesEnum.USER))
         {
             authClaims = new List<Claim>
             {
@@ -209,12 +210,12 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.Email, userGeneral.Email!),
                 new Claim("CompanieId", userGeneral.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.USER.ToString().ToLower()),
+                new Claim("Role", RolesEnum.USER.ToString().ToLower()),
             };
         }
 
         //Admin geral de cada empresa
-        if (userRole.Equals(Roles.ADMIN_INTERNAL))
+        if (userRole.Equals(RolesEnum.ADMIN_INTERNAL))
         {
             authClaims = new List<Claim>
             {
@@ -223,7 +224,7 @@ public class AuthRepository : IAuthRepository
                 new Claim(ClaimTypes.Email, userGeneral.Email!),
                 new Claim("CompanieId", userGeneral.CompanieId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Role", Roles.ADMIN_INTERNAL.ToString().ToLower()),
+                new Claim("Role", RolesEnum.ADMIN_INTERNAL.ToString().ToLower()),
             };
         }
 

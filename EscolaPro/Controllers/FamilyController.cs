@@ -1,5 +1,5 @@
-﻿using EscolaPro.Models;
-using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
+using EscolaPro.Models;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.ViewModels;
@@ -295,7 +295,7 @@ public class FamilyController : ControllerBase
 
         if (request.Role != null)
         {
-            if (Enum.IsDefined(typeof(Roles), request.Role))
+            if (Enum.IsDefined(typeof(RolesEnum), request.Role))
             {
                 family.Role = request.Role.Value;
             }

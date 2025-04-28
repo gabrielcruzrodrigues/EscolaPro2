@@ -1,6 +1,6 @@
-﻿namespace EscolaPro.Models.Dtos
+﻿namespace EscolaPro.Enums
 {
-    public enum Roles
+    public enum RolesEnum
     {
         ADMIN = 0,
         USER = 1,

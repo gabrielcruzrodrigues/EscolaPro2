@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaPro.Migrations.Internal
 {
     [DbContext(typeof(InternalDbContext))]
-    [Migration("20250425150352_AddFixedHealth")]
-    partial class AddFixedHealth
+    [Migration("20250428160028_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,22 +25,22 @@ namespace EscolaPro.Migrations.Internal
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AllergieFixedHealth", b =>
+            modelBuilder.Entity("AllergyFixedHealth", b =>
                 {
                     b.Property<int>("AllergiesId")
                         .HasColumnType("int");
 
-                    b.Property<long>("FixedHealthsStudentId")
+                    b.Property<long>("FixedHealthsId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("AllergiesId", "FixedHealthsStudentId");
+                    b.HasKey("AllergiesId", "FixedHealthsId");
 
-                    b.HasIndex("FixedHealthsStudentId");
+                    b.HasIndex("FixedHealthsId");
 
-                    b.ToTable("AllergieFixedHealth");
+                    b.ToTable("AllergyFixedHealth");
                 });
 
-            modelBuilder.Entity("EscolaPro.Models.Allergie", b =>
+            modelBuilder.Entity("EscolaPro.Models.Allergy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,8 +189,11 @@ namespace EscolaPro.Migrations.Internal
 
             modelBuilder.Entity("EscolaPro.Models.FixedHealth", b =>
                 {
-                    b.Property<long>("StudentId")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BloodGroup")
                         .HasMaxLength(3)
@@ -205,13 +208,19 @@ namespace EscolaPro.Migrations.Internal
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("ToGoOutAuthorization")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("StudentId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
 
                     b.ToTable("FixedHealths");
                 });
@@ -224,17 +233,112 @@ namespace EscolaPro.Migrations.Internal
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cep")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long?>("FatherId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("MotherId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Naturalness")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Neighborhood")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("ResponsibleEmail")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("ResponsibleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Rg")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Situation")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FatherId");
+
+                    b.HasIndex("MotherId");
+
+                    b.HasIndex("ResponsibleId");
+
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("AllergieFixedHealth", b =>
+            modelBuilder.Entity("AllergyFixedHealth", b =>
                 {
-                    b.HasOne("EscolaPro.Models.Allergie", null)
+                    b.HasOne("EscolaPro.Models.Allergy", null)
                         .WithMany()
                         .HasForeignKey("AllergiesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -242,7 +346,7 @@ namespace EscolaPro.Migrations.Internal
 
                     b.HasOne("EscolaPro.Models.FixedHealth", null)
                         .WithMany()
-                        .HasForeignKey("FixedHealthsStudentId")
+                        .HasForeignKey("FixedHealthsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -252,7 +356,7 @@ namespace EscolaPro.Migrations.Internal
                     b.HasOne("EscolaPro.Models.Student", "Student")
                         .WithMany("Families")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Student");
@@ -263,10 +367,34 @@ namespace EscolaPro.Migrations.Internal
                     b.HasOne("EscolaPro.Models.Student", "Student")
                         .WithOne("FixedHealth")
                         .HasForeignKey("EscolaPro.Models.FixedHealth", "StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("EscolaPro.Models.Student", b =>
+                {
+                    b.HasOne("EscolaPro.Models.Family", "Father")
+                        .WithMany()
+                        .HasForeignKey("FatherId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("EscolaPro.Models.Family", "Mother")
+                        .WithMany()
+                        .HasForeignKey("MotherId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("EscolaPro.Models.Family", "Responsible")
+                        .WithMany()
+                        .HasForeignKey("ResponsibleId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Father");
+
+                    b.Navigation("Mother");
+
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("EscolaPro.Models.Student", b =>

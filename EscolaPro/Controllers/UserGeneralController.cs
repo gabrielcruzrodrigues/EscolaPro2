@@ -1,4 +1,5 @@
-﻿using EscolaPro.Extensions;
+﻿using EscolaPro.Enums;
+using EscolaPro.Extensions;
 using EscolaPro.Models;
 using EscolaPro.Models.Dtos;
 using EscolaPro.Repositories.Interfaces;
@@ -132,11 +133,11 @@ public class UserGeneralController : ControllerBase
         {
             if (request.Role == 0)
             {
-                user.Role = Roles.ADMIN;
+                user.Role = RolesEnum.ADMIN;
             }
             if (request.Role == 2)
             {
-                user.Role = Roles.MODERADOR;
+                user.Role = RolesEnum.MODERADOR;
             }
         }
 

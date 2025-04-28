@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using EscolaPro.Enums;
+using System.Data;
 
 namespace EscolaPro.Models.Dtos
 {
@@ -9,6 +10,6 @@ namespace EscolaPro.Models.Dtos
         public required string Token { get; set; }
         public required string RefreshToken { get; set; }
         public DateTime Expiration { get; set; }
-        public Roles? Role { get; set; }
+        public RolesEnum? Role { get; set; }
     }
 }

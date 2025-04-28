@@ -1,5 +1,20 @@
 # Documentação oficial
 
+## Comandos iniciais para gerar os bancos de dados
+1. Gerar o banco Geral, com usuários e empresas: <br>
+``` dotnet ef database update --context GeneralDbContext --verbose ```
+
+2. Gerar o banco de design interno, que serve de base para os outros bancos de dados: <br>
+``` dotnet ef database update --context InternalDbContext --verbose ```
+
+## Comandos para gerenciar o banco de dados
+
+comando para criar novas migrations nos bancos internos:<br>
+``` dotnet ef migrations add MigrationName --context InternalDbContext --output-dir Migrations/Internal --verbose ```
+
+atualizar bancos de dados internos: <br>
+``` HTTP::GET /api/Config/Database-update ```
+
 ## Informações relacionados aos banco de dados.
 * Existem dois esquemas de banco de dados, o ``` GeneralDbContext - Banco geral de usuários e empresas``` e o ``` InternalDbContext - Banco específico para guardar os dados de cada empresa separadamente. ```
 * Cada empresa tem seu próprio banco de dados.

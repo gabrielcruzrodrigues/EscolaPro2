@@ -1,6 +1,6 @@
-﻿namespace EscolaPro.Models.Dtos
+﻿namespace EscolaPro.Enums
 {
-    public enum FamilyType
+    public enum FamilyTypeEnum
     {
         FATHER = 0,
         MOTHER = 1,

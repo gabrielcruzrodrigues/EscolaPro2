@@ -1,4 +1,4 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace EscolaPro.ViewModels;
@@ -16,7 +16,7 @@ public class CreateUserGeneralViewModel
     public required string Password { get; set; }
 
     [Required(ErrorMessage = "A role é obrigatória!")]
-    public required Roles Role { get; set; }
+    public required RolesEnum Role { get; set; }
 
     [Required(ErrorMessage = "A empresa é obrigatório!")]
     public required int CompanieId { get; set; }

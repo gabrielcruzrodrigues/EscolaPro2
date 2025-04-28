@@ -1,10 +1,9 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EscolaPro.Models
 {
-    [NotMapped]
     public class UserInternal
     {
         [Key]
@@ -40,7 +39,7 @@ namespace EscolaPro.Models
         public required string Naturalness { get; set; }
 
         [Required]
-        public required Sexs Sex { get; set; }
+        public required SexsEnum Sex { get; set; }
 
         public string? Cep { get; set; }
 
@@ -61,7 +60,7 @@ namespace EscolaPro.Models
         public required string State { get; set; }
 
         [Required]
-        public required Roles Role { get; set; }
+        public required RolesEnum Role { get; set; }
 
         [Required]
         public required bool Status { get; set; }

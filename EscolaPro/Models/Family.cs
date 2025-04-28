@@ -1,4 +1,4 @@
-﻿using EscolaPro.Models.Dtos;
+﻿using EscolaPro.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +14,7 @@ public class Family : UserInternal
     public long StudentId { get; set; }
 
     [Required]
-    public required FamilyType Type { get; set; }
+    public required FamilyTypeEnum Type { get; set; }
 
     public Student Student { get; set; }
 }
