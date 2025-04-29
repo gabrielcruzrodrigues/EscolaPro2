@@ -4,6 +4,7 @@ using EscolaPro.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaPro.Migrations.Internal
 {
     [DbContext(typeof(InternalDbContext))]
-    partial class InternalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250429135904_AddFinancialResponsible")]
+    partial class AddFinancialResponsible
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,7 +366,7 @@ namespace EscolaPro.Migrations.Internal
                     b.Property<long?>("FatherId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FinancialResponsibleId")
+                    b.Property<long>("FinancialResponsibleId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Image")
@@ -402,6 +405,9 @@ namespace EscolaPro.Migrations.Internal
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("ResponsibleId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Rg")
                         .IsRequired()
@@ -490,9 +496,11 @@ namespace EscolaPro.Migrations.Internal
                         .WithMany()
                         .HasForeignKey("FatherId");
 
-                    b.HasOne("EscolaPro.Models.FinancialResponsible", "FinancialResponsible")
+                    b.HasOne("EscolaPro.Models.FinancialResponsible", "Responsible")
                         .WithMany()
-                        .HasForeignKey("FinancialResponsibleId");
+                        .HasForeignKey("FinancialResponsibleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EscolaPro.Models.Family", "Mother")
                         .WithMany()
@@ -500,9 +508,9 @@ namespace EscolaPro.Migrations.Internal
 
                     b.Navigation("Father");
 
-                    b.Navigation("FinancialResponsible");
-
                     b.Navigation("Mother");
+
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("EscolaPro.Models.Student", b =>

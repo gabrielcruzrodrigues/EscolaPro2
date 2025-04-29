@@ -11,10 +11,29 @@ namespace EscolaPro.Database
         public DbSet<Student> Students { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
         public DbSet<FixedHealth> FixedHealths { get; set; }
+        public DbSet<FinancialResponsible> FinancialResponsibles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Family>(entity =>
+            {
+                entity.HasIndex(f => f.Name).IsUnique();
+                entity.HasIndex(f => f.Email).IsUnique();
+                entity.HasIndex(f => f.Rg).IsUnique();
+                entity.HasIndex(f => f.Cpf).IsUnique();
+                entity.HasIndex(f => f.Phone).IsUnique();
+            });
+
+            modelBuilder.Entity<FinancialResponsible>(entity =>
+            {
+                entity.HasIndex(f => f.Name).IsUnique();
+                entity.HasIndex(f => f.Email).IsUnique();
+                entity.HasIndex(f => f.Rg).IsUnique();
+                entity.HasIndex(f => f.Cpf).IsUnique();
+                entity.HasIndex(f => f.Phone).IsUnique();
+            });
+
+            modelBuilder.Entity<Student>(entity =>
             {
                 entity.HasIndex(f => f.Name).IsUnique();
                 entity.HasIndex(f => f.Email).IsUnique();

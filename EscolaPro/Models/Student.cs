@@ -11,7 +11,7 @@ namespace EscolaPro.Models
         [StringLength(50)]
         public required string ResponsibleEmail { get; set; }
 
-        public long? ResponsibleId { get; set; }
+        public long? FinancialResponsibleId { get; set; }
         public long? FatherId { get; set; }
         public long? MotherId { get; set; }
 
@@ -21,8 +21,8 @@ namespace EscolaPro.Models
         public ICollection<Family> Families { get; set; } = new List<Family>();
         public FixedHealth FixedHealth { get; set; } = null!;
 
-        [ForeignKey("ResponsibleId")]
-        public Family Responsible { get; set; }
+        [ForeignKey("FinancialResponsibleId")]
+        public FinancialResponsible FinancialResponsible { get; set; }
 
         [ForeignKey("FatherId")]
         public Family Father { get; set; }
