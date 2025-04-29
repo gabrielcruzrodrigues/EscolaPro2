@@ -21,11 +21,6 @@ namespace EscolaPro.Database
                 entity.HasIndex(f => f.Rg).IsUnique();
                 entity.HasIndex(f => f.Cpf).IsUnique();
                 entity.HasIndex(f => f.Phone).IsUnique();
-
-                entity.HasOne(f => f.Student)
-                  .WithMany(s => s.Families)
-                  .HasForeignKey(f => f.StudentId)
-                  .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Allergy>(entity =>
@@ -39,23 +34,23 @@ namespace EscolaPro.Database
                 .HasForeignKey<FixedHealth>(fh => fh.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.Father)
-                .WithMany()
-                .HasForeignKey(s => s.FatherId)
-                .OnDelete(DeleteBehavior.NoAction); 
+            //modelBuilder.Entity<Student>()
+            //    .HasOne(s => s.Father)
+            //    .WithMany()
+            //    .HasForeignKey(s => s.FatherId)
+            //    .OnDelete(DeleteBehavior.SetNull); 
 
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.Mother)
-                .WithMany()
-                .HasForeignKey(s => s.MotherId)
-                .OnDelete(DeleteBehavior.NoAction); 
+            //modelBuilder.Entity<Student>()
+            //    .HasOne(s => s.Mother)
+            //    .WithMany()
+            //    .HasForeignKey(s => s.MotherId)
+            //    .OnDelete(DeleteBehavior.SetNull); 
 
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.Responsible)
-                .WithMany()
-                .HasForeignKey(s => s.ResponsibleId)
-                .OnDelete(DeleteBehavior.NoAction); 
+            //modelBuilder.Entity<Student>()
+            //    .HasOne(s => s.Responsible)
+            //    .WithMany()
+            //    .HasForeignKey(s => s.ResponsibleId)
+            //    .OnDelete(DeleteBehavior.SetNull); 
         }
     }
 }

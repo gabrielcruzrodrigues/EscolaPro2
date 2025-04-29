@@ -135,6 +135,7 @@ builder.Services.AddDbContext<GeneralDbContext>(options =>
 //builder.Services.AddScoped<ISectorRepository, SectorRepository>();
 //builder.Services.AddScoped<ICallRepository, CallRepository>();
 builder.Services.AddScoped<ISaltRepository, SaltRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUsersGeneralRepository, UsersGeneralRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

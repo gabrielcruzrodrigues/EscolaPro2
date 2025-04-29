@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaPro.Migrations.Internal
 {
     [DbContext(typeof(InternalDbContext))]
-    [Migration("20250428160028_InitialCreate")]
+    [Migration("20250429104206_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -156,7 +156,7 @@ namespace EscolaPro.Migrations.Internal
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<long>("StudentId")
+                    b.Property<long?>("StudentId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Type")
@@ -353,13 +353,9 @@ namespace EscolaPro.Migrations.Internal
 
             modelBuilder.Entity("EscolaPro.Models.Family", b =>
                 {
-                    b.HasOne("EscolaPro.Models.Student", "Student")
+                    b.HasOne("EscolaPro.Models.Student", null)
                         .WithMany("Families")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Student");
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("EscolaPro.Models.FixedHealth", b =>
@@ -377,18 +373,15 @@ namespace EscolaPro.Migrations.Internal
                 {
                     b.HasOne("EscolaPro.Models.Family", "Father")
                         .WithMany()
-                        .HasForeignKey("FatherId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("FatherId");
 
                     b.HasOne("EscolaPro.Models.Family", "Mother")
                         .WithMany()
-                        .HasForeignKey("MotherId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("MotherId");
 
                     b.HasOne("EscolaPro.Models.Family", "Responsible")
                         .WithMany()
-                        .HasForeignKey("ResponsibleId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ResponsibleId");
 
                     b.Navigation("Father");
 

@@ -27,5 +27,21 @@ namespace EscolaPro.Repositories
 
             return student;
         }
+
+        public async Task<Student> CreateAsync(string companieName, Student student)
+        {
+            try 
+            {
+                using var _context = _contextFactory.Create(companieName);
+                await _context.Students.AddAsync(student);
+                await _context.SaveChangesAsync();
+                return student;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar Estudante. {Message}", ex.InnerException?.Message ?? ex.Message);
+                throw new HttpResponseException(500, "Um erro aconteceu ao tentar criar um Estudante!");
+            }
+        }
     }
 }

@@ -53,8 +53,8 @@ namespace EscolaPro.Migrations.Internal
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WorkAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ocupation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentId = table.Column<long>(type: "bigint", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<long>(type: "bigint", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -236,8 +236,7 @@ namespace EscolaPro.Migrations.Internal
                 table: "Families",
                 column: "StudentId",
                 principalTable: "Students",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

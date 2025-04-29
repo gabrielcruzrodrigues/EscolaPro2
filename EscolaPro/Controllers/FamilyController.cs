@@ -131,11 +131,6 @@ public class FamilyController : ControllerBase
             return Conflict(new { message = "Esse Telefone já foi cadastrado", type = "phone", code = 409 });
         }
 
-        if (await _studentRepository.GetbyIdAsync(userCompanie.Name, request.StudentId) == null)
-        {
-            return NotFound("Estudante não encontrado!");
-        }
-
         var family = new Family
         {
             Image = imageFamilyUrl,
@@ -159,7 +154,6 @@ public class FamilyController : ControllerBase
             LastUpdatedAt = DateTime.UtcNow,
             WorkAddress = request.WorkAddress ?? "",
             Ocupation = request.Ocupation,
-            StudentId = request.StudentId,
             Type = request.Type
         };
 
@@ -311,18 +305,6 @@ public class FamilyController : ControllerBase
             if (Enum.IsDefined(typeof(Type), request.Type))
             {
                 family.Type = request.Type.Value;
-            }
-            else
-            {
-                return BadRequest("Esse tipo não está cadastrado no banco de dados!");
-            }
-        }
-
-        if (request.StudentId != null)
-        {
-            if (await _studentRepository.GetbyIdAsync(userCompanie.Name, request.StudentId.Value) != null)
-            {
-                family.StudentId = request.StudentId.Value;
             }
             else
             {

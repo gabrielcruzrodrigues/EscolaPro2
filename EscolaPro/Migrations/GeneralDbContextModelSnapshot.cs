@@ -22,7 +22,7 @@ namespace EscolaPro.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EscolaPro.Models.Companie", b =>
+            modelBuilder.Entity("EscolaPro.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,7 +148,7 @@ namespace EscolaPro.Migrations
 
             modelBuilder.Entity("EscolaPro.Models.UserGeneral", b =>
                 {
-                    b.HasOne("EscolaPro.Models.Companie", "Companie")
+                    b.HasOne("EscolaPro.Models.Company", "Companie")
                         .WithMany()
                         .HasForeignKey("CompanieId")
                         .OnDelete(DeleteBehavior.Cascade)
