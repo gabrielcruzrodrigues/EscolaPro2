@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using EscolaPro.Models;
 using EscolaPro.Enums;
+using EscolaPro.Repositories.Interfaces.Educacional;
 
 public class AuthRepository : IAuthRepository
 {

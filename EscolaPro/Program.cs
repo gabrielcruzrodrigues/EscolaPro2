@@ -14,6 +14,10 @@ using EscolaPro.Repositories;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.Services;
 using Microsoft.Extensions.FileProviders;
+using EscolaPro.Services.Interfaces.Educacional;
+using EscolaPro.Services.Educacional;
+using EscolaPro.Repositories.Interfaces.Educacional;
+using EscolaPro.Repositories.Educacional;
 
 var builder = WebApplication.CreateBuilder(args);
 

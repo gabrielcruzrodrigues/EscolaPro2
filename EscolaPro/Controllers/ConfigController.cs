@@ -1,5 +1,5 @@
-﻿using EscolaPro.Models;
-using EscolaPro.Repositories.Interfaces;
+﻿using EscolaPro.Models.Educacional;
+using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
