@@ -223,7 +223,9 @@ public class StudentController : ControllerBase
             FatherId = fatherId,
             MotherId = motherId,
             FinancialResponsibleId = financialResponsibleId,
-            Situation = Enums.StudentSituationEnum.OK
+            Situation = Enums.StudentSituationEnum.OK,
+            RgDispatched = request.RgDispatched,
+            RgDispatchedDate = request.RgDispatchedDate
         };
 
         var response = await _studentRepository.CreateAsync(userCompanie.Name, student);

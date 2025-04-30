@@ -24,6 +24,12 @@ namespace EscolaPro.Models
         public required string Rg { get; set; }
 
         [Required]
+        public required string RgDispatched { get; set; }
+
+        [Required]
+        public required DateTime RgDispatchedDate { get; set; }
+
+        [Required]
         [StringLength(11, ErrorMessage = "O Cpf é obrigatório!")]
         public required string Cpf { get; set; }
 

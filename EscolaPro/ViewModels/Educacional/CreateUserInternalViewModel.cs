@@ -19,6 +19,13 @@ namespace EscolaPro.ViewModels.Educacional
         [StringLength(10, ErrorMessage = "O RG é obrigatório!")]
         public required string Rg { get; set; }
 
+        [Required(ErrorMessage = "O orgão expeditor do RG é obrigatório!")]
+        [StringLength(10)]
+        public required string RgDispatched { get; set; }
+
+        [Required(ErrorMessage = "A data de expedição do RG é obrigatório!")]
+        public required DateTime RgDispatchedDate { get; set; }
+
         [Required]
         [StringLength(11, ErrorMessage = "O Cpf é obrigatório!")]
         public required string Cpf { get; set; }

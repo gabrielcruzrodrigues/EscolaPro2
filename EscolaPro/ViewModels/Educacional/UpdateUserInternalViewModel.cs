@@ -11,6 +11,8 @@ public class UpdateUserInternalViewModel
     public string? Name { get; set; }
     public string? Email { get; set; }
     public string? Rg { get; set; }
+    public string? RgDispatched { get; set; }
+    public DateTime? RgDispatchedDate { get; set; }
     public string? Cpf { get; set; }
     public DateTime? DateOfBirth { get; set; }
     public string? Nationality { get; set; }

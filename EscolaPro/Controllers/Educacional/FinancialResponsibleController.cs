@@ -1,5 +1,4 @@
 ﻿using EscolaPro.Enums;
-using EscolaPro.Extensions;
 using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.Services.Interfaces.Educacional;
@@ -13,29 +12,29 @@ namespace EscolaPro.Controllers.Educacional;
 
 [Route("api/[controller]")]
 [ApiController]
-public class FamilyController : ControllerBase
+public class FinancialResponsibleController : ControllerBase
 {
-    private readonly IFamilyRepository _familyRepository;
+    private readonly IFinancialResponsibleRepository _financialResponsibleRepository;
     private readonly IUsersGeneralRepository _userGeneralRepository;
     private readonly ICompanieRepository _companieRepository;
-    private readonly IFamilyService _familyService;
+    private readonly IFinancialResponsibleService _financialResponsibleService;
 
-    public FamilyController(
-        IFamilyRepository familyRepository,
+    public FinancialResponsibleController(
+        IFinancialResponsibleRepository familyRepository,
         IUsersGeneralRepository userGeneralRepository,
         ICompanieRepository companieRepository,
-        IFamilyService familyService
+        IFinancialResponsibleService familyService
     )
     {
-        _familyRepository = familyRepository;
+        _financialResponsibleRepository = familyRepository;
         _userGeneralRepository = userGeneralRepository;
         _companieRepository = companieRepository;
-        _familyService = familyService;
+        _financialResponsibleService = familyService;
     }
 
     [HttpGet]
     [Authorize(policy: "admin_internal")]
-    public async Task<ActionResult<IEnumerable<Family>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<FinancialResponsible>>> GetAllAsync()
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -50,13 +49,13 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        var response = await _familyRepository.GetAllAsync(userCompanie.Name);
+        var response = await _financialResponsibleRepository.GetAllAsync(userCompanie.Name);
         return Ok(response);
     }
 
-    [HttpGet("{familyId:long}")]
+    [HttpGet("{financialResponsibleId:long}")]
     [Authorize(policy: "admin_internal")]
-    public async Task<ActionResult<Family>> GetByIdAsync(int familyId)
+    public async Task<ActionResult<FinancialResponsible>> GetByIdAsync(int financialResponsibleId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -71,13 +70,13 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        var user = await _familyRepository.GetByIdAsync(userCompanie.Name, familyId);
+        var user = await _financialResponsibleRepository.GetByIdAsync(userCompanie.Name, financialResponsibleId);
         return Ok(user);
     }
 
     [HttpPost]
     [Authorize(policy: "admin_internal")]
-    public async Task<ActionResult<Family>> CreateAsync([FromForm] CreateFamilyViewModel request)
+    public async Task<ActionResult<FinancialResponsible>> CreateAsync([FromForm] CreateFinancialResponsibleViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -92,13 +91,13 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa 
 
-        var response = await _familyService.CreateAsync(request, Request, userCompanie.Name);
+        var response = await _financialResponsibleService.CreateAsync(request, Request, userCompanie.Name);
         return StatusCode(201, response);
     }
 
-    [HttpDelete("{familyId:long}")]
+    [HttpDelete("{financialResponsibleId:long}")]
     [Authorize(policy: "admin_internal")]
-    public async Task<IActionResult> DisableAsync(int familyId)
+    public async Task<IActionResult> DisableAsync(int financialResponsibleId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -113,7 +112,7 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        await _familyRepository.Disable(userCompanie.Name, familyId);
+        await _financialResponsibleRepository.Disable(userCompanie.Name, financialResponsibleId);
         return StatusCode(204);
     }
 
@@ -134,13 +133,13 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        var companie = await _familyRepository.Search(userCompanie.Name, param);
+        var companie = await _financialResponsibleRepository.Search(userCompanie.Name, param);
         return Ok(companie);
     }
 
     [HttpPut]
     [Authorize(policy: "admin_internal")]
-    public async Task<ActionResult> Update(UpdateFamilyViewModel request)
+    public async Task<ActionResult> Update(UpdateFinancialResponsibleViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -155,13 +154,13 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        var family = await _familyRepository.GetByIdAsync(userCompanie.Name, request.Id);
+        var family = await _financialResponsibleRepository.GetByIdAsync(userCompanie.Name, request.Id);
 
         //Validar alteração de imagem aqui
 
         if (!request.Name.IsNullOrEmpty())
         {
-            if (await _familyRepository.GetByNameAsync(userCompanie.Name, request.Name) == null)
+            if (await _financialResponsibleRepository.GetByNameAsync(userCompanie.Name, request.Name) == null)
             {
                 family.Name = request.Name;
             }
@@ -173,7 +172,7 @@ public class FamilyController : ControllerBase
 
         if (!request.Email.IsNullOrEmpty())
         {
-            if (await _familyRepository.GetByEmailAsync(userCompanie.Name, request.Email) == null)
+            if (await _financialResponsibleRepository.GetByEmailAsync(userCompanie.Name, request.Email) == null)
             {
                 family.Email = request.Email;
             }
@@ -183,10 +182,9 @@ public class FamilyController : ControllerBase
             }
         }
 
-
         if (!request.Rg.IsNullOrEmpty())
         {
-            if (await _familyRepository.GetByRgAsync(userCompanie.Name, request.Rg) == null)
+            if (await _financialResponsibleRepository.GetByRgAsync(userCompanie.Name, request.Rg) == null)
             {
                 family.Rg = request.Rg;
             }
@@ -198,7 +196,7 @@ public class FamilyController : ControllerBase
 
         if (!request.Cpf.IsNullOrEmpty())
         {
-            if (await _familyRepository.GetByCpfAsync(userCompanie.Name, request.Cpf) == null)
+            if (await _financialResponsibleRepository.GetByCpfAsync(userCompanie.Name, request.Cpf) == null)
             {
                 family.Cpf = request.Cpf;
             }
@@ -208,10 +206,9 @@ public class FamilyController : ControllerBase
             }
         }
 
-
         if (!request.Phone.IsNullOrEmpty())
         {
-            if (await _familyRepository.GetByPhoneAsync(userCompanie.Name, request.Phone) == null)
+            if (await _financialResponsibleRepository.GetByPhoneAsync(userCompanie.Name, request.Phone) == null)
             {
                 family.Phone = request.Phone;
             }
@@ -220,7 +217,6 @@ public class FamilyController : ControllerBase
                 return BadRequest("Este Telefone já está cadastrado no banco de dados!");
             }
         }
-
 
         if (request.Role != null)
         {
@@ -234,19 +230,6 @@ public class FamilyController : ControllerBase
             }
         }
 
-
-        if (request.Type != null)
-        {
-            if (Enum.IsDefined(typeof(Type), request.Type))
-            {
-                family.Type = request.Type.Value;
-            }
-            else
-            {
-                return BadRequest("Esse tipo não está cadastrado no banco de dados!");
-            }
-        }
-
         family.DateOfBirth = request.DateOfBirth ?? family.DateOfBirth;
         family.Nationality = request.Nationality ?? family.Nationality;
         family.Naturalness = request.Naturalness ?? family.Naturalness;
@@ -256,12 +239,10 @@ public class FamilyController : ControllerBase
         family.Neighborhood = request.Neighborhood ?? family.Neighborhood;
         family.City = request.City ?? family.City;
         family.State = request.State ?? family.State;
-        family.WorkAddress = request.WorkAddress ?? family.WorkAddress;
-        family.Ocupation = request.Ocupation ?? family.Ocupation;
         family.RgDispatched = request.RgDispatched ?? family.RgDispatched;
         family.RgDispatchedDate = request.RgDispatchedDate ?? family.RgDispatchedDate;
 
-        await _familyRepository.Update(userCompanie.Name, family);
+        await _financialResponsibleRepository.Update(userCompanie.Name, family);
         return NoContent();
     }
 
@@ -276,5 +257,4 @@ public class FamilyController : ControllerBase
 
         return false;
     }
-
 }

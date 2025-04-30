@@ -65,6 +65,8 @@ public class FamilyService : IFamilyService
             Name = request.Name,
             Email = request.Email,
             Rg = request.Rg,
+            RgDispatched = request.RgDispatched,
+            RgDispatchedDate = request.RgDispatchedDate,
             Cpf = request.Cpf,
             DateOfBirth = request.DateOfBirth,
             Nationality = request.Nationality,

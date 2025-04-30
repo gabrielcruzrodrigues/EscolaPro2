@@ -83,66 +83,54 @@ public class FamilyRepository : IFamilyRepository
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Status.Equals(true) && u.Name.Equals(familyName))
                 .FirstOrDefaultAsync();
-
-        return family;
     }
 
     public async Task<Family> GetByEmailAsync(string companieName, string familyEmail)
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Status.Equals(true) && u.Email.Equals(familyEmail))
                 .FirstOrDefaultAsync();
-
-        return family;
     }
 
     public async Task<Family> GetByRgAsync(string companieName, string familyRg)
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Status.Equals(true) && u.Rg.Equals(familyRg))
                 .FirstOrDefaultAsync();
-
-        return family;
     }
 
     public async Task<Family> GetByCpfAsync(string companieName, string familyCpf)
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Status.Equals(true) && u.Cpf.Equals(familyCpf))
                 .FirstOrDefaultAsync();
-
-        return family;
     }
 
     public async Task<Family> GetByPhoneAsync(string companieName, string familyPhone)
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Status.Equals(true) && u.Phone.Equals(familyPhone))
                 .FirstOrDefaultAsync();
-
-        return family;
     }
 
     public async Task<IEnumerable<Family>> Search(string companieName, string param)
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var family = await _context.Families
+        return await _context.Families
                 .Where(u => u.Name.Contains(param) && u.Status.Equals(true))
                 .ToListAsync();
-
-        return family;
     }
 
     public async Task Update(string companieName, Family familyForUpdate)
