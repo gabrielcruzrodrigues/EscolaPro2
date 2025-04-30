@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EscolaPro.Models
+namespace EscolaPro.ViewModels
 {
-    public class FinancialResponsible
+    public class CreateFinancialResponsibleViewModel
     {
-        [Key]
-        public long Id { get; set; }
-
         [Required]
         public required string Name { get; set; }
     }

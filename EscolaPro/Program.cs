@@ -142,12 +142,15 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanieRepository, CompanieRepository>();
 builder.Services.AddScoped<IFamilyRepository, FamilyRepository>();
+builder.Services.AddScoped<IFamilyService, FamilyService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAllergieRepository, AllergieRepository>();
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 builder.Services.AddScoped<IDbContextFactory, DbContextFactory>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IFixedHealthRepository, FixedHealthRepository>();
+builder.Services.AddScoped<IFinancialResponsibleRepository, FinancialResponsibleRepository>();
+builder.Services.AddScoped<IFinancialResponsibleService, FinancialResponsibleService>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";

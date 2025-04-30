@@ -1,4 +1,5 @@
 ﻿using EscolaPro.Enums;
+using EscolaPro.Extensions;
 using EscolaPro.Models;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Services.Interfaces;
@@ -17,22 +18,19 @@ public class FamilyController : ControllerBase
     private readonly IFamilyRepository _familyRepository;
     private readonly IUsersGeneralRepository _userGeneralRepository;
     private readonly ICompanieRepository _companieRepository;
-    private readonly IStudentRepository _studentRepository;
-    private readonly IImageService _imageService;
+    private readonly IFamilyService _familyService;
 
     public FamilyController(
         IFamilyRepository familyRepository,
         IUsersGeneralRepository userGeneralRepository,
         ICompanieRepository companieRepository,
-        IStudentRepository studentRepository,
-        IImageService imageService
-        )
+        IFamilyService familyService
+    )
     {
         _familyRepository = familyRepository;
         _userGeneralRepository = userGeneralRepository;
         _companieRepository = companieRepository;
-        _studentRepository = studentRepository;
-        _imageService = imageService;
+        _familyService = familyService;
     }
 
     [HttpGet]
@@ -92,72 +90,9 @@ public class FamilyController : ControllerBase
         }
         var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
 
-        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+        // ============= Fim validação de empresa e adquirimento do nome da empresa 
 
-        string imageFamilyUrl = "";
-        if (request.Image != null)
-        {
-            if (request.Image.Length == 0)
-            {
-                return BadRequest("Arquivo inváido");
-            }
-
-            var fileName = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image);
-            imageFamilyUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
-        }
-
-        if (await _familyRepository.GetByNameAsync(userCompanie.Name, request.Name) != null)
-        {
-            return Conflict(new { message = "Esse Nome já foi cadastrado", type = "name", code = 409 });
-        }
-
-        if (await _familyRepository.GetByEmailAsync(userCompanie.Name, request.Email) != null)
-        {
-            return Conflict(new { message = "Esse email já foi cadastrado", type = "email", code = 409 });
-        }
-
-        if (await _familyRepository.GetByRgAsync(userCompanie.Name, request.Rg) != null)
-        {
-            return Conflict(new { message = "Esse RG já foi cadastrado", type = "rg", code = 409 });
-        }
-
-        if (await _familyRepository.GetByCpfAsync(userCompanie.Name, request.Cpf) != null)
-        {
-            return Conflict(new { message = "Esse CPF já foi cadastrado", type = "cpf", code = 409 });
-        }
-
-        if (await _familyRepository.GetByPhoneAsync(userCompanie.Name, request.Phone) != null)
-        {
-            return Conflict(new { message = "Esse Telefone já foi cadastrado", type = "phone", code = 409 });
-        }
-
-        var family = new Family
-        {
-            Image = imageFamilyUrl,
-            Name = request.Name,
-            Email = request.Email,
-            Rg = request.Rg,
-            Cpf = request.Cpf,
-            DateOfBirth = request.DateOfBirth,
-            Nationality = request.Nationality,
-            Naturalness = request.Naturalness,
-            Sex = request.Sex,
-            Cep = request.Cep,
-            Address = request.Address,
-            Phone = request.Phone,
-            Neighborhood = request.Neighborhood,
-            City = request.City,
-            State = request.State,
-            Role = request.Role,
-            Status = true,
-            CreatedAt = DateTime.UtcNow,
-            LastUpdatedAt = DateTime.UtcNow,
-            WorkAddress = request.WorkAddress ?? "",
-            Ocupation = request.Ocupation,
-            Type = request.Type
-        };
-
-        var response = await _familyRepository.CreateAsync(userCompanie.Name, family);
+        var response = await _familyService.CreateAsync(request, Request, userCompanie.Name);
         return StatusCode(201, response);
     }
 

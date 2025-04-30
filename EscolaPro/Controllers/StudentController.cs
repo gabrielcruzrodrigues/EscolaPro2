@@ -19,13 +19,19 @@ public class StudentController : ControllerBase
     private readonly IUsersGeneralRepository _userGeneralRepository;
     private readonly IFamilyRepository _familyRepository;
     private readonly IImageService _imageService;
+    private readonly IFamilyService _familyService;
+    private readonly IFinancialResponsibleService _financialResponsibleService;
+    private readonly IFinancialResponsibleRepository _financialResponsibleRepository;
 
     public StudentController(
         ICompanieRepository companieRepository,
         IStudentRepository studentRepository,
         IUsersGeneralRepository usersGeneralRepository,
         IFamilyRepository familyRepository,
-        IImageService imageService
+        IImageService imageService,
+        IFamilyService familyService,
+        IFinancialResponsibleService financialResponsibleService,
+        IFinancialResponsibleRepository financialResponsibleRepository
     )
     {
         _companieRepository = companieRepository;
@@ -33,6 +39,9 @@ public class StudentController : ControllerBase
         _userGeneralRepository = usersGeneralRepository;
         _familyRepository = familyRepository;
         _imageService = imageService;
+        _familyService = familyService;
+        _financialResponsibleService = financialResponsibleService;
+        _financialResponsibleRepository = financialResponsibleRepository;
     }
 
     [HttpGet]
@@ -119,7 +128,7 @@ public class StudentController : ControllerBase
             return Conflict(new { message = "Esse Telefone já foi cadastrado", type = "phone", code = 409 });
         }
 
-        string imageFamilyUrl = "";
+        string studentImageUrl = "";
         if (request.Image != null)
         {
             if (request.Image.Length == 0)
@@ -128,31 +137,30 @@ public class StudentController : ControllerBase
             }
 
             var fileName = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image);
-            imageFamilyUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+            studentImageUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
         }
 
-        //long responsibleId;
-        //string responsibleEmail;
-        long fatherId;
-        long motherId;
+        long financialResponsibleId = 0L;
+        string financialResponsibleEmail = string.Empty;
+        long fatherId = 0L;
+        long motherId = 0L;
 
         // =================== Verifica se o responsável existe, se não, cria o responsável ===================
-        //if (request.ResponsibleId.HasValue)
-        //{
-        //    var responsible = await _familyRepository.GetByIdAsync(userCompanie.Name, request.ResponsibleId.Value);
-        //    if (responsible == null)
-        //        return NotFound("O responsável não foi encontrado com este Id.");
+        if (request.ResponsibleId.HasValue)
+        {
+            var financialResponsible = await _financialResponsibleRepository.GetByIdAsync(userCompanie.Name, request.ResponsibleId.Value);
+            if (financialResponsible == null)
+                return NotFound("O responsável não foi encontrado com este Id.");
 
-        //    responsibleId = request.ResponsibleId.Value;
-        //} 
-        //else
-        //{
-        //    if (request.Responsible == null)
-        //        return BadRequest("É necessário fornecer o Id do responsável ou os dados para cadastrá-lo.");
-
-        //    var responsible = await _familyRepository.CreateAsync(userCompanie.Name, request.Responsible);
-        //    responsibleId = responsible.Id;
-        //}
+            financialResponsibleId = request.ResponsibleId.Value;
+            financialResponsibleEmail = financialResponsible.Email;
+        }
+        else if (request.FinancialResponsible is not null)
+        { 
+            var financialResponsible = await _financialResponsibleService.CreateAsync(request.FinancialResponsible, Request, userCompanie.Name);
+            financialResponsibleId = financialResponsible.Id;
+            financialResponsibleEmail = financialResponsible.Email;
+        }
 
         // =================== Verifica se o pai existe, se não, cria o pai ===================
         if (request.FatherId.HasValue)
@@ -165,7 +173,7 @@ public class StudentController : ControllerBase
         }
         else if (request.Father is not null)
         {
-            var father = await _familyRepository.CreateAsync(userCompanie.Name, request.Father);
+            var father = await _familyService.CreateAsync(request.Father, Request, userCompanie.Name);
             fatherId = father.Id;
         }
 
@@ -180,36 +188,45 @@ public class StudentController : ControllerBase
         }
         else if (request.Mother is not null)
         {
-            var mother = await _familyRepository.CreateAsync(userCompanie.Name, request.Mother);
+            var mother = await _familyService.CreateAsync(request.Mother, Request, userCompanie.Name);
             motherId = mother.Id;
         }
 
-        //var student = new Student
-        //{
-        //    Image = imageFamilyUrl,
-        //    Name = request.Name,
-        //    Email = request.Email,
-        //    Rg = request.Rg,
-        //    Cpf = request.Cpf,
-        //    DateOfBirth = request.DateOfBirth,
-        //    Nationality = request.Nationality,
-        //    Naturalness = request.Naturalness,
-        //    Sex = request.Sex,
-        //    Cep = request.Cep,
-        //    Address = request.Address,
-        //    Phone = request.Phone,
-        //    Neighborhood = request.Neighborhood,
-        //    City = request.City,
-        //    State = request.State,
-        //    Role = request.Role,
-        //    Status = true,
-        //    CreatedAt = DateTime.UtcNow,
-        //    LastUpdatedAt = DateTime.UtcNow,
-        //    ResponsibleEmail = 
-        //}
+        if (fatherId == 0 || motherId == 0 || financialResponsibleId == 0)
+        {
+            return BadRequest("O pai, mãe ou responsável financeiro não foram encontrados ou cadastrados corretamente!");
+        }
 
-        //var response = await _allergieRepository.CreateAsync(userCompanie.Name, allergie);
-        return StatusCode(201);
+        var student = new Student
+        {
+            Image = studentImageUrl,
+            Name = request.Name,
+            Email = request.Email,
+            Rg = request.Rg,
+            Cpf = request.Cpf,
+            DateOfBirth = request.DateOfBirth,
+            Nationality = request.Nationality,
+            Naturalness = request.Naturalness,
+            Sex = request.Sex,
+            Cep = request.Cep,
+            Address = request.Address,
+            Phone = request.Phone,
+            Neighborhood = request.Neighborhood,
+            City = request.City,
+            State = request.State,
+            Role = request.Role,
+            Status = true,
+            CreatedAt = DateTime.UtcNow,
+            LastUpdatedAt = DateTime.UtcNow,
+            ResponsibleEmail = financialResponsibleEmail,
+            FatherId = fatherId,
+            MotherId = motherId,
+            FinancialResponsibleId = financialResponsibleId,
+            Situation = Enums.StudentSituationEnum.OK
+        };
+
+        var response = await _studentRepository.CreateAsync(userCompanie.Name, student);
+        return StatusCode(201, response);
     }
 
     [HttpDelete("{studentId:int}")]

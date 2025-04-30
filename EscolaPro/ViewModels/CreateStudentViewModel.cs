@@ -10,8 +10,8 @@ namespace EscolaPro.ViewModels
         public long? ResponsibleId { get; set; }
         public long? FatherId { get; set; }
         public long? MotherId { get; set; }
-        public FinancialResponsible? FinancialResponsible { get; set; }
-        public Family? Father { get; set; }
-        public Family? Mother { get; set; }
+        public CreateFinancialResponsibleViewModel? FinancialResponsible { get; set; }
+        public CreateFamilyViewModel? Father { get; set; }
+        public CreateFamilyViewModel? Mother { get; set; }
     }
 }
