@@ -52,24 +52,6 @@ namespace EscolaPro.Database
                 .WithOne(s => s.FixedHealth)
                 .HasForeignKey<FixedHealth>(fh => fh.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<Student>()
-            //    .HasOne(s => s.Father)
-            //    .WithMany()
-            //    .HasForeignKey(s => s.FatherId)
-            //    .OnDelete(DeleteBehavior.SetNull); 
-
-            //modelBuilder.Entity<Student>()
-            //    .HasOne(s => s.Mother)
-            //    .WithMany()
-            //    .HasForeignKey(s => s.MotherId)
-            //    .OnDelete(DeleteBehavior.SetNull); 
-
-            //modelBuilder.Entity<Student>()
-            //    .HasOne(s => s.Responsible)
-            //    .WithMany()
-            //    .HasForeignKey(s => s.ResponsibleId)
-            //    .OnDelete(DeleteBehavior.SetNull); 
         }
     }
 }

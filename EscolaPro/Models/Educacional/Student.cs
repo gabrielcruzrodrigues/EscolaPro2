@@ -13,8 +13,6 @@ namespace EscolaPro.Models.Educacional
 
         [Required]
         public required StudentSituationEnum Situation { get; set; }
-
-        public ICollection<Family> Families { get; set; } = new List<Family>();
         public FixedHealth FixedHealth { get; set; } = null!;
 
         [ForeignKey("FinancialResponsibleId")]
