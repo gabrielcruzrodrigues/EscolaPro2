@@ -36,27 +36,27 @@ public class FamilyService : IFamilyService
 
         if (await _familyRepository.GetByNameAsync(companieName, request.Name) != null)
         {
-            throw new HttpResponseException(400, "Esse Nome já foi cadastrado");
+            throw new HttpResponseException(400, "Esse Nome de Familiar já foi cadastrado");
         }
 
         if (await _familyRepository.GetByEmailAsync(companieName, request.Email) != null)
         {
-            throw new HttpResponseException(400, "Esse email já foi cadastrado");
+            throw new HttpResponseException(400, "Esse email de Familiar já foi cadastrado");
         }
 
         if (await _familyRepository.GetByRgAsync(companieName, request.Rg) != null)
         {
-            throw new HttpResponseException(400, "Esse RG já foi cadastrado");
+            throw new HttpResponseException(400, "Esse RG de Familiar já foi cadastrado");
         }
 
         if (await _familyRepository.GetByCpfAsync(companieName, request.Cpf) != null)
         {
-            throw new HttpResponseException(400, "Esse CPF já foi cadastrado");
+            throw new HttpResponseException(400, "Esse CPF de Familiar já foi cadastrado");
         }
 
         if (await _familyRepository.GetByPhoneAsync(companieName, request.Phone) != null)
         {
-            throw new HttpResponseException(400, "Esse Telefone já foi cadastrado");
+            throw new HttpResponseException(400, "Esse Telefone de Familiar já foi cadastrado");
         }
 
         var family = new Family

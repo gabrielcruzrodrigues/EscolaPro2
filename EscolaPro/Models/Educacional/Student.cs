@@ -7,10 +7,6 @@ namespace EscolaPro.Models.Educacional
     [Table("Students")]
     public class Student : UserInternal
     {
-        [Required]
-        [StringLength(50)]
-        public required string ResponsibleEmail { get; set; }
-
         public long? FinancialResponsibleId { get; set; }
         public long? FatherId { get; set; }
         public long? MotherId { get; set; }

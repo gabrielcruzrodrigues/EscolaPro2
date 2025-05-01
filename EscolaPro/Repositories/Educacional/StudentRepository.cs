@@ -21,11 +21,9 @@ public class StudentRepository : IStudentRepository
     {
         using var _context = _contextFactory.Create(companieName);
 
-        var student = await _context.Students
+        return await _context.Students
                 .Where(u => u.Status.Equals(true) && u.Id.Equals(studentId))
                 .FirstOrDefaultAsync();
-
-        return student;
     }
 
     public async Task<Student> CreateAsync(string companieName, Student student)
@@ -49,6 +47,9 @@ public class StudentRepository : IStudentRepository
         using var _context = _contextFactory.Create(companieName);
         return await _context.Students
             .AsNoTracking()
+            .Include(s => s.Father)
+            .Include(s => s.Mother)
+            .Include(s => s.FinancialResponsible)
             .Where(s => s.Status.Equals(true))
             .ToListAsync();
     }
@@ -57,6 +58,9 @@ public class StudentRepository : IStudentRepository
     {
         using var _context = _contextFactory.Create(companieName);
         return await _context.Students
+            .Include(s => s.Father)
+            .Include(s => s.Mother)
+            .Include(s => s.FinancialResponsible)
             .Where(s => s.Status.Equals(true) && s.Name.Equals(studentName))
             .FirstOrDefaultAsync();
     }
@@ -103,6 +107,9 @@ public class StudentRepository : IStudentRepository
         {
             using var _context = _contextFactory.Create(companieName);
             return await _context.Students
+                .Include(s => s.Father)
+                .Include(s => s.Mother)
+                .Include(s => s.FinancialResponsible)
                 .AsNoTracking()
                 .Where(s => s.Status.Equals(true) && s.Name.Equals(param) || s.Email.Equals(param))
                 .ToListAsync();
@@ -119,6 +126,9 @@ public class StudentRepository : IStudentRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Students
+                .Include(s => s.Father)
+                .Include(s => s.Mother)
+                .Include(s => s.FinancialResponsible)
                 .Where(u => u.Status.Equals(true) && u.Email.Equals(studentEmail))
                 .FirstOrDefaultAsync();
     }
@@ -128,6 +138,9 @@ public class StudentRepository : IStudentRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Students
+                .Include(s => s.Father)
+                .Include(s => s.Mother)
+                .Include(s => s.FinancialResponsible)
                 .Where(u => u.Status.Equals(true) && u.Rg.Equals(studentRg))
                 .FirstOrDefaultAsync();
     }
@@ -136,6 +149,9 @@ public class StudentRepository : IStudentRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Students
+                .Include(s => s.Father)
+                .Include(s => s.Mother)
+                .Include(s => s.FinancialResponsible)
                 .Where(u => u.Status.Equals(true) && u.Cpf.Equals(studentCpf))
                 .FirstOrDefaultAsync();
     }
@@ -145,6 +161,9 @@ public class StudentRepository : IStudentRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Students
+                .Include(s => s.Father)
+                .Include(s => s.Mother)
+                .Include(s => s.FinancialResponsible)
                 .Where(u => u.Status.Equals(true) && u.Phone.Equals(studentPhone))
                 .FirstOrDefaultAsync();
     }

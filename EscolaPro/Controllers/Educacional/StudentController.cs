@@ -106,27 +106,27 @@ public class StudentController : ControllerBase
 
         if (await _studentRepository.GetByNameAsync(userCompanie.Name, request.Name) != null)
         {
-            return Conflict(new { message = "Esse Nome já foi cadastrado", type = "name", code = 409 });
+            return Conflict(new { message = "Esse Nome de Estudante já foi cadastrado", type = "name", code = 409 });
         }
 
         if (await _studentRepository.GetByEmailAsync(userCompanie.Name, request.Email) != null)
         {
-            return Conflict(new { message = "Esse Email já foi cadastrado", type = "email", code = 409 });
+            return Conflict(new { message = "Esse Email de Estudante já foi cadastrado", type = "email", code = 409 });
         }
 
         if (await _studentRepository.GetByRgAsync(userCompanie.Name, request.Rg) != null)
         {
-            return Conflict(new { message = "Esse RG já foi cadastrado", type = "rg", code = 409 });
+            return Conflict(new { message = "Esse RG de Estudante já foi cadastrado", type = "rg", code = 409 });
         }
 
         if (await _studentRepository.GetByCpfAsync(userCompanie.Name, request.Cpf) != null)
         {
-            return Conflict(new { message = "Esse CPF já foi cadastrado", type = "cpf", code = 409 });
+            return Conflict(new { message = "Esse CPF de Estudante já foi cadastrado", type = "cpf", code = 409 });
         }
 
         if (await _studentRepository.GetByPhoneAsync(userCompanie.Name, request.Phone) != null)
         {
-            return Conflict(new { message = "Esse Telefone já foi cadastrado", type = "phone", code = 409 });
+            return Conflict(new { message = "Esse Telefone de Estudante já foi cadastrado", type = "phone", code = 409 });
         }
 
         string studentImageUrl = "";
@@ -147,21 +147,12 @@ public class StudentController : ControllerBase
         long motherId = 0L;
 
         // =================== Verifica se o responsável existe, se não, cria o responsável ===================
-        if (request.ResponsibleId.HasValue)
-        {
-            var financialResponsible = await _financialResponsibleRepository.GetByIdAsync(userCompanie.Name, request.ResponsibleId.Value);
-            if (financialResponsible == null)
-                return NotFound("O responsável não foi encontrado com este Id.");
+        var financialResponsible = await _financialResponsibleRepository.GetByIdAsync(userCompanie.Name, request.ResponsibleId);
+        if (financialResponsible == null)
+            return NotFound("O responsável não foi encontrado com este Id.");
 
-            financialResponsibleId = request.ResponsibleId.Value;
-            financialResponsibleEmail = financialResponsible.Email;
-        }
-        else if (request.FinancialResponsible is not null)
-        {
-            var financialResponsible = await _financialResponsibleService.CreateAsync(request.FinancialResponsible, Request, userCompanie.Name);
-            financialResponsibleId = financialResponsible.Id;
-            financialResponsibleEmail = financialResponsible.Email;
-        }
+        financialResponsibleId = request.ResponsibleId;
+        financialResponsibleEmail = financialResponsible.Email;
 
         // =================== Verifica se o pai existe, se não, cria o pai ===================
         if (request.FatherId.HasValue)
@@ -172,11 +163,6 @@ public class StudentController : ControllerBase
 
             fatherId = request.FatherId.Value;
         }
-        else if (request.Father is not null)
-        {
-            var father = await _familyService.CreateAsync(request.Father, Request, userCompanie.Name);
-            fatherId = father.Id;
-        }
 
         // =================== Verifica se a mãe existe, se não, cria o mãe ===================
         if (request.MotherId.HasValue)
@@ -186,16 +172,6 @@ public class StudentController : ControllerBase
                 return NotFound("O Familiar não foi encontrado com este Id.");
 
             motherId = request.MotherId.Value;
-        }
-        else if (request.Mother is not null)
-        {
-            var mother = await _familyService.CreateAsync(request.Mother, Request, userCompanie.Name);
-            motherId = mother.Id;
-        }
-
-        if (fatherId == 0 || motherId == 0 || financialResponsibleId == 0)
-        {
-            return BadRequest("O pai, mãe ou responsável financeiro não foram encontrados ou cadastrados corretamente!");
         }
 
         var student = new Student
@@ -219,14 +195,17 @@ public class StudentController : ControllerBase
             Status = true,
             CreatedAt = DateTime.UtcNow,
             LastUpdatedAt = DateTime.UtcNow,
-            ResponsibleEmail = financialResponsibleEmail,
-            FatherId = fatherId,
-            MotherId = motherId,
             FinancialResponsibleId = financialResponsibleId,
             Situation = Enums.StudentSituationEnum.OK,
             RgDispatched = request.RgDispatched,
             RgDispatchedDate = request.RgDispatchedDate
         };
+
+        if (fatherId != 0)
+            student.FatherId = fatherId;
+
+        if (motherId != 0)
+            student.MotherId = motherId;
 
         var response = await _studentRepository.CreateAsync(userCompanie.Name, student);
         return StatusCode(201, response);

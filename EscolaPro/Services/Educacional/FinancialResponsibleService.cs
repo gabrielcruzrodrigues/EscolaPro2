@@ -34,27 +34,27 @@ public class FinancialResponsibleService : IFinancialResponsibleService
 
         if (await _financialResponsibleRepository.GetByNameAsync(companieName, request.Name) != null)
         {
-            throw new HttpResponseException(400, "Esse Nome já foi cadastrado");
+            throw new HttpResponseException(400, "Esse Nome de Responsável Financeiro já foi cadastrado");
         }
 
         if (await _financialResponsibleRepository.GetByEmailAsync(companieName, request.Email) != null)
         {
-            throw new HttpResponseException(400, "Esse email já foi cadastrado");
+            throw new HttpResponseException(400, "Esse email de Responsável Financeiro já foi cadastrado");
         }
 
         if (await _financialResponsibleRepository.GetByRgAsync(companieName, request.Rg) != null)
         {
-            throw new HttpResponseException(400, "Esse RG já foi cadastrado");
+            throw new HttpResponseException(400, "Esse RG de Responsável Financeiro já foi cadastrado");
         }
 
         if (await _financialResponsibleRepository.GetByCpfAsync(companieName, request.Cpf) != null)
         {
-            throw new HttpResponseException(400, "Esse CPF já foi cadastrado");
+            throw new HttpResponseException(400, "Esse CPF de Responsável Financeiro já foi cadastrado");
         }
 
         if (await _financialResponsibleRepository.GetByPhoneAsync(companieName, request.Phone) != null)
         {
-            throw new HttpResponseException(400, "Esse Telefone já foi cadastrado");
+            throw new HttpResponseException(400, "Esse Telefone de Responsável Financeiro já foi cadastrado");
         }
 
         var financialResponsible = new FinancialResponsible
