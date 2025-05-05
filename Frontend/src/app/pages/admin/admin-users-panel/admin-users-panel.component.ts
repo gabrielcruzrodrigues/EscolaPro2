@@ -3,10 +3,11 @@ import { AdminNavbarComponent } from "../../../components/layout/admin/admin-nav
 import { RouterModule } from '@angular/router';
 import { InfoTopComponent } from "../../../components/layout/info-top/info-top.component";
 import { AdminLastActiveUsersComponent } from "../../../components/layout/admin/admin-last-active-users/admin-last-active-users.component";
+import { AdminMainSearchUserBoxComponent } from "../../../components/layout/admin/admin-main-search-user-box/admin-main-search-user-box.component";
 
 @Component({
   selector: 'app-admin-users-panel',
-  imports: [AdminNavbarComponent, RouterModule, InfoTopComponent, AdminLastActiveUsersComponent],
+  imports: [AdminNavbarComponent, RouterModule, InfoTopComponent, AdminLastActiveUsersComponent, AdminMainSearchUserBoxComponent],
   templateUrl: './admin-users-panel.component.html',
   styleUrl: './admin-users-panel.component.sass'
 })

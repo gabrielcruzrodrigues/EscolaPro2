@@ -17,6 +17,7 @@ import { masterGuard } from './guards/master.guard';
 import { AuthLoadingComponent } from './components/layout/auth-loading/auth-loading.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { AdminUsersPanelComponent } from './pages/admin/admin-users-panel/admin-users-panel.component';
+import { AdminUsersCreateComponent } from './pages/admin/admin-users-create/admin-users-create.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -114,6 +115,11 @@ export const routes: Routes = [
      {
           path: 'admin/users-panel',
           component: AdminUsersPanelComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-create',
+          component: AdminUsersCreateComponent,
           canActivate: [masterGuard]
      },
 

@@ -55,7 +55,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous]
+    [AllowAnonymous] //admin-internal   
     public async Task<ActionResult<UserGeneralDto>> CreateAsync(CreateUserGeneralViewModel request)
     {
         var emailVerify = await _userGeneralRepository.GetByEmailAsync(request.Email);

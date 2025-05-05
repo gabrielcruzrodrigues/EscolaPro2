@@ -1,0 +1,85 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <section class="full-div">
+          <div class="title">
+               <!-- <i class="fa-solid fa-user-plus icon"></i> -->
+               <h1>Criar usuário</h1>
+          </div>
+
+          <form class="main-form" [formGroup]="userForm" (ngSubmit)="Submit()">
+               <label>Nome:</label>
+               <input 
+                    type="text" 
+                    formControlName="name" 
+                    placeholder="Digite o Nome do novo usuário" 
+                    name="name"
+                    (input)="clearInputErrors('name')"
+                    (change)="getNameErrors()">
+               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+
+               <label>Email:</label>
+               <input 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="Digite o Email do novo usuário" 
+                    name="email"
+                    (input)="clearInputErrors('email')"
+                    (change)="getEmailErrors()">
+               <app-input-error-message [errors]="emailErrros"></app-input-error-message>
+
+               <label>Senha:</label>
+               <input 
+                    type="password" 
+                    formControlName="password" 
+                    placeholder="Digite a senha do novo usuário" 
+                    name="password"
+                    (input)="clearInputErrors('password')"
+                    (change)="getPasswordErrors()">
+               <app-input-error-message [errors]="passwordErrros"></app-input-error-message>
+
+               <label>Confirmação de senha:</label>
+               <input 
+                    type="password" 
+                    formControlName="passwordVerify" 
+                    placeholder="Digite novamente a senha do novo usuário" 
+                    name="'passwordVerify'"
+                    (input)="clearInputErrors('passwordVerify')"
+                    (change)="getPasswordVerifyErrors()">
+               <app-input-error-message [errors]="passwordVerifyErrors"></app-input-error-message>
+
+               <div class="main-selects">
+                    <div class="main-select">
+                         <label>Níveis de acesso:</label>
+                         <select 
+                              id="roleSelect"
+                              formControlName="role" 
+                              name="role" 
+                              class="selectRole">
+                                   <option value="0">Administrador</option>
+                                   <option value="0">Moderador</option>
+                                   <option value="2" selected>Recepção</option>
+                         </select>
+                    </div>
+     
+                    <!-- <div class="main-select">
+                         <label>Empresa:</label>
+                         <select 
+                              id="companieSelect"
+                              formControlName="companieId" 
+                              name="companie" 
+                              class="selectCompanie">
+                                   <option value="" selected disabled>Escolha uma empresa</option>
+                                   @for (companie of companies; track $index) {
+                                        <option value="{{ companie.id }}">{{ companie.name }}</option>
+                                   }
+                         </select>
+                         <app-input-error-message [errors]="companiesErrors"></app-input-error-message>
+                    </div> -->
+               </div>
+
+               <button type="submit">Cadastrar</button>
+          </form>
+     </section>
+</section>

@@ -1,0 +1,12 @@
+<section class="search-student">
+     <div class="title">
+          <p>{{ title }}</p>
+     </div>
+     <form (submit)="search($event)">
+          <div class="input">
+               <input type="text" id="searchInput" name="student-name" placeholder="Digite aqui o nome ou email do usuário">
+               <button class="input-button" type="submit">Pesquisar</button>
+          </div>
+     </form>
+</section>
+<app-spinning></app-spinning>

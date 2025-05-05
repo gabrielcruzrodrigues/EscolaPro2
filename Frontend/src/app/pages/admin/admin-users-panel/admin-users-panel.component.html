@@ -3,7 +3,7 @@
      <app-info-top></app-info-top>
      <!-- <app-top-user-infos [title]="title"></app-top-user-infos> -->
      <section class="first-options">
-          <div class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/users-create'}">
+          <div class="option" [routerLink]="['/admin/users-create']">
                <div class="icon-div green">
                     <i class="fa-solid fa-user-plus icon"></i>
                </div>
@@ -29,7 +29,7 @@
           </div>
      </section>
 
-     <!-- <app-main-search-user-box></app-main-search-user-box>  -->
+     <app-admin-main-search-user-box></app-admin-main-search-user-box>
 
      <app-admin-last-active-users></app-admin-last-active-users>
 </section>
