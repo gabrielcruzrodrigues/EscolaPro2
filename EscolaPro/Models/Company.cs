@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EscolaPro.Models.Educacional
+namespace EscolaPro.Models
 {
     [Table("Companies")]
     public class Company

@@ -30,6 +30,7 @@ export type User = {
      email: string,
      password: string,
      role: number,
+     roleName: string,
      createdAt: string,
      lastUpdatedAt: string
      lastAccess: string,

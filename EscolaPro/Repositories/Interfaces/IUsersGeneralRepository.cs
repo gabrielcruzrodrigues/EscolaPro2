@@ -1,6 +1,6 @@
 ﻿using EscolaPro.Models;
 using EscolaPro.Models.Dtos;
-namespace EscolaPro.Repositories.Interfaces.Educacional;
+namespace EscolaPro.Repositories.Interfaces;
 
 public interface IUsersGeneralRepository
 {
@@ -13,4 +13,5 @@ public interface IUsersGeneralRepository
     Task Update(UserGeneral userForUpdate);
     Task Disable(long userId);
     Task<IEnumerable<UserGeneralDto>> Search(string param);
+    Task<IEnumerable<UserGeneralDto>> GetLast5ActiveUsers(int companieId);
 }

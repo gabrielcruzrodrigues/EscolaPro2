@@ -65,4 +65,13 @@ export class UserService {
     const urlForRequest = this.url;
     return this.http.put(urlForRequest, user, { headers: headers, observe: 'response' });
   }
+
+  lastActiveUsers(): Observable<HttpResponse<User[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const userCompanieId = this.authService.getCompanieId();
+    const urlForRequest = this.url + `/last-active-users/${userCompanieId}`;
+    console.log(urlForRequest)
+    return this.http.get<User[]>(urlForRequest, { headers: headers, observe: 'response' });
+  }
 }

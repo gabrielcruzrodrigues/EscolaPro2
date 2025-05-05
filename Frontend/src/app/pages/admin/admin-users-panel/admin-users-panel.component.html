@@ -1,4 +1,4 @@
-<app-admin-master-navbar></app-admin-master-navbar>
+<app-admin-navbar></app-admin-navbar>
 <section class="main-section appear">
      <app-info-top></app-info-top>
      <!-- <app-top-user-infos [title]="title"></app-top-user-infos> -->
@@ -21,7 +21,7 @@
                </div>
                <p class="option-title">Atualizar</p>
           </div>
-          <div *ngIf="userRole === 0" class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/users-search-delete'}">
+          <div class="option" [routerLink]="['/verify']" [queryParams]="{ next: '/admin/master/users-search-delete'}">
                <div class="icon-div red">
                     <i class="fa-solid fa-trash icon"></i>
                </div>
@@ -29,34 +29,7 @@
           </div>
      </section>
 
-     <!-- <app-main-search-user-box></app-main-search-user-box> -->
+     <!-- <app-main-search-user-box></app-main-search-user-box>  -->
 
-     <!-- <div class="full-div">
-          <div class="title">
-               <i class="fa-solid fa-list icon"></i>
-               <h2>Últimos usuários ativos</h2>
-          </div>
-
-          <table class="custom-table">
-               <thead>
-                    <tr>
-                         <th>Nome</th>
-                         <th>Role</th>
-                         <th>Data de acesso</th>
-                    </tr>
-               </thead>
-               <tbody>
-                    <tr>
-                         <td>Gabriel Cruz Rodrigues</td>
-                         <td>Admin</td>
-                         <td>22/03/2025 - 09:03:22</td>
-                    </tr>
-                    <tr>
-                         <td>Gabriel Cruz Rodrigues</td>
-                         <td>Admin</td>
-                         <td>22/03/2025 - 09:03:22</td>
-                    </tr>
-               </tbody>
-          </table>
-     </div> -->
+     <app-admin-last-active-users></app-admin-last-active-users>
 </section>

@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using EscolaPro.Database;
 using EscolaPro.Models.Dtos;
 using EscolaPro.Models;
-using EscolaPro.Repositories.Interfaces.Educacional;
-namespace EscolaPro.Repositories.Educacional;
+using EscolaPro.Repositories.Interfaces;
+using AutoMapper.QueryableExtensions;
+namespace EscolaPro.Repositories;
 
 public class UsersGeneralRepository : IUsersGeneralRepository
 {
@@ -135,5 +136,16 @@ public class UsersGeneralRepository : IUsersGeneralRepository
             _logger.LogError($"Um erro aconteceu ao tentar atualizar um usuário! err: {ex.Message}");
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar atualizar um usuário!");
         }
+    }
+
+    public async Task<IEnumerable<UserGeneralDto>> GetLast5ActiveUsers(int companieId)
+    {
+        return await _context.UsersGeneral
+            .AsNoTracking()
+            .Where(u => u.Status.Equals(true) && u.CompanieId.Equals(companieId))
+            .OrderByDescending(u => u.LastAccess)
+            .Take(5)
+            .ProjectTo<UserGeneralDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

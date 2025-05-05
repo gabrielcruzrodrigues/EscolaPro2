@@ -1,5 +1,5 @@
 ﻿using EscolaPro.Extensions;
-using EscolaPro.Models.Educacional;
+using EscolaPro.Models;
 using EscolaPro.Repositories;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.ViewModels.Educacional;

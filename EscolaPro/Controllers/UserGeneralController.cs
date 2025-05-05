@@ -46,6 +46,14 @@ public class UserGeneralController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("last-active-users/{companieId:int}")]
+    [Authorize(policy: "admin_internal")]
+    public async Task<ActionResult<UserGeneralDto>> GetLast5ActiveUsers(int companieId)
+    {
+        var user = await _userGeneralRepository.GetLast5ActiveUsers(companieId);
+        return Ok(user);
+    }
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<ActionResult<UserGeneralDto>> CreateAsync(CreateUserGeneralViewModel request)
@@ -70,6 +78,7 @@ public class UserGeneralController : ControllerBase
             Role = request.Role,
             CreatedAt = DateTime.UtcNow,
             LastUpdatedAt = DateTime.UtcNow,
+            LastAccess = DateTime.UtcNow,
             Password = "passwordHashed",
             CompanieId = request.CompanieId,
             Status = true

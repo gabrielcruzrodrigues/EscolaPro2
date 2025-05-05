@@ -9,6 +9,7 @@ namespace EscolaPro.Models.Dtos
         public required long UserId { get; set; }
         public required string Token { get; set; }
         public required string RefreshToken { get; set; }
+        public required int CompanieId { get; set; }
         public DateTime Expiration { get; set; }
         public RolesEnum? Role { get; set; }
     }

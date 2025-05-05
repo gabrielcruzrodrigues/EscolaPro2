@@ -1,5 +1,5 @@
-﻿using EscolaPro.Models.Dtos;
-using EscolaPro.Models.Educacional;
+﻿using EscolaPro.Models;
+using EscolaPro.Models.Dtos;
 
 namespace EscolaPro.Repositories.Interfaces.Educacional;
 

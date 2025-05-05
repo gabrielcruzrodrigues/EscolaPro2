@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using EscolaPro.Models.Dtos;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
-using EscolaPro.Models.Educacional;
+using EscolaPro.Models;
 
 namespace EscolaPro.Repositories.Educacional;
 

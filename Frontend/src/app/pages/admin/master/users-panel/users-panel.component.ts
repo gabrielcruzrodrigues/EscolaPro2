@@ -3,13 +3,15 @@ import { AuthService } from '../../../../services/auth.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdminMasterNavbarComponent } from "../../../../components/layout/admin/master/admin-master-navbar/admin-master-navbar.component";
+import { InfoTopComponent } from "../../../../components/layout/info-top/info-top.component";
 
 @Component({
   selector: 'app-users-panel',
   imports: [
     RouterModule,
     CommonModule,
-    AdminMasterNavbarComponent
+    AdminMasterNavbarComponent,
+    InfoTopComponent
 ],
   templateUrl: './users-panel.component.html',
   styleUrl: './users-panel.component.sass'

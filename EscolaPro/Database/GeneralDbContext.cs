@@ -1,5 +1,4 @@
 ﻿using EscolaPro.Models;
-using EscolaPro.Models.Educacional;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscolaPro.Database;

@@ -15,6 +15,8 @@ import { CompaniesSearchDeleteComponent } from './pages/admin/master/companies-s
 import { CompaniesEditComponent } from './pages/admin/master/companies-edit/companies-edit.component';
 import { masterGuard } from './guards/master.guard';
 import { AuthLoadingComponent } from './components/layout/auth-loading/auth-loading.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersPanelComponent } from './pages/admin/admin-users-panel/admin-users-panel.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -96,6 +98,22 @@ export const routes: Routes = [
      {
           path: 'admin/master/companies-edit/:companieId',
           component: CompaniesEditComponent,
+          canActivate: [masterGuard]
+     },
+
+     //admin
+
+     {
+          path: 'admin/dashboard',
+          component: AdminDashboardComponent,
+          canActivate: [masterGuard]
+     },
+
+     // === ADMIN - Users ===
+
+     {
+          path: 'admin/users-panel',
+          component: AdminUsersPanelComponent,
           canActivate: [masterGuard]
      },
 

@@ -1,0 +1,98 @@
+.topbar
+     display: flex
+     justify-content: space-between
+     align-items: center
+     padding: 0.5rem 1rem
+     margin-bottom: 1.8rem
+     background-color: #fff
+     box-shadow: 0px 2px 5px rgba(0,0,0,0.1)
+     border-bottom: 1px solid #e0e0e0
+     border-radius: 5px
+
+.left
+     width: 30%
+
+     .search-bar
+          display: flex
+          align-items: center
+          background-color: #fff
+          border: 1px solid #ccc
+          border-radius: 12px
+          padding: 0.4rem 0.8rem
+          gap: 0.5rem
+          font-size: 0.9rem
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05)
+          width: 80%
+
+     input
+          border: none
+          outline: none
+          background: transparent
+          font-size: 0.9rem
+          flex: 1
+          color: #333
+
+          &::placeholder
+               color: #999
+
+     .shortcut
+          background-color: #eee
+          color: #333
+          padding: 0.2rem 0.5rem
+          border-radius: 6px
+          font-size: 0.75rem
+          font-weight: bold
+          font-family: monospace
+
+.center
+     width: 30%
+     display: flex
+     justify-content: center
+     gap: 1rem
+
+     .icon
+          // position: relative
+          font-size: 1.2rem
+          cursor: pointer
+
+     &.bell .dot
+          position: absolute
+          top: -4px
+          right: -4px
+          width: 8px
+          height: 8px
+          background-color: #ff4d6d
+          border-radius: 50%
+
+.right
+     width: 30%
+     display: flex
+     justify-content: end
+     gap: 0.5rem
+
+     .avatar
+          width: 30px
+          height: 30px
+          border-radius: 50%
+
+     .user-info
+          display: flex
+          flex-direction: column
+          font-size: 0.85rem
+
+     .name
+          font-weight: 600
+
+     .role
+          color: #888
+          font-size: 0.75rem
+
+@media (max-width: 768px)
+     .center
+          display: none
+
+     .right .user-info
+          display: none
+
+     .left .search-bar .shortcut
+          display: none

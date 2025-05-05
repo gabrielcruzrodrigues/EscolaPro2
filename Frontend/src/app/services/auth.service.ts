@@ -45,6 +45,23 @@ export class AuthService {
     return Number(this.cookieService.get('role'));
   }
 
+  getRoleName(role: number): string {
+    switch(role) {
+      case 0: 
+        return 'Administrador Master';
+      case 1:
+        return 'Usuário'
+      case 2:
+        return 'Moderador'
+      case 3:
+        return 'Administrador'
+      case 4:
+        return 'Secretária'
+      default:
+        return "undefined"
+    }
+  }
+
   async getName(): Promise<string> {
     return this.cookieService.get('name');
   }
@@ -53,8 +70,19 @@ export class AuthService {
     return this.cookieService.get('userId');
   }
 
+  getCompanieId(): string {
+    return this.cookieService.get('companieId');
+  }
+
   saveCookiesLogin(body: any): void {
     this.cookieService.set('token', body.token, {
+      path: '/',
+      secure: false, // Trocar para true em prod
+      sameSite: 'Lax',
+      expires: 1 // Alterar em prod
+    });
+
+    this.cookieService.set('companieId', body.companieId, {
       path: '/',
       secure: false, // Trocar para true em prod
       sameSite: 'Lax',

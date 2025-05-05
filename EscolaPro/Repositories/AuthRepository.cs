@@ -14,7 +14,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using EscolaPro.Models;
 using EscolaPro.Enums;
-using EscolaPro.Repositories.Interfaces.Educacional;
 
 public class AuthRepository : IAuthRepository
 {
@@ -38,10 +37,10 @@ public class AuthRepository : IAuthRepository
 
     public async Task<LoginResponseDto> LoginAsync(LoginViewModel loginViewModel)
     {
-        var emailVerify = await _userGeneralRepository.GetByEmailAsync(loginViewModel.Login);
-        var userNameVerify = await _userGeneralRepository.GetByNameAsync(loginViewModel.Login);
+        var userVerifyWithEmail = await _userGeneralRepository.GetByEmailAsync(loginViewModel.Login);
+        var userVerifyWithName = await _userGeneralRepository.GetByNameAsync(loginViewModel.Login);
 
-        if (emailVerify is null && userNameVerify is null)
+        if (userVerifyWithEmail is null && userVerifyWithName is null)
         {
             throw new HttpResponseException(404, "Usuário não encontrado!");
         }
@@ -49,19 +48,19 @@ public class AuthRepository : IAuthRepository
         string? salt = null;
         try
         {
-            if (emailVerify is not null)
+            if (userVerifyWithEmail is not null)
             {
                 salt = await _context.Salts
                     .AsNoTracking()
-                    .Where(s => s.UserGeneralId.Equals(emailVerify.Id))
+                    .Where(s => s.UserGeneralId.Equals(userVerifyWithEmail.Id))
                     .Select(s => s.SaltHash)
                     .FirstAsync();
             }
-            else if (userNameVerify is not null)
+            else if (userVerifyWithName is not null)
             {
                 salt = await _context.Salts
                     .AsNoTracking()
-                    .Where(s => s.UserGeneralId.Equals(userNameVerify.Id))
+                    .Where(s => s.UserGeneralId.Equals(userVerifyWithName.Id))
                     .Select(s => s.SaltHash)
                     .FirstAsync();
             }
@@ -73,17 +72,17 @@ public class AuthRepository : IAuthRepository
             throw new HttpResponseException(500, "Um erro aconteceu ao tentar buscar o salt no banco de dados!");
         }
 
-        if (emailVerify is not null)
+        if (userVerifyWithEmail is not null)
         {
-            if (!PasswordHashManager.VerifyPassword(loginViewModel.Password, emailVerify.Password, salt))
+            if (!PasswordHashManager.VerifyPassword(loginViewModel.Password, userVerifyWithEmail.Password, salt))
             {
                 throw new HttpResponseException(400, "Senha incorreta!");
             }
 
-            var userRole = emailVerify.Role;
+            var userRole = userVerifyWithEmail.Role;
 
             IEnumerable<Claim> authClaims = new List<Claim>();
-            authClaims = GetClaims(userRole, emailVerify);
+            authClaims = GetClaims(userRole, userVerifyWithEmail);
 
             var token = _tokenService.GenerateAccessToken(authClaims);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -96,12 +95,13 @@ public class AuthRepository : IAuthRepository
                 throw new InvalidOperationException("Valor inválido para JWT_REFRESH_TOKEN_VALIDITY_IN_MINUTES");
             }
 
-            emailVerify.RefreshToken = refreshToken;
-            emailVerify.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(refreshTokenValidityInMinutes);
+            userVerifyWithEmail.RefreshToken = refreshToken;
+            userVerifyWithEmail.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(refreshTokenValidityInMinutes);
+            userVerifyWithEmail.LastAccess = DateTime.UtcNow;
 
             try
             {
-                _context.Entry(emailVerify).State = EntityState.Modified;
+                _context.Entry(userVerifyWithEmail).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -112,25 +112,26 @@ public class AuthRepository : IAuthRepository
 
             return new LoginResponseDto
             {
-                UserId = emailVerify.Id,
+                UserId = userVerifyWithEmail.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
                 Expiration = token.ValidTo,
                 Role = userRole,
-                Name = emailVerify.Name
+                Name = userVerifyWithEmail.Name,
+                CompanieId = userVerifyWithEmail.CompanieId
             };
         }
         else
         {
-            if (!PasswordHashManager.VerifyPassword(loginViewModel.Password, userNameVerify.Password, salt))
+            if (!PasswordHashManager.VerifyPassword(loginViewModel.Password, userVerifyWithName.Password, salt))
             {
                 throw new HttpResponseException(400, "Senha incorreta!");
             }
 
-            var userRole = userNameVerify.Role;
+            var userRole = userVerifyWithName.Role;
 
             IEnumerable<Claim> authClaims = new List<Claim>();
-            authClaims = GetClaims(userRole, userNameVerify);
+            authClaims = GetClaims(userRole, userVerifyWithName);
 
             var token = _tokenService.GenerateAccessToken(authClaims);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -142,12 +143,13 @@ public class AuthRepository : IAuthRepository
                 throw new InvalidOperationException("Valor inválido para JWT_REFRESH_TOKEN_VALIDITY_IN_MINUTES");
             }
 
-            userNameVerify.RefreshToken = refreshToken;
-            userNameVerify.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(refreshTokenValidityInMinutes);
+            userVerifyWithName.RefreshToken = refreshToken;
+            userVerifyWithName.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(refreshTokenValidityInMinutes);
+            userVerifyWithName.LastAccess = DateTime.UtcNow;
 
             try
             {
-                _context.Entry(userNameVerify).State = EntityState.Modified;
+                _context.Entry(userVerifyWithName).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -158,12 +160,13 @@ public class AuthRepository : IAuthRepository
 
             return new LoginResponseDto
             {
-                UserId = userNameVerify.Id,
+                UserId = userVerifyWithName.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
                 Expiration = token.ValidTo,
                 Role = userRole,
-                Name = userNameVerify.Name
+                Name = userVerifyWithName.Name,
+                CompanieId = userVerifyWithName.CompanieId
             };
         }
     }
