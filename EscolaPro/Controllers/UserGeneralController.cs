@@ -55,7 +55,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous] //admin-internal   
+    [AllowAnonymous] //admin_internal   
     public async Task<ActionResult<UserGeneralDto>> CreateAsync(CreateUserGeneralViewModel request)
     {
         var emailVerify = await _userGeneralRepository.GetByEmailAsync(request.Email);
@@ -115,6 +115,22 @@ public class UserGeneralController : ControllerBase
         var users = await _userGeneralRepository.Search(param);
         return Ok(users);
     }
+
+    [HttpGet("roles")]
+    [Authorize(policy: "admin_internal")]
+    public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
+    {
+        var roles = Enum.GetValues(typeof(RolesEnum))
+                    .Cast<RolesEnum>()
+                    .Select(r => new RoleDto
+                    {
+                        Name = r.ToString(),
+                        Value = (int)r
+                    }).ToList();
+
+        return Ok(roles);
+    }
+
 
     [HttpPut]
     [Authorize(policy: "admin")]

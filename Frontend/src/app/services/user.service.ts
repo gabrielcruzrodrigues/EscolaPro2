@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { CreateUser, ResponseCreateUser, UpdateUser, User } from '../types/User';
 import { map, Observable } from 'rxjs';
+import { Role } from '../types/Role';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,13 @@ export class UserService {
         return response.body;
       })
     )
+  }
+
+  getAllRoles(): Observable<HttpResponse<Role[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/roles`;
+    return this.http.get<Role[]>(urlForRequest, { headers: headers, observe: 'response' });
   }
 
   getAll(): Observable<HttpResponse<User[]>> {

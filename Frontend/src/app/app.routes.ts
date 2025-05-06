@@ -22,6 +22,7 @@ import { AdminUsersShowComponent } from './pages/admin/admin-users-show/admin-us
 import { AdminUsersSearchEditComponent } from './pages/admin/admin-users-search-edit/admin-users-search-edit.component';
 import { AdminUsersSearchDeleteComponent } from './pages/admin/admin-users-search-delete/admin-users-search-delete.component';
 import { AdminUsersDetailsComponent } from './pages/admin/admin-users-details/admin-users-details.component';
+import { AdminStudentsPanelComponent } from './pages/admin/admin-students-panel/admin-students-panel.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -144,6 +145,14 @@ export const routes: Routes = [
      {
           path: 'admin/users-details/:userId',
           component: AdminUsersDetailsComponent,
+          canActivate: [masterGuard]
+     },
+
+     // === ADMIN - Students ===
+
+     {
+          path: 'admin/students-panel',
+          component: AdminStudentsPanelComponent,
           canActivate: [masterGuard]
      },
 

@@ -3,7 +3,7 @@ import { SpinningComponent } from "../../../components/layout/spinning/spinning.
 import { AdminNavbarComponent } from "../../../components/layout/admin/admin-navbar/admin-navbar.component";
 import { InputErrorMessageComponent } from "../../../components/layout/input-error-message/input-error-message.component";
 import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../../types/User';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Companie } from '../../../types/Companie';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { nameValidators } from '../../../validators/nameValidator';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { InfoTopComponent } from "../../../components/layout/info-top/info-top.component";
 import { AuthService } from '../../../services/auth.service';
+import { Role } from '../../../types/Role';
 
 @Component({
   selector: 'app-admin-users-create',
@@ -30,6 +31,7 @@ import { AuthService } from '../../../services/auth.service';
 export class AdminUsersCreateComponent {
   userForm: FormGroup;
   title: string = 'Users';
+  roles: Role[] = [];
 
   //variable for control spinning
   isLoading: boolean = false;
@@ -70,7 +72,20 @@ export class AdminUsersCreateComponent {
     this.userForm.patchValue({
       companieId: companieId
     });
-    console.log(this.userForm.value)
+    
+    this.userService.getAllRoles().subscribe({
+      next: (response: HttpResponse<Role[]>) => {
+        if (response.status == 200) {
+          this.roles = response.body ?? [];
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status == 500) {
+          this.toastr.error("Houve um erro desconhecido, contate o suporte técnico!");
+          this.router.navigate(['/admin/users-panel']);
+        }
+      }
+    })
   }
 
   Submit(): void {

@@ -57,9 +57,9 @@
                               formControlName="role" 
                               name="role" 
                               class="selectRole">
-                                   <option value="0">Administrador</option>
-                                   <option value="0">Moderador</option>
-                                   <option value="2" selected>Recepção</option>
+                              @for (role of roles; track $index) {
+                                   <option value="{{ role.value }}">{{ role.name }}</option>
+                              }
                          </select>
                     </div>
      
