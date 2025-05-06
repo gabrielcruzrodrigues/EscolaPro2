@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../services/auth.service';
 import { formatDate } from '../../../../utils/FormatDate';
 import { SpinningComponent } from "../../spinning/spinning.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-last-active-users',
@@ -21,7 +22,8 @@ export class AdminLastActiveUsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,5 +44,9 @@ export class AdminLastActiveUsersComponent implements OnInit {
         this.isLoading = false;
       }
     })
+  }
+
+  showUsersDetails(userId: number): void {
+    this.router.navigate([`/admin/users-details/${userId}`]);
   }
 }

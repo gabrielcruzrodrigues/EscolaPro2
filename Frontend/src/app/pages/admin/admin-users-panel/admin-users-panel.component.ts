@@ -12,5 +12,5 @@ import { AdminMainSearchUserBoxComponent } from "../../../components/layout/admi
   styleUrl: './admin-users-panel.component.sass'
 })
 export class AdminUsersPanelComponent {
-
+  dropdown: boolean = true;
 }

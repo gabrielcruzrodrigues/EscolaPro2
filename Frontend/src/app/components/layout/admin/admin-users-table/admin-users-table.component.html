@@ -10,20 +10,37 @@
                </tr>
           </thead>
           <tbody>
-               <tr *ngFor="let user of users">
+               <tr *ngFor="let user of users" (click)="openUserDetails(user.id)">
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.roleName }}</td>
                     <td>{{ user.createdAt }}</td>
+
                     <th *ngIf="typeActions == 'default'" class="actions">
-                         <button class="edit action" (click)="goToEditPage(user.id)"><i class="fa-solid fa-pen-to-square"></i></button>
-                         <button (click)="openModal(user.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
+                         <button 
+                              class="edit action" 
+                              (click)="goToEditPage(user.id); $event.stopPropagation()">
+                              <i class="fa-solid fa-pen-to-square"></i>
+                         </button>
+                         <button 
+                              (click)="openModal(user.id); $event.stopPropagation()" 
+                              class="trash action">
+                              <i class="fa-solid fa-trash"></i>
+                         </button>
                     </th>
                     <th *ngIf="typeActions == 'edit'" class="actions">
-                         <button class="edit action" (click)="goToEditPage(user.id)"><i class="fa-solid fa-pen-to-square"></i></button>
+                         <button 
+                              class="edit action" 
+                              (click)="goToEditPage(user.id); $event.stopPropagation()">
+                              <i class="fa-solid fa-pen-to-square"></i>
+                         </button>
                     </th>
                     <th *ngIf="typeActions == 'trash'" class="actions">
-                         <button (click)="openModal(user.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
+                         <button 
+                              (click)="openModal(user.id); $event.stopPropagation()" 
+                              class="trash action">
+                              <i class="fa-solid fa-trash"></i>
+                         </button>
                     </th>
                </tr>
           </tbody>

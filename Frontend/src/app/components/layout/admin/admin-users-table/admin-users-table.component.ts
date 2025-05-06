@@ -64,4 +64,8 @@ export class AdminUsersTableComponent {
   goToEditPage(userId: number): void {
     this.router.navigate([`/admin/users-edit/${userId}`]);
   }
+
+  openUserDetails(userId: number): void {
+    this.router.navigate([`/admin/users-details/${userId}`]);
+  }
 }

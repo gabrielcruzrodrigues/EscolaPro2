@@ -13,7 +13,7 @@
           </thead>
           <tbody>
                @for (user of users; track $index) {
-                    <tr>
+                    <tr (click)="showUsersDetails(user.id)">
                          <td>{{ user.name }}</td>
                          <td>{{ user.roleName }}</td>
                          <td>{{ user.lastAccess }}</td>

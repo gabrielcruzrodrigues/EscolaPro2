@@ -2,11 +2,39 @@
      <div class="title">
           <p>{{ title }}</p>
      </div>
-     <form (submit)="search($event)">
+
+     <form *ngIf="dropdown" (submit)="search($event)">
           <div class="input">
-               <input type="text" id="searchInput" name="student-name" placeholder="Digite aqui o nome ou email do usuário">
+               <input type="text" id="searchInput" name="student-name"
+                    placeholder="Digite aqui o nome ou email do usuário"
+               (input)="search($event)"
+               autocomplete="off">
                <button class="input-button" type="submit">Pesquisar</button>
           </div>
      </form>
+
+     <form *ngIf="dropdown == false" (submit)="search($event)">
+          <div class="input">
+               <input type="text" id="searchInput" name="student-name"
+                    placeholder="Digite aqui o nome ou email do usuário">
+               <button class="input-button" type="submit">Pesquisar</button>
+          </div>
+     </form>
+
+     @if (users.length > 0 && dropdown) {
+          <div class="input-container">
+               <!-- <input ... /> -->
+               <ul class="results-list">
+                    <li *ngFor="let user of users" (click)="openUserDetails(user.id)">
+                         <img src="/user.png">
+                         <p>{{ user.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{ user.roleName }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{ user.email }}</p>&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{ user.lastAccess }}
+                    </li>
+               </ul>
+          </div>
+     }
+
 </section>
 <app-spinning [isLoading]="isLoading"></app-spinning>
