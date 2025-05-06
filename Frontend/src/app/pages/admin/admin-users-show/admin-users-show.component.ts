@@ -1,25 +1,27 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AdminMasterNavbarComponent } from "../../../../components/layout/admin/master/admin-master-navbar/admin-master-navbar.component";
-import { SpinningComponent } from "../../../../components/layout/spinning/spinning.component";
-import { User } from '../../../../types/User';
-import { UserService } from '../../../../services/user.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AdminNavbarComponent } from "../../../components/layout/admin/admin-navbar/admin-navbar.component";
+import { SpinningComponent } from "../../../components/layout/spinning/spinning.component";
+import { AdminUsersTableComponent } from "../../../components/layout/admin/admin-users-table/admin-users-table.component";
+import { UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { User } from '../../../types/User';
 import { HttpResponse } from '@angular/common/http';
-import { UsersTableComponent } from "../../../../components/layout/admin/master/users-table/users-table.component";
-import { formatDate } from '../../../../utils/FormatDate';
+import { formatDate } from '../../../utils/FormatDate';
+import { InfoTopComponent } from "../../../components/layout/info-top/info-top.component";
 
 @Component({
-  selector: 'app-users-show',
+  selector: 'app-admin-users-show',
   imports: [
-    AdminMasterNavbarComponent, 
-    SpinningComponent, 
-    UsersTableComponent
-  ],
-  templateUrl: './users-show.component.html',
-  styleUrl: './users-show.component.sass'
+    AdminNavbarComponent,
+    SpinningComponent,
+    AdminUsersTableComponent,
+    InfoTopComponent
+],
+  templateUrl: './admin-users-show.component.html',
+  styleUrl: './admin-users-show.component.sass'
 })
-export class UsersShowComponent implements OnInit{
+export class AdminUsersShowComponent {
   isLoading: boolean = true;
   users: User[] = [];
   title: string = 'Users';
@@ -31,9 +33,6 @@ export class UsersShowComponent implements OnInit{
   orderEmailListAZToggle: boolean = false;
   emailButtonOrderListAZ: string = 'Ordenar Email A - Z';
   @ViewChild('emailOrderAZ') emailOrderAZ!: ElementRef;
-
-  // orderRoleListAZToggle: boolean = false;
-  // @ViewChild('roleOrderAZ') roleOrderAZ!: ElementRef;
 
   constructor(
     private userService: UserService,

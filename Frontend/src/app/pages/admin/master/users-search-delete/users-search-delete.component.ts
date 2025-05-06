@@ -6,7 +6,11 @@ import { User } from '../../../../types/User';
 
 @Component({
   selector: 'app-users-search-delete',
-  imports: [AdminMasterNavbarComponent, UsersMainSearchBoxComponent, UsersTableComponent],
+  imports: [
+    AdminMasterNavbarComponent, 
+    UsersMainSearchBoxComponent, 
+    UsersTableComponent
+  ],
   templateUrl: './users-search-delete.component.html',
   styleUrl: './users-search-delete.component.sass'
 })

@@ -1,0 +1,17 @@
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <div class="div">
+          <app-admin-main-search-user-box
+               [title]="titleUsersSearchInput"
+               (searchUser)="onSearchUser($event)">
+          </app-admin-main-search-user-box>
+     
+          @if (usersSearched) {
+               <app-admin-users-table 
+                    [users]="users"
+                    [typeActions]="typeActions">
+               </app-admin-users-table >
+          }
+     </div>
+</section>

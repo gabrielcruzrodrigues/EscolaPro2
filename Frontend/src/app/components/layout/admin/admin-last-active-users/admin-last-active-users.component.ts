@@ -6,15 +6,17 @@ import { HttpResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../services/auth.service';
 import { formatDate } from '../../../../utils/FormatDate';
+import { SpinningComponent } from "../../spinning/spinning.component";
 
 @Component({
   selector: 'app-admin-last-active-users',
-  imports: [],
+  imports: [SpinningComponent],
   templateUrl: './admin-last-active-users.component.html',
   styleUrl: './admin-last-active-users.component.sass'
 })
 export class AdminLastActiveUsersComponent implements OnInit {
   users: User[] = [];
+  isLoading: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -32,10 +34,12 @@ export class AdminLastActiveUsersComponent implements OnInit {
           })
 
           this.users = response.body ?? [];
+          this.isLoading = false;
         }
       },
       error: (error) => {
         this.toastr.error("Houve um erro ao tentar buscar o histórico de acesso de usuários, contate um administrador do sistema!");
+        this.isLoading = false;
       }
     })
   }

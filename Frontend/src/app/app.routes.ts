@@ -18,6 +18,9 @@ import { AuthLoadingComponent } from './components/layout/auth-loading/auth-load
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { AdminUsersPanelComponent } from './pages/admin/admin-users-panel/admin-users-panel.component';
 import { AdminUsersCreateComponent } from './pages/admin/admin-users-create/admin-users-create.component';
+import { AdminUsersShowComponent } from './pages/admin/admin-users-show/admin-users-show.component';
+import { AdminUsersSearchEditComponent } from './pages/admin/admin-users-search-edit/admin-users-search-edit.component';
+import { AdminUsersSearchDeleteComponent } from './pages/admin/admin-users-search-delete/admin-users-search-delete.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -120,6 +123,21 @@ export const routes: Routes = [
      {
           path: 'admin/users-create',
           component: AdminUsersCreateComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-show',
+          component: AdminUsersShowComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-search-edit',
+          component: AdminUsersSearchEditComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-search-delete',
+          component: AdminUsersSearchDeleteComponent,
           canActivate: [masterGuard]
      },
 

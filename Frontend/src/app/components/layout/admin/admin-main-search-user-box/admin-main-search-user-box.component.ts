@@ -24,11 +24,11 @@ export class AdminMainSearchUserBoxComponent {
   ) { }
 
   search(event: Event): void {
+    this.isLoading = true;
     event.preventDefault();
     const inputElement = document.getElementById('searchInput') as HTMLInputElement;
 
     if (inputElement.value) {
-      this.isLoading = true;
       this.userService.search(inputElement.value).subscribe({
         next: (response: HttpResponse<User[]>) => {
           const users = response.body ?? [];
@@ -39,7 +39,7 @@ export class AdminMainSearchUserBoxComponent {
           }
           
           this.searchUser.emit(users);
-          // this.isLoading = false;
+          this.isLoading = false;
         },
         error: (error) => {
           if (error.status == 500) {
@@ -49,6 +49,8 @@ export class AdminMainSearchUserBoxComponent {
           }
         }
       })
+    } else {
+      this.isLoading = false;
     }
   }
 }

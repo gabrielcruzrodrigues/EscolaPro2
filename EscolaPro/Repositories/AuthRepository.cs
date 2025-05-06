@@ -1,6 +1,5 @@
 ﻿namespace EscolaPro.Repositories;
 
-
 using Microsoft.EntityFrameworkCore;
 using EscolaPro.Database;
 using EscolaPro.Extensions;
@@ -8,9 +7,7 @@ using EscolaPro.Models.Dtos;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.ViewModels;
-
 using System.IdentityModel.Tokens.Jwt;
-
 using System.Security.Claims;
 using EscolaPro.Models;
 using EscolaPro.Enums;
