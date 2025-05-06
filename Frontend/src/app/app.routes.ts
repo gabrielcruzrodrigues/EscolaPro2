@@ -21,6 +21,7 @@ import { AdminUsersCreateComponent } from './pages/admin/admin-users-create/admi
 import { AdminUsersShowComponent } from './pages/admin/admin-users-show/admin-users-show.component';
 import { AdminUsersSearchEditComponent } from './pages/admin/admin-users-search-edit/admin-users-search-edit.component';
 import { AdminUsersSearchDeleteComponent } from './pages/admin/admin-users-search-delete/admin-users-search-delete.component';
+import { AdminUsersDetailsComponent } from './pages/admin/admin-users-details/admin-users-details.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -138,6 +139,11 @@ export const routes: Routes = [
      {
           path: 'admin/users-search-delete',
           component: AdminUsersSearchDeleteComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-details/:userId',
+          component: AdminUsersDetailsComponent,
           canActivate: [masterGuard]
      },
 

@@ -1,0 +1,34 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="main-section appear">
+     <app-info-top></app-info-top>
+
+     <div class="full-div">
+          <div class="title">
+               <p>Informações do usuário</p>
+          </div>
+          
+          <div class="image-first_infos">
+               <div class="image">
+                    <img src="{{ profile }}">
+               </div>
+               <div class="first_infos">
+                    <div class="info">
+                         <label>Nome</label>
+                         <p>{{ name }}</p>
+                         <label>Email</label>
+                         <p>{{ email }}</p>
+                         <label>Cargo</label>
+                         <p>{{ role }}</p>
+                    </div>
+                    <div class="info">
+                         <label>Data de criação</label>
+                         <p>{{ createdAt }}</p>
+                         <label>Data do último accesso</label>
+                         <p>{{ lastAccess }}</p>
+                         <label>Empresa</label>
+                         <p>{{ companieName }}</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
