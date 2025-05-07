@@ -31,7 +31,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<ActionResult<IEnumerable<UserGeneralDto>>> GetAllAsync()
     {
         var response = await _userGeneralRepository.GetAllUsersAsync();
@@ -39,7 +39,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("{userId:long}")]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<ActionResult<UserGeneralDto>> GetByIdAsync(long userId)
     {
         var user = await _userGeneralRepository.GetByIdAsync(userId);
@@ -47,7 +47,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("last-active-users/{companieId:int}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<UserGeneralDto>> GetLast5ActiveUsers(int companieId)
     {
         var user = await _userGeneralRepository.GetLast5ActiveUsers(companieId);
@@ -55,7 +55,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous] //admin_internal   
+    [AllowAnonymous] //ADMINISTRACAO
     public async Task<ActionResult<UserGeneralDto>> CreateAsync(CreateUserGeneralViewModel request)
     {
         var emailVerify = await _userGeneralRepository.GetByEmailAsync(request.Email);
@@ -101,7 +101,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpDelete("{userId:long}")]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<IActionResult> DisableAsync(long userId)
     {
         await _userGeneralRepository.Disable(userId);
@@ -109,7 +109,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<ActionResult> Search(string param)
     {
         var users = await _userGeneralRepository.Search(param);
@@ -117,7 +117,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("roles")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(Roles = Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
     {
         var roles = Enum.GetValues(typeof(RolesEnum))
@@ -133,7 +133,7 @@ public class UserGeneralController : ControllerBase
 
 
     [HttpPut]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<IActionResult> UpdateAsync(UpdateUserGeneralViewModel request)
     {
         var user = await _userGeneralRepository.GetByIdWithTrackingAsync(request.Id.Value);
@@ -159,11 +159,11 @@ public class UserGeneralController : ControllerBase
         {
             if (request.Role == 0)
             {
-                user.Role = RolesEnum.ADMIN;
+                user.Role = RolesEnum.ADMIN_MASTER;
             }
             if (request.Role == 2)
             {
-                user.Role = RolesEnum.MODERADOR;
+                user.Role = RolesEnum.MODERADOR_MASTER;
             }
         }
 

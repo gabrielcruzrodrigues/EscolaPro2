@@ -57,6 +57,7 @@
                               formControlName="role" 
                               name="role" 
                               class="selectRole">
+                              <option value="" selected disabled>Escolha um acesso</option>
                               @for (role of roles; track $index) {
                                    <option value="{{ role.value }}">{{ role.name }}</option>
                               }

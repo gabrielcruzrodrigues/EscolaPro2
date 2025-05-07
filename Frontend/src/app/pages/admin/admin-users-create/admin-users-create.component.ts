@@ -15,11 +15,12 @@ import { UserService } from '../../../services/user.service';
 import { InfoTopComponent } from "../../../components/layout/info-top/info-top.component";
 import { AuthService } from '../../../services/auth.service';
 import { Role } from '../../../types/Role';
+import { filterRoles } from '../../../utils/FilterRoles';
 
 @Component({
   selector: 'app-admin-users-create',
   imports: [
-    SpinningComponent,
+  SpinningComponent,
     AdminNavbarComponent,
     InputErrorMessageComponent,
     ReactiveFormsModule,
@@ -62,7 +63,7 @@ export class AdminUsersCreateComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator()]],
       passwordVerify: ['', Validators.required],
-      role: [2, Validators.required],
+      role: ['', Validators.required],
       companieId: ['', Validators.required]
     })
   }
@@ -76,7 +77,7 @@ export class AdminUsersCreateComponent {
     this.userService.getAllRoles().subscribe({
       next: (response: HttpResponse<Role[]>) => {
         if (response.status == 200) {
-          this.roles = response.body ?? [];
+          this.roles = filterRoles(response.body ?? []);
         }
       },
       error: (error: HttpErrorResponse) => {

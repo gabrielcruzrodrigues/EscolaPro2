@@ -18,6 +18,8 @@ using EscolaPro.Services.Interfaces.Educacional;
 using EscolaPro.Services.Educacional;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.Repositories.Educacional;
+using EscolaPro.Enums;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +76,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new TokenValidationParameters()
         {
+            RoleClaimType = "Role",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
             ValidIssuer = issuer,
             ValidAudience = audience,
@@ -102,22 +105,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Adiciona a autorização
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("admin", policy =>
+    options.AddPolicy("ADMIN_MASTER", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim("Role", "admin") &&
-            context.User.HasClaim("Role", "moderador") &&
-            context.User.HasClaim("Role", "user")));
+            context.User.HasClaim("Role", RolesEnum.ADMIN_MASTER.ToString())));
 
-    options.AddPolicy("moderador", policy =>
+    options.AddPolicy("MODERADOR_MASTER", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim("Role", "moderador") &&
-            context.User.HasClaim("Role", "user")));
+            context.User.HasClaim("Role", RolesEnum.MODERADOR_MASTER.ToString())));
 
-    options.AddPolicy("user", policy => 
-        policy.RequireClaim("Role", "user"));
+    options.AddPolicy("USER_MASTER", policy => 
+        policy.RequireClaim("Role", RolesEnum.USER_MASTER.ToString()));
 
-    options.AddPolicy("admin_internal", policy =>
-        policy.RequireClaim("Role", "admin_internal"));
+    options.AddPolicy("ADMINISTRACAO", policy =>
+        policy.RequireClaim("Role", RolesEnum.ADMINISTRACAO.ToString()));
 });
 
 // Adicionando políticas globais
