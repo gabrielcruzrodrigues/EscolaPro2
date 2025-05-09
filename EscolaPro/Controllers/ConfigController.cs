@@ -1,4 +1,5 @@
-﻿using EscolaPro.Models;
+﻿using EscolaPro.Enums;
+using EscolaPro.Models;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +29,7 @@ namespace EscolaPro.Controllers
         }
 
         [HttpGet("Database-update")]
-        [Authorize(policy: "admin")]
+        [Authorize(policy: Policies.ADMIN_MASTER)]
         public async Task<IActionResult> DatabaseUpdate()
         {
             var companies = await _companieRepository.GetAllAsync();

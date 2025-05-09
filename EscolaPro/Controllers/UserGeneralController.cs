@@ -117,7 +117,7 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("roles")]
-    [Authorize(Roles = Policies.ADMINISTRACAO)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
     {
         var roles = Enum.GetValues(typeof(RolesEnum))

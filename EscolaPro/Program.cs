@@ -107,17 +107,27 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ADMIN_MASTER", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim("Role", RolesEnum.ADMIN_MASTER.ToString())));
+            context.User.Claims.Any(c =>
+                c.Type == "Role" &&
+                c.Value.Equals(RolesEnum.ADMIN_MASTER.ToString(), StringComparison.OrdinalIgnoreCase))));
 
     options.AddPolicy("MODERADOR_MASTER", policy =>
         policy.RequireAssertion(context =>
-            context.User.HasClaim("Role", RolesEnum.MODERADOR_MASTER.ToString())));
+            context.User.Claims.Any(c =>
+                c.Type == "Role" &&
+                c.Value.Equals(RolesEnum.MODERADOR_MASTER.ToString(), StringComparison.OrdinalIgnoreCase))));
 
-    options.AddPolicy("USER_MASTER", policy => 
-        policy.RequireClaim("Role", RolesEnum.USER_MASTER.ToString()));
+    options.AddPolicy("USER_MASTER", policy =>
+        policy.RequireAssertion(context =>
+            context.User.Claims.Any(c =>
+                    c.Type == "Role" &&
+                    c.Value.Equals(RolesEnum.USER_MASTER.ToString(), StringComparison.OrdinalIgnoreCase))));
 
     options.AddPolicy("ADMINISTRACAO", policy =>
-        policy.RequireClaim("Role", RolesEnum.ADMINISTRACAO.ToString()));
+        policy.RequireAssertion(context =>
+            context.User.Claims.Any(c =>
+                c.Type == "Role" &&
+                c.Value.Equals(RolesEnum.ADMINISTRACAO.ToString(), StringComparison.OrdinalIgnoreCase))));
 });
 
 // Adicionando políticas globais

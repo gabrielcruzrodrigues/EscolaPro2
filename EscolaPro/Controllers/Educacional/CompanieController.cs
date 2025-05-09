@@ -1,4 +1,5 @@
-﻿using EscolaPro.Extensions;
+﻿using EscolaPro.Enums;
+using EscolaPro.Extensions;
 using EscolaPro.Models;
 using EscolaPro.Repositories;
 using EscolaPro.Repositories.Interfaces.Educacional;
@@ -22,7 +23,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet]
-        [Authorize(policy: "admin")]
+        [Authorize(policy: Policies.ADMIN_MASTER)]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Company>>> GetAllAsync()
         {
@@ -31,7 +32,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet("{companieId:int}")]
-        //[Authorize(policy: "admin")]
+        //[Authorize(policy: Policies.ADMIN_MASTER)]
         [AllowAnonymous]
         public async Task<ActionResult<Company>> GetByIdAsync(int companieId)
         {
@@ -68,7 +69,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpPut]
-        [Authorize(policy: "admin")]
+        [Authorize(policy: Policies.ADMIN_MASTER)]
         public async Task<IActionResult> UpdateAsync(UpdateCompanieViewModel request)
         {
             var companie = await _companieRepository.GetByIdAsync(request.Id.Value);
@@ -92,7 +93,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpDelete("{companieId:int}")]
-        //[Authorize(policy: "admin")]
+        //[Authorize(policy: Policies.ADMIN_MASTER)]
         [AllowAnonymous]
         public async Task<IActionResult> DisableAsync(int companieId)
         {
@@ -101,7 +102,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet("search/{param}")]
-        [Authorize(policy: "admin")]
+        [Authorize(policy: Policies.ADMIN_MASTER)]
         public async Task<ActionResult> Search(string param)
         {
             var companie = await _companieRepository.Search(param);

@@ -1,4 +1,5 @@
-﻿using EscolaPro.Models.Educacional;
+﻿using EscolaPro.Enums;
+using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.ViewModels.Educacional;
@@ -29,7 +30,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<ActionResult<IEnumerable<Allergy>>> GetAllAsync()
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -50,7 +51,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet("{allergieId:int}")]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<ActionResult<Allergy>> GetByIdAsync(int allergieId)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -71,7 +72,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpPost]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<ActionResult<Allergy>> CreateAsync(CreateAllergieViewModel request)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -105,7 +106,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpDelete("{allergieId:int}")]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<IActionResult> DisableAsync(int allergieId)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -126,7 +127,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpGet("search/{param}")]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<ActionResult> Search(string param)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -147,7 +148,7 @@ namespace EscolaPro.Controllers.Educacional
         }
 
         [HttpPut]
-        [Authorize(policy: "admin_internal")]
+        [Authorize(policy: Policies.ADMINISTRACAO)]
         public async Task<ActionResult> Update(UpdateAllergieViewModel request)
         {
             // ============= Início validação de empresa e adquirimento do nome da empresa =============

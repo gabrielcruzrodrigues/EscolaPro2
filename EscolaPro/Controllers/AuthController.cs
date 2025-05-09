@@ -1,4 +1,5 @@
-﻿using EscolaPro.Repositories.Interfaces;
+﻿using EscolaPro.Enums;
+using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -27,14 +28,14 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    [Authorize(policy: "user")]
+    [Authorize(policy: Policies.USER_MASTER)]
     public async Task<ActionResult> Logout()
     {
         return Ok(new { message = "Logout realizado com sucesso!" });
     }
 
     [HttpGet("verify")]
-    [Authorize(policy: "admin")]
+    [Authorize(policy: Policies.ADMIN_MASTER)]
     public async Task<IActionResult> TokenVerify()
     {
         return Ok();
