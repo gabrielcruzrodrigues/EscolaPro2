@@ -1,1 +1,70 @@
-<p>admin-users-edit works!</p>
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <div class="full-div">     
+          <div class="title">
+               <h2>Editar usuário</h2>
+          </div>
+     
+          <form class="main-form" [formGroup]="userForm" (ngSubmit)="Submit()">
+               <label>Nome:</label>
+               <input 
+                    type="text" 
+                    formControlName="name" 
+                    placeholder="Digite o Nome do novo usuário" 
+                    name="name"
+                    (input)="clearInputErrors('name')"
+                    (change)="getNameErrors()">
+               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+     
+               <label>Email:</label>
+               <input 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="Digite o Email do novo usuário" 
+                    name="email"
+                    (input)="clearInputErrors('email')"
+                    (change)="getEmailErrors()">
+               <app-input-error-message [errors]="emailErrros"></app-input-error-message>
+     
+               <label>Senha:</label>
+               <input 
+                    type="password" 
+                    formControlName="password" 
+                    placeholder="Digite a senha do novo usuário" 
+                    name="password"
+                    (input)="clearInputErrors('password')"
+                    (change)="getPasswordErrors()">
+               <app-input-error-message [errors]="passwordErrros"></app-input-error-message>
+     
+               <label>Confirmação de senha:</label>
+               <input 
+                    type="password" 
+                    formControlName="passwordVerify" 
+                    placeholder="Digite novamente a senha do novo usuário" 
+                    name="'passwordVerify'"
+                    (input)="clearInputErrors('passwordVerify')"
+                    (change)="getPasswordVerifyErrors()">
+               <app-input-error-message [errors]="passwordVerifyErrors"></app-input-error-message>
+     
+               <div class="main-selects">
+                    <div class="main-select">
+                         <label>Níveis de acesso:</label>
+                         <select 
+                              id="roleSelect"
+                              formControlName="role" 
+                              name="role" 
+                              class="selectRole">
+                              <option value="" disabled>Escolha um acesso</option>
+                              @for (role of roles; track $index) {
+                                   <option value="{{ role.value }}">{{ role.name }}</option>
+                              }
+                         </select>
+                    </div>
+               </div>
+     
+               <button type="submit">Atualizar</button>
+          </form>
+     </div>
+</section>
+<app-spinning [isLoading]="isLoading"></app-spinning>

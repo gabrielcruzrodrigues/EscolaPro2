@@ -23,6 +23,7 @@ import { AdminUsersSearchEditComponent } from './pages/admin/admin-users-search-
 import { AdminUsersSearchDeleteComponent } from './pages/admin/admin-users-search-delete/admin-users-search-delete.component';
 import { AdminUsersDetailsComponent } from './pages/admin/admin-users-details/admin-users-details.component';
 import { AdminStudentsPanelComponent } from './pages/admin/admin-students-panel/admin-students-panel.component';
+import { AdminUsersEditComponent } from './pages/admin/admin-users-edit/admin-users-edit.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -135,6 +136,11 @@ export const routes: Routes = [
      {
           path: 'admin/users-search-edit',
           component: AdminUsersSearchEditComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/users-edit/:userId',
+          component: AdminUsersEditComponent,
           canActivate: [masterGuard]
      },
      {

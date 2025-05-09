@@ -186,9 +186,22 @@ public class UserGeneralController : ControllerBase
 
 
     [HttpPut]
-    [Authorize(policy: Policies.ADMIN_MASTER)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<IActionResult> UpdateAsync(UpdateUserGeneralViewModel request)
     {
+        // ============= Início validação de empresa e adquirimento do nome da empresa =============
+
+        var userIdVerify = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userCompanieId = int.Parse(User.FindFirst("CompanieId")?.Value);
+
+        if (!await CompanieValidation(userIdVerify, userCompanieId))
+        {
+            return BadRequest("Você não tem acesso a essa empresa!");
+        }
+        var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
+
+        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+
         var user = await _userGeneralRepository.GetByIdWithTrackingAsync(request.Id.Value);
         var emailVerify = await _userGeneralRepository.GetByEmailAsync(request.Email);
         var nameVerify = await _userGeneralRepository.GetByNameAsync(request.Name);
