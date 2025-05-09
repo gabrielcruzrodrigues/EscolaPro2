@@ -1,0 +1,172 @@
+<section class="form">
+     <div #step1>
+          <div class="image-first_infos">
+               <div class="image">
+                    <div class="upload-box" (click)="fileInput.click()">
+                         <ng-container *ngIf="previewUrl; else uploadIcon">
+                              <img [src]="previewUrl" alt="Preview" />
+                         </ng-container>
+          
+                         <ng-template #uploadIcon>
+                              <i class="fa-solid fa-upload"></i>
+                         </ng-template>
+          
+                         <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden />
+                    </div>
+               </div>
+               <div class="first_infos">
+                    <app-admin-main-search-user-box
+                         [title]="titleSearchStudents"
+                         [dropdown]="true"
+                         [placeholder]="placeholderSearchStudents">
+                    </app-admin-main-search-user-box>
+     
+                    <div class="fields">
+                         <label>Nome completo:</label>
+                         <input 
+                              type="text" 
+                              formControlName="name" 
+                              placeholder="Digite o Nome do novo familiar" 
+                              name="name"
+                              (input)="clearInputErrors('name')"
+                              (change)="getNameErrors()">
+                         <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+     
+                         <label>Email:</label>
+                         <input 
+                              type="text" 
+                              formControlName="name" 
+                              placeholder="Digite o Nome do novo familiar" 
+                              name="name"
+                              (input)="clearInputErrors('name')"
+                              (change)="getNameErrors()">
+                         <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+                    </div>
+               </div>
+          </div>
+          <!-- <div class="three-input-fields">
+               <div class="inputs-div">
+                    <label>RG:</label>
+                         <input 
+                              type="text" 
+                              formControlName="rg" 
+                              placeholder="Digite o RG do novo familiar" 
+                              name="rg"
+                              (input)="clearInputErrors('rg')"
+                              (change)="getRgErrors()">
+                         <app-input-error-message [errors]="rgErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Emissor do RG:</label>
+                         <input 
+                              type="text" 
+                              formControlName="RgDispatched" 
+                              placeholder="Ex: SSP" 
+                              name="RgDispatched"
+                              (input)="clearInputErrors('RgDispatched')"
+                              (change)="getRgDispatchedErrors()">
+                         <app-input-error-message [errors]="rgDispatchedErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Data de emissão:</label>
+                         <input 
+                              type="date" 
+                              formControlName="RgDispatchedDate" 
+                              name="RgDispatchedDate"
+                              (input)="clearInputErrors('RgDispatchedDate')"
+                              (change)="getRgDispatchedDateErrors()">
+                         <app-input-error-message [errors]="rgDispatchedDateErrors"></app-input-error-message>
+               </div>
+          </div> -->
+     
+          <div class="three-input-fields">
+               <!-- <div class="inputs-div">
+                    <label>CPF:</label>
+                         <input 
+                              type="text" 
+                              formControlName="rg" 
+                              placeholder="Digite o RG do novo familiar" 
+                              name="rg"
+                              (input)="clearInputErrors('rg')"
+                              (change)="getRgErrors()">
+                         <app-input-error-message [errors]="rgErrors"></app-input-error-message>
+               </div>
+     
+               
+               <div class="inputs-div">
+                    <label>Data :</label>
+                    <select formControlName="city" (click)="searchCity($event)">
+                         <option value="" disabled selected>Selecione</option>
+                         <option value="0">Masculino</option>
+                         <option value="1">Feminino</option>
+                    </select>
+                    <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
+               </div>
+     
+               -->
+     
+               <div class="inputs-div">
+                    <label>Data de nascimento:</label>
+                         <input 
+                              type="date" 
+                              formControlName="dateOfBirth" 
+                              name="dateOfBirth"
+                              (input)="clearInputErrors('dateOfBirth')"
+                              (change)="getDateOfBirthErrors()">
+                         <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
+               </div> 
+               
+               <div class="inputs-div">
+                    <label>Estado:</label>
+                    <select id="estado-select" formControlName="state" (change)="findCitiesByState($event)">
+                         <option value="" disabled selected>Selecione</option>
+                         <option value="AC">Acre</option>
+                         <option value="AL">Alagoas</option>
+                         <option value="AP">Amapá</option>
+                         <option value="AM">Amazonas</option>
+                         <option value="BA">Bahia</option>
+                         <option value="CE">Ceará</option>
+                         <option value="DF">Distrito Federal</option>
+                         <option value="ES">Espírito Santo</option>
+                         <option value="GO">Goiás</option>
+                         <option value="MA">Maranhão</option>
+                         <option value="MT">Mato Grosso</option>
+                         <option value="MS">Mato Grosso do Sul</option>
+                         <option value="MG">Minas Gerais</option>
+                         <option value="PA">Pará</option>
+                         <option value="PB">Paraíba</option>
+                         <option value="PR">Paraná</option>
+                         <option value="PE">Pernambuco</option>
+                         <option value="PI">Piauí</option>
+                         <option value="RJ">Rio de Janeiro</option>
+                         <option value="RN">Rio Grande do Norte</option>
+                         <option value="RS">Rio Grande do Sul</option>
+                         <option value="RO">Rondônia</option>
+                         <option value="RR">Roraima</option>
+                         <option value="SC">Santa Catarina</option>
+                         <option value="SP">São Paulo</option>
+                         <option value="SE">Sergipe</option>
+                         <option value="TO">Tocantins</option>
+                    </select>
+                         <app-input-error-message [errors]="stateErrors"></app-input-error-message>
+               </div>
+     
+               <div class="inputs-div">
+                    <label>Cidade:</label>
+                         <select formControlName="city" (click)="searchCity($event)">
+                              <option value="" disabled selected>Selecione</option>
+                              <option *ngFor="let city of cities" [value]="city">{{ city }}</option> 
+                         </select>
+                         <app-input-error-message [errors]="cityErrors"></app-input-error-message>
+               </div>
+          </div>
+     </div>
+     <div #step2 class="disable">
+          <p>step2</p>
+     </div>
+     <div #step3 class="disable">
+          <p>step3</p>
+     </div>
+     <app-buttons-form></app-buttons-form>
+</section>
+

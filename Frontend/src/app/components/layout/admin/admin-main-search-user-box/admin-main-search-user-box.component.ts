@@ -24,6 +24,7 @@ export class AdminMainSearchUserBoxComponent {
   @Input() dropdown: boolean = false;
   @Output() searchUser = new EventEmitter<User[]>();
   users: User[] = [];
+  @Input() placeholder: string = "";
 
   constructor(
     private userService: UserService,

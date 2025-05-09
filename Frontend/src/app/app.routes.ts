@@ -24,6 +24,8 @@ import { AdminUsersSearchDeleteComponent } from './pages/admin/admin-users-searc
 import { AdminUsersDetailsComponent } from './pages/admin/admin-users-details/admin-users-details.component';
 import { AdminStudentsPanelComponent } from './pages/admin/admin-students-panel/admin-students-panel.component';
 import { AdminUsersEditComponent } from './pages/admin/admin-users-edit/admin-users-edit.component';
+import { AdminFamiliesPanelComponent } from './pages/admin/admin-families-panel/admin-families-panel.component';
+import { AdminFamiliesCreateComponent } from './pages/admin/admin-families-create/admin-families-create.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -159,6 +161,19 @@ export const routes: Routes = [
      {
           path: 'admin/students-panel',
           component: AdminStudentsPanelComponent,
+          canActivate: [masterGuard]
+     },
+
+     // === ADMIN - Families ===
+
+     {
+          path: 'admin/families-panel',
+          component: AdminFamiliesPanelComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/families-create',
+          component: AdminFamiliesCreateComponent,
           canActivate: [masterGuard]
      },
 

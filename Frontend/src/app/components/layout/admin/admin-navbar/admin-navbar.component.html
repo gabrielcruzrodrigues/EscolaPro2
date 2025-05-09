@@ -25,6 +25,12 @@
                     </a>
                </li>
 
+               <li [ngClass]="{ 'selected-li': currentRoute.startsWith('/admin/famil') }">
+                    <a [routerLink]="['/admin/families-panel']">
+                         <i class="fa-solid fa-people-roof icon"></i>Familiares
+                    </a>
+               </li>
+
                <li (click)="logout()">
                     <a><i class="fa-solid fa-door-open icon"></i>Sair</a>
                </li>

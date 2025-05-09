@@ -16,7 +16,7 @@ import { formatDate } from '../../../utils/FormatDate';
   styleUrl: './admin-users-details.component.sass'
 })
 export class AdminUsersDetailsComponent implements OnInit {
-  profile: string = '/user-default.png';
+  profile: string = '/perfil-photo.png';
   name: string = 'Usuário do sistema Escola Pro 2';
   email: string = 'usuario@example.com';
   role: string = 'Cargo teste';

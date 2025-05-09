@@ -6,7 +6,7 @@
      <form *ngIf="dropdown" (submit)="search($event)">
           <div class="input">
                <input type="text" id="searchInput" name="student-name"
-                    placeholder="Digite aqui o nome ou email do usuário"
+                    placeholder="{{ placeholder }}"
                (input)="search($event)"
                autocomplete="off">
                <button class="input-button" type="submit">Pesquisar</button>
@@ -16,7 +16,7 @@
      <form *ngIf="dropdown == false" (submit)="search($event)">
           <div class="input">
                <input type="text" id="searchInput" name="student-name"
-                    placeholder="Digite aqui o nome ou email do usuário">
+                    placeholder="{{ placeholder }}">
                <button class="input-button" type="submit">Pesquisar</button>
           </div>
      </form>
