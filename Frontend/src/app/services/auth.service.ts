@@ -53,9 +53,9 @@ export class AuthService {
         return 'Usuário'
       case 2:
         return 'Moderador'
-      case 3:
+      case 10:
         return 'Administrador'
-      case 4:
+      case 11:
         return 'Secretária'
       default:
         return "undefined"

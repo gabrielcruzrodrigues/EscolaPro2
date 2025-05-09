@@ -28,14 +28,14 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    [Authorize(policy: Policies.USER_MASTER)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Logout()
     {
         return Ok(new { message = "Logout realizado com sucesso!" });
     }
 
     [HttpGet("verify")]
-    [Authorize(policy: Policies.ADMIN_MASTER)]
+    [Authorize(policy: Policies.MODERADOR_MASTER)]
     public async Task<IActionResult> TokenVerify()
     {
         return Ok();

@@ -34,6 +34,10 @@ export class AuthLoadingComponent implements OnInit {
           }
         });
         break;
+      case 10:
+        this.router.navigate(['/admin/dashboard']);
+        break;
+        
       default:
         this.router.navigate(['/login'])
     }

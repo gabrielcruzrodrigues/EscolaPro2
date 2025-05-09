@@ -1,4 +1,5 @@
-﻿using EscolaPro.Models.Educacional;
+﻿using EscolaPro.Enums;
+using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.ViewModels.Educacional;
@@ -34,7 +35,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<FixedHealth>>> GetAllAsync()
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -55,7 +56,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpGet("{fixedHealthId:int}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<FixedHealth>> GetByIdAsync(int fixedHealthId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -76,7 +77,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<FixedHealth>> CreateAsync(CreateFixedHealthViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -127,7 +128,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpDelete("{fixedHealthId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<IActionResult> DisableAsync(int fixedHealthId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -148,7 +149,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpGet("search/{fixedHealthId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> SearchByStudentId(long fixedHealthId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -169,7 +170,7 @@ public class FixedHealthController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Update(UpdateFixedHealthViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============

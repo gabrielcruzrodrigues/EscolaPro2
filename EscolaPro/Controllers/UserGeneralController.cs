@@ -8,6 +8,7 @@ using EscolaPro.ViewModels.Educacional;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 
 namespace EscolaPro.Controllers;
 
@@ -31,17 +32,43 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: Policies.ADMIN_MASTER)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<UserGeneralDto>>> GetAllAsync()
     {
+        // ============= Início validação de empresa e adquirimento do nome da empresa =============
+
+        var userIdVerify = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userCompanieId = int.Parse(User.FindFirst("CompanieId")?.Value);
+
+        if (!await CompanieValidation(userIdVerify, userCompanieId))
+        {
+            return BadRequest("Você não tem acesso a essa empresa!");
+        }
+        var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
+
+        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+
         var response = await _userGeneralRepository.GetAllUsersAsync();
         return Ok(response);
     }
 
     [HttpGet("{userId:long}")]
-    [Authorize(policy: Policies.ADMIN_MASTER)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<UserGeneralDto>> GetByIdAsync(long userId)
     {
+        // ============= Início validação de empresa e adquirimento do nome da empresa =============
+
+        var userIdVerify = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userCompanieId = int.Parse(User.FindFirst("CompanieId")?.Value);
+
+        if (!await CompanieValidation(userIdVerify, userCompanieId))
+        {
+            return BadRequest("Você não tem acesso a essa empresa!");
+        }
+        var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
+
+        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+
         var user = await _userGeneralRepository.GetByIdAsync(userId);
         return Ok(user);
     }
@@ -50,6 +77,19 @@ public class UserGeneralController : ControllerBase
     [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<UserGeneralDto>> GetLast5ActiveUsers(int companieId)
     {
+        // ============= Início validação de empresa e adquirimento do nome da empresa =============
+
+        var userIdVerify = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userCompanieId = int.Parse(User.FindFirst("CompanieId")?.Value);
+
+        if (!await CompanieValidation(userIdVerify, userCompanieId))
+        {
+            return BadRequest("Você não tem acesso a essa empresa!");
+        }
+        var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
+
+        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+
         var user = await _userGeneralRepository.GetLast5ActiveUsers(companieId);
         return Ok(user);
     }
@@ -109,9 +149,22 @@ public class UserGeneralController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
-    [Authorize(policy: Policies.ADMIN_MASTER)]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Search(string param)
     {
+        // ============= Início validação de empresa e adquirimento do nome da empresa =============
+
+        var userIdVerify = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userCompanieId = int.Parse(User.FindFirst("CompanieId")?.Value);
+
+        if (!await CompanieValidation(userIdVerify, userCompanieId))
+        {
+            return BadRequest("Você não tem acesso a essa empresa!");
+        }
+        var userCompanie = await _companieRepository.GetByIdAsync(userCompanieId);
+
+        // ============= Fim validação de empresa e adquirimento do nome da empresa =============
+
         var users = await _userGeneralRepository.Search(param);
         return Ok(users);
     }
@@ -183,5 +236,17 @@ public class UserGeneralController : ControllerBase
         }
 
         return StatusCode(204);
+    }
+
+    private async Task<bool> CompanieValidation(long userId, int companieId)
+    {
+        var userGeneral = await _userGeneralRepository.GetByIdAsync(userId);
+
+        if (userGeneral.CompanieId == companieId)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -2,6 +2,7 @@
      <table class="custom-table">
           <thead>
                <tr>
+                    <th>Perfil</th>
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Role</th>
@@ -11,6 +12,7 @@
           </thead>
           <tbody>
                <tr *ngFor="let user of users" (click)="openUserDetails(user.id)">
+                    <th class="col-image"><img src="{{ imageProfile }}"></th>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.roleName }}</td>

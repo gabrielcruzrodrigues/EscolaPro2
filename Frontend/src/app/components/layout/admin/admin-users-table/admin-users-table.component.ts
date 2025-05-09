@@ -24,6 +24,7 @@ export class AdminUsersTableComponent {
   modalDeleteMessage: string = "Tem certeza de que deseja desativar este usuário?";
   userId: number = 0;
   isLoading: boolean = false;
+  imageProfile: string = '/perfil-photo.png';
 
   isModalOpen: boolean = false;
 

@@ -35,7 +35,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<Family>>> GetAllAsync()
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -56,7 +56,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpGet("{familyId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<Family>> GetByIdAsync(int familyId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -77,7 +77,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<Family>> CreateAsync([FromForm] CreateFamilyViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -98,7 +98,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpDelete("{familyId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<IActionResult> DisableAsync(int familyId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -119,7 +119,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Search(string param)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -140,7 +140,7 @@ public class FamilyController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Update(UpdateFamilyViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -277,5 +277,4 @@ public class FamilyController : ControllerBase
 
         return false;
     }
-
 }

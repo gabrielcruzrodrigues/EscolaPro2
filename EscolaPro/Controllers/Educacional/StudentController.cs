@@ -1,4 +1,5 @@
-﻿using EscolaPro.Models.Educacional;
+﻿using EscolaPro.Enums;
+using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
@@ -47,7 +48,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<Student>>> GetAllAsync()
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -68,7 +69,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{studentId:int}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<Student>> GetByIdAsync(int studentId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -89,7 +90,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<Allergy>> CreateAsync(CreateStudentViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -213,7 +214,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpDelete("{studentId:int}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<IActionResult> DisableAsync(int studentId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -234,7 +235,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Search(string param)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============

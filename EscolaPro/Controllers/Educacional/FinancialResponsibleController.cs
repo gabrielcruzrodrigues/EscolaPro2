@@ -34,7 +34,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<IEnumerable<FinancialResponsible>>> GetAllAsync()
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -55,7 +55,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpGet("{financialResponsibleId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<FinancialResponsible>> GetByIdAsync(int financialResponsibleId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -76,7 +76,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult<FinancialResponsible>> CreateAsync([FromForm] CreateFinancialResponsibleViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -97,7 +97,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpDelete("{financialResponsibleId:long}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<IActionResult> DisableAsync(int financialResponsibleId)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -118,7 +118,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Search(string param)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
@@ -139,7 +139,7 @@ public class FinancialResponsibleController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(policy: "admin_internal")]
+    [Authorize(policy: Policies.ADMINISTRACAO)]
     public async Task<ActionResult> Update(UpdateFinancialResponsibleViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
