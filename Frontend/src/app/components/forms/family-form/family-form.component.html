@@ -167,6 +167,6 @@
      <div #step3 class="disable">
           <p>step3</p>
      </div>
-     <app-buttons-form></app-buttons-form>
+     <app-buttons-form (stepButton)="onStepChange($event)" [step]="stepName"></app-buttons-form>
 </section>
 

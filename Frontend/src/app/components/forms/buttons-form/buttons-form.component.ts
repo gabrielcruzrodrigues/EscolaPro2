@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-buttons-form',
@@ -7,13 +7,14 @@ import { Component, Input } from '@angular/core';
   styleUrl: './buttons-form.component.sass'
 })
 export class ButtonsFormComponent {
-  @Input() step: string = 'etapa familiar : 1'
+  @Input() step: string = 'etapa familiar : 1';
+  @Output() stepButton = new EventEmitter<string>();
 
   emitBack(): void {
-
+    this.stepButton.emit('back');
   }
 
   emitNext(): void {
-
+    this.stepButton.emit('next');
   }
 }
