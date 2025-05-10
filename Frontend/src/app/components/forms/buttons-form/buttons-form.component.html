@@ -1,6 +1,15 @@
 <section>
-     <button (click)="emitBack()" class="back"><i class="fa-solid fa-backward icon"></i>Anterior</button>
-     <p>{{ step }}</p>
-     <button (click)="emitNext()" class="next">Próximo<i class="fa-solid fa-forward icon"></i></button>
+     <div class="left">
+          <button *ngIf="!firstStep" (click)="emitBack()" class="back"><i
+                    class="fa-solid fa-backward icon"></i>Anterior</button>
+     </div>
+     <div class="center">
+          <p>{{ step }}</p>
+     </div>
+     <div class="right">
+          <button *ngIf="!lastStep" (click)="emitNext()" class="next">Próximo<i
+                    class="fa-solid fa-forward icon"></i></button>
+          <button *ngIf="lastStep" (click)="finish()" class="finish">Finalizar<i
+                    class="fa-solid fa-circle-check icon"></i></button>
+     </div>
 </section>
-

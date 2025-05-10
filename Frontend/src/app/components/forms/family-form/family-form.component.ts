@@ -24,6 +24,8 @@ export class FamilyFormComponent implements AfterViewInit {
   cities: string[] = ['Jequié', 'Jaguaquara'];
   step: number = 1;
   stepName: string = 'Etapa familiar : 1';
+  firstStep: boolean = true;
+  lastEtep: boolean = false;
 
   rgFileUploaded: boolean = false;
   financialUploaded: boolean = false;
@@ -32,7 +34,6 @@ export class FamilyFormComponent implements AfterViewInit {
   //view childs
   @ViewChild('step1') step1!: ElementRef;
   @ViewChild('step2') step2!: ElementRef;
-  @ViewChild('step3') step3!: ElementRef;
 
   //arrays with errors 
   nameErrors: string[] = [];
@@ -114,18 +115,6 @@ export class FamilyFormComponent implements AfterViewInit {
     }
   }
 
-  changeStep(option: string): void {
-    if (option === 'next' && this.step <= 4) {
-      this.step++;
-    }
-
-    if (option === 'back' && this.step >= 2) {
-      this.step--;
-    }
-
-    this.updateTemplate();
-  }
-
   updateTemplate(): void {
     switch (this.step) {
       case 1:
@@ -138,27 +127,51 @@ export class FamilyFormComponent implements AfterViewInit {
       case 2:
         this.step1.nativeElement.classList.add('disable');
         this.step2.nativeElement.classList.remove('disable');
-        this.step3.nativeElement.classList.add('disable');
         this.stepName = 'Etapa familiar : 2';
-        break;
-      case 3:
-        this.step2.nativeElement.classList.add('disable');
-        this.step3.nativeElement.classList.remove('disable');
-        this.stepName = 'Etapa familiar : 3';
         break;
     }
   }
 
   onStepChange(event: string): void {
+    console.log('last: ' + this.step)
     if (event.match('next')) {
       this.step++;
+
+      if (this.step == 1) {
+        this.firstStep = true;
+      } else {
+        this.firstStep = false;
+      }
+
+      if (this.step == 2) {
+        this.lastEtep = true;
+      } else {
+        this.lastEtep = false;
+      }
+
       this.updateTemplate();
-    } else {
+    } else if (event.match('back')) {
       if (this.step >= 1) {
         this.step--;
+
+        if (this.step == 1) {
+          this.firstStep = true;
+        } else {
+          this.firstStep = false;
+        }
+
+        if (this.step == 2) {
+          this.lastEtep = true;
+        } else {
+          this.lastEtep = false;
+        }
+
         this.updateTemplate();
       }
+    } else if (event.match('finish')) {
+      alert('cadastrado')
     }
+    console.log('now: ' + this.step)
   }
 
   getRgErrors(): void {
