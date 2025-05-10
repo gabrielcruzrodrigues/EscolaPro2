@@ -11,7 +11,7 @@
                               <i class="fa-solid fa-upload"></i>
                          </ng-template>
           
-                         <input type="file" accept="image/*" (change)="onFileSelected($event)" #fileInput hidden />
+                         <input type="file" accept="image/*" (change)="onImageSelected($event)" #fileInput hidden />
                     </div>
                </div>
                <div class="first_infos">
@@ -44,40 +44,6 @@
                     </div>
                </div>
           </div>
-          <!-- <div class="three-input-fields">
-               <div class="inputs-div">
-                    <label>RG:</label>
-                         <input 
-                              type="text" 
-                              formControlName="rg" 
-                              placeholder="Digite o RG do novo familiar" 
-                              name="rg"
-                              (input)="clearInputErrors('rg')"
-                              (change)="getRgErrors()">
-                         <app-input-error-message [errors]="rgErrors"></app-input-error-message>
-               </div>
-               <div class="inputs-div">
-                    <label>Emissor do RG:</label>
-                         <input 
-                              type="text" 
-                              formControlName="RgDispatched" 
-                              placeholder="Ex: SSP" 
-                              name="RgDispatched"
-                              (input)="clearInputErrors('RgDispatched')"
-                              (change)="getRgDispatchedErrors()">
-                         <app-input-error-message [errors]="rgDispatchedErrors"></app-input-error-message>
-               </div>
-               <div class="inputs-div">
-                    <label>Data de emissão:</label>
-                         <input 
-                              type="date" 
-                              formControlName="RgDispatchedDate" 
-                              name="RgDispatchedDate"
-                              (input)="clearInputErrors('RgDispatchedDate')"
-                              (change)="getRgDispatchedDateErrors()">
-                         <app-input-error-message [errors]="rgDispatchedDateErrors"></app-input-error-message>
-               </div>
-          </div> -->
      
           <div class="three-input-fields">
                <!-- <div class="inputs-div">
@@ -162,7 +128,59 @@
           </div>
      </div>
      <div #step2 class="disable">
-          <p>step2</p>
+          <div class="four-input-fields">
+               <div class="inputs-div">
+                    <label>RG:</label>
+                         <input 
+                              type="text" 
+                              formControlName="rg" 
+                              placeholder="Digite o RG do novo familiar" 
+                              name="rg"
+                              (input)="clearInputErrors('rg')"
+                              (change)="getRgErrors()">
+                         <app-input-error-message [errors]="rgErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Emissor do RG:</label>
+                         <input 
+                              type="text" 
+                              formControlName="RgDispatched" 
+                              placeholder="Ex: SSP" 
+                              name="RgDispatched"
+                              (input)="clearInputErrors('RgDispatched')"
+                              (change)="getRgDispatchedErrors()">
+                         <app-input-error-message [errors]="rgDispatchedErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Data de emissão:</label>
+                         <input 
+                              type="date" 
+                              formControlName="RgDispatchedDate" 
+                              name="RgDispatchedDate"
+                              (input)="clearInputErrors('RgDispatchedDate')"
+                              (change)="getRgDispatchedDateErrors()">
+                         <app-input-error-message [errors]="rgDispatchedDateErrors"></app-input-error-message>
+               </div>
+               
+               <div class="inputs-div">
+                    <label>Cópia digital:</label>
+                    <div class="upload-box-field" (click)="fileInputField.click()">
+                              <i *ngIf="!rgFileUploaded" class="fa-solid fa-upload"></i>
+
+                              <i *ngIf="rgFileUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                              
+                              <input
+                                   hidden
+                                   #fileInputField 
+                                   type="file" 
+                                   name="rgFile"
+                                   accept=".pdf, .png, .jpeg, .jpg"
+                                   (input)="clearInputErrors('rgFile')"
+                                   (change)="onFileSelected($event, 'rg'); getRgFileErrors()">
+                              <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                    </div>
+               </div>
+          </div>
      </div>
      <div #step3 class="disable">
           <p>step3</p>

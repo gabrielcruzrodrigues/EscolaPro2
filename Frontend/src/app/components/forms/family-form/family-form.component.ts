@@ -23,7 +23,8 @@ export class FamilyFormComponent implements AfterViewInit {
   placeholderSearchStudents: string = 'Digite aqui o nome ou email do estudante temp';
   cities: string[] = ['Jequié', 'Jaguaquara'];
   step: number = 1;
-  stepName: string = 'etapa familiar : 1';
+  stepName: string = 'Etapa familiar : 1';
+  rgFileUploaded: boolean = false;
 
   //view childs
   @ViewChild('step1') step1!: ElementRef;
@@ -39,10 +40,12 @@ export class FamilyFormComponent implements AfterViewInit {
   stateErrors: string[] = [];
   cityErrors: string[] = [];
   dateOfBirthErrors: string[] = [];
+  rgFileErrors: string[] = [];
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      image: [null]
+      image: [null],
+      rgFile: [null]
     });
   }
 
@@ -50,7 +53,7 @@ export class FamilyFormComponent implements AfterViewInit {
     this.updateTemplate();
   }
 
-  onFileSelected(event: Event) {
+  onImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       this.form.patchValue({ image: file });
@@ -62,6 +65,22 @@ export class FamilyFormComponent implements AfterViewInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  onFileSelected(event: Event, option: string): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (file) {
+      switch (option) {
+        case 'rg':
+          this.form.patchValue({ rgFile: file });
+          this.rgFileUploaded = true;
+          break;
+      }
+    }
+
+    input.value = '';
   }
 
   clearInputErrors(option: string): void {
@@ -92,19 +111,19 @@ export class FamilyFormComponent implements AfterViewInit {
         // alert('oi')
         this.step1.nativeElement.classList.remove('disable');
         this.step2.nativeElement.classList.add('disable');
-        this.stepName = 'etapa familiar : 1';
-          break;
-        
-        case 2:
-          this.step1.nativeElement.classList.add('disable');
-          this.step2.nativeElement.classList.remove('disable');
-          this.step3.nativeElement.classList.add('disable');
-          this.stepName = 'etapa familiar : 2';
-          break;
-        case 3:
-          this.step2.nativeElement.classList.add('disable');
-          this.step3.nativeElement.classList.remove('disable');
-          this.stepName = 'etapa familiar : 3';
+        this.stepName = 'Etapa familiar : 1';
+        break;
+
+      case 2:
+        this.step1.nativeElement.classList.add('disable');
+        this.step2.nativeElement.classList.remove('disable');
+        this.step3.nativeElement.classList.add('disable');
+        this.stepName = 'Etapa familiar : 2';
+        break;
+      case 3:
+        this.step2.nativeElement.classList.add('disable');
+        this.step3.nativeElement.classList.remove('disable');
+        this.stepName = 'Etapa familiar : 3';
         break;
     }
   }
@@ -142,6 +161,10 @@ export class FamilyFormComponent implements AfterViewInit {
   }
 
   getDateOfBirthErrors(): void {
+
+  }
+
+  getRgFileErrors(): void {
 
   }
 
