@@ -45,32 +45,7 @@
                </div>
           </div>
      
-          <div class="three-input-fields">
-               <!-- <div class="inputs-div">
-                    <label>CPF:</label>
-                         <input 
-                              type="text" 
-                              formControlName="rg" 
-                              placeholder="Digite o RG do novo familiar" 
-                              name="rg"
-                              (input)="clearInputErrors('rg')"
-                              (change)="getRgErrors()">
-                         <app-input-error-message [errors]="rgErrors"></app-input-error-message>
-               </div>
-     
-               
-               <div class="inputs-div">
-                    <label>Data :</label>
-                    <select formControlName="city" (click)="searchCity($event)">
-                         <option value="" disabled selected>Selecione</option>
-                         <option value="0">Masculino</option>
-                         <option value="1">Feminino</option>
-                    </select>
-                    <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
-               </div>
-     
-               -->
-     
+          <div class="three-input-fields">     
                <div class="inputs-div">
                     <label>Data de nascimento:</label>
                          <input 
@@ -81,49 +56,25 @@
                               (change)="getDateOfBirthErrors()">
                          <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
                </div> 
-               
                <div class="inputs-div">
-                    <label>Estado:</label>
-                    <select id="estado-select" formControlName="state" (change)="findCitiesByState($event)">
-                         <option value="" disabled selected>Selecione</option>
-                         <option value="AC">Acre</option>
-                         <option value="AL">Alagoas</option>
-                         <option value="AP">Amapá</option>
-                         <option value="AM">Amazonas</option>
-                         <option value="BA">Bahia</option>
-                         <option value="CE">Ceará</option>
-                         <option value="DF">Distrito Federal</option>
-                         <option value="ES">Espírito Santo</option>
-                         <option value="GO">Goiás</option>
-                         <option value="MA">Maranhão</option>
-                         <option value="MT">Mato Grosso</option>
-                         <option value="MS">Mato Grosso do Sul</option>
-                         <option value="MG">Minas Gerais</option>
-                         <option value="PA">Pará</option>
-                         <option value="PB">Paraíba</option>
-                         <option value="PR">Paraná</option>
-                         <option value="PE">Pernambuco</option>
-                         <option value="PI">Piauí</option>
-                         <option value="RJ">Rio de Janeiro</option>
-                         <option value="RN">Rio Grande do Norte</option>
-                         <option value="RS">Rio Grande do Sul</option>
-                         <option value="RO">Rondônia</option>
-                         <option value="RR">Roraima</option>
-                         <option value="SC">Santa Catarina</option>
-                         <option value="SP">São Paulo</option>
-                         <option value="SE">Sergipe</option>
-                         <option value="TO">Tocantins</option>
-                    </select>
-                         <app-input-error-message [errors]="stateErrors"></app-input-error-message>
+                    <label>Telefone/WhatsApp:</label>
+                         <input 
+                              type="number" 
+                              formControlName="phone" 
+                              placeholder="Digite o Telefone/WhatsApp do novo familiar" 
+                              name="phone"
+                              (input)="clearInputErrors('phone')"
+                              (change)="getPhoneErrors()">
+                         <app-input-error-message [errors]="phoneErrors"></app-input-error-message>
                </div>
-     
                <div class="inputs-div">
-                    <label>Cidade:</label>
-                         <select formControlName="city" (click)="searchCity($event)">
-                              <option value="" disabled selected>Selecione</option>
-                              <option *ngFor="let city of cities" [value]="city">{{ city }}</option> 
+                    <label>Sexo:</label>
+                         <select formControlName="sex">
+                              <option value="" selected disabled>Selecione</option>
+                              <option value="0">Maculino</option>
+                              <option value="1">Feminino</option>
                          </select>
-                         <app-input-error-message [errors]="cityErrors"></app-input-error-message>
+                         <app-input-error-message [errors]="phoneErrors"></app-input-error-message>
                </div>
           </div>
      </div>
@@ -163,7 +114,7 @@
                </div>
                
                <div class="inputs-div">
-                    <label>Cópia digital:</label>
+                    <label>Cópia digital do RG:</label>
                     <div class="upload-box-field" (click)="fileInputField.click()">
                               <i *ngIf="!rgFileUploaded" class="fa-solid fa-upload"></i>
 
@@ -179,6 +130,178 @@
                                    (change)="onFileSelected($event, 'rg'); getRgFileErrors()">
                               <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                     </div>
+               </div>
+          </div>
+<div class="four-input-fields">
+               <div class="inputs-div">
+                    <label>Naturalidade:</label>
+                         <input 
+                              type="text" 
+                              formControlName="naturalness" 
+                              placeholder="Ex: Jequié" 
+                              name="naturalness"
+                              (input)="clearInputErrors('naturalness')"
+                              (change)="getNaturalnessErrors()">
+                         <app-input-error-message [errors]="NaturalnessErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Naturalidade:</label>
+                         <input 
+                              type="text" 
+                              formControlName="nationality" 
+                              placeholder="Ex: Brasileiro" 
+                              name="nationality"
+                              (input)="clearInputErrors('nationality')"
+                              (change)="getNationalityErrors()">
+                         <app-input-error-message [errors]="NationalityErrors"></app-input-error-message>
+               </div> 
+               <div class="inputs-div">
+                    <label>CPF:</label>
+                         <input 
+                              type="text" 
+                              formControlName="cpf" 
+                              placeholder="Digite o CPF do novo familiar" 
+                              name="cpf"
+                              (input)="clearInputErrors('cpf')"
+                              (change)="getCpfErrors()">
+                         <app-input-error-message [errors]="cpfErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Cópia digital do CPF:</label>
+                    <div class="upload-box-field" (click)="fileInputFieldCpf.click()">
+                              <i *ngIf="!cpfUploaded" class="fa-solid fa-upload"></i>
+
+                              <i *ngIf="cpfUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                              
+                              <input
+                                   hidden
+                                   #fileInputFieldCpf 
+                                   type="file" 
+                                   name="rgFile"
+                                   accept=".pdf, .png, .jpeg, .jpg"
+                                   (input)="clearInputErrors('rgFile')"
+                                   (change)="onFileSelected($event, 'cpf'); getRgFileErrors()">
+                              <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                    </div>
+               </div>
+          </div>
+          <div class="four-input-fields">
+               <div class="inputs-div">
+                    <label>CEP:</label>
+                         <input 
+                              type="cep" 
+                              formControlName="cep" 
+                              placeholder="Digite o CEP do novo familiar" 
+                              name="cep"
+                              (input)="clearInputErrors('cep')"
+                              (change)="getCepErrors()">
+                         <app-input-error-message [errors]="cepErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div">
+                    <label>Estado:</label>
+                    <select id="estado-select" formControlName="state" (change)="findCitiesByState($event)">
+                         <option value="" disabled selected>Selecione</option>
+                         <option value="AC">Acre</option>
+                         <option value="AL">Alagoas</option>
+                         <option value="AP">Amapá</option>
+                         <option value="AM">Amazonas</option>
+                         <option value="BA">Bahia</option>
+                         <option value="CE">Ceará</option>
+                         <option value="DF">Distrito Federal</option>
+                         <option value="ES">Espírito Santo</option>
+                         <option value="GO">Goiás</option>
+                         <option value="MA">Maranhão</option>
+                         <option value="MT">Mato Grosso</option>
+                         <option value="MS">Mato Grosso do Sul</option>
+                         <option value="MG">Minas Gerais</option>
+                         <option value="PA">Pará</option>
+                         <option value="PB">Paraíba</option>
+                         <option value="PR">Paraná</option>
+                         <option value="PE">Pernambuco</option>
+                         <option value="PI">Piauí</option>
+                         <option value="RJ">Rio de Janeiro</option>
+                         <option value="RN">Rio Grande do Norte</option>
+                         <option value="RS">Rio Grande do Sul</option>
+                         <option value="RO">Rondônia</option>
+                         <option value="RR">Roraima</option>
+                         <option value="SC">Santa Catarina</option>
+                         <option value="SP">São Paulo</option>
+                         <option value="SE">Sergipe</option>
+                         <option value="TO">Tocantins</option>
+                    </select>
+                         <app-input-error-message [errors]="stateErrors"></app-input-error-message>
+               </div>
+               <!-- <div class="inputs-div">
+                    <label>CPF:</label>
+                         <input 
+                              type="text" 
+                              formControlName="cpf" 
+                              placeholder="Digite o CPF do novo familiar" 
+                              name="cpf"
+                              (input)="clearInputErrors('cpf')"
+                              (change)="getCpfErrors()">
+                         <app-input-error-message [errors]="cpfErrors"></app-input-error-message>
+               </div> -->
+               <div class="inputs-div">
+                    <label>Cidade:</label>
+                         <select formControlName="city" (click)="searchCity($event)">
+                              <option value="" disabled selected>Selecione</option>
+                              <option *ngFor="let city of cities" [value]="city">{{ city }}</option> 
+                         </select>
+                         <app-input-error-message [errors]="cityErrors"></app-input-error-message>
+               </div>  
+               <div class="inputs-div">
+                    <label>Cópia digital Comp. Residencial:</label>
+                    <div class="upload-box-field" (click)="fileInputFieldFinancial.click()">
+                              <i *ngIf="!financialUploaded" class="fa-solid fa-upload"></i>
+
+                              <i *ngIf="financialUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                              
+                              <input
+                                   hidden
+                                   #fileInputFieldFinancial 
+                                   type="file" 
+                                   name="rgFile"
+                                   accept=".pdf, .png, .jpeg, .jpg"
+                                   (input)="clearInputErrors('rgFile')"
+                                   (change)="onFileSelected($event, 'financial'); getRgFileErrors()">
+                              <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                    </div>
+               </div>
+          </div>
+          <div class="three-input-fields address-homeNumber-neighborhood">             
+               <div class="inputs-div address">
+                    <label>Endereço:</label>
+                         <input 
+                              type="text" 
+                              formControlName="address" 
+                              placeholder="Digite o endereço do novo familiar" 
+                              name="address"
+                              (input)="clearInputErrors('address')"
+                              (change)="getAddressErrors()">
+                         <app-input-error-message [errors]="addressErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div homeNumber">
+                    <label>N°:</label>
+                         <input 
+                              type="text" 
+                              formControlName="homeNumber" 
+                              placeholder="n°" 
+                              name="homeNumber"
+                              (input)="clearInputErrors('homeNumber')"
+                              (change)="getHomeNumberErrors()">
+                         <app-input-error-message [errors]="homeNumberErrors"></app-input-error-message>
+               </div>
+               <div class="inputs-div neighborhood">
+                    <label>Bairro:</label>
+                         <input 
+                              type="text" 
+                              formControlName="neighborhood" 
+                              placeholder="Digite o nome do bairro" 
+                              name="neighborhood"
+                              (input)="clearInputErrors('neighborhood')"
+                              (change)="getNeighborhoodErrors()">
+                         <app-input-error-message [errors]="neighborhoodErrors"></app-input-error-message>
                </div>
           </div>
      </div>

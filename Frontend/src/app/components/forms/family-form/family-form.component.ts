@@ -24,7 +24,10 @@ export class FamilyFormComponent implements AfterViewInit {
   cities: string[] = ['Jequié', 'Jaguaquara'];
   step: number = 1;
   stepName: string = 'Etapa familiar : 1';
+
   rgFileUploaded: boolean = false;
+  financialUploaded: boolean = false;
+  cpfUploaded: boolean = false;
 
   //view childs
   @ViewChild('step1') step1!: ElementRef;
@@ -41,11 +44,21 @@ export class FamilyFormComponent implements AfterViewInit {
   cityErrors: string[] = [];
   dateOfBirthErrors: string[] = [];
   rgFileErrors: string[] = [];
+  cpfErrors: string[] = [];
+  phoneErrors: string[] = [];
+  cepErrors: string[] = [];
+  addressErrors: string[] = [];
+  homeNumberErrors: string[] = [];
+  neighborhoodErrors: string[] = [];
+  NaturalnessErrors: string[] = [];
+  NationalityErrors: string[] = [];
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       image: [null],
-      rgFile: [null]
+      rgFile: [null],
+      financialFile: [null],
+      cpfFile: [null]
     });
   }
 
@@ -76,6 +89,14 @@ export class FamilyFormComponent implements AfterViewInit {
         case 'rg':
           this.form.patchValue({ rgFile: file });
           this.rgFileUploaded = true;
+          break;
+        case 'financial':
+          this.form.patchValue({ financialFile: file });
+          this.financialUploaded = true;
+          break;
+        case 'cpf':
+          this.form.patchValue({ cpfFile: file });
+          this.cpfUploaded = true;
           break;
       }
     }
@@ -165,6 +186,38 @@ export class FamilyFormComponent implements AfterViewInit {
   }
 
   getRgFileErrors(): void {
+
+  }
+
+  getCpfErrors(): void {
+
+  }
+
+  getPhoneErrors(): void {
+
+  }
+
+  getCepErrors(): void {
+
+  }
+
+  getAddressErrors(): void {
+
+  }
+
+  getHomeNumberErrors(): void {
+
+  }
+
+  getNeighborhoodErrors(): void {
+
+  }
+
+  getNaturalnessErrors(): void {
+
+  }
+
+  getNationalityErrors(): void {
 
   }
 

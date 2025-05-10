@@ -10,5 +10,6 @@
         //ADMIN
         ADMINISTRACAO = 10,
         SECRETARIA = 11,
+        USER = 12
     }
 }
