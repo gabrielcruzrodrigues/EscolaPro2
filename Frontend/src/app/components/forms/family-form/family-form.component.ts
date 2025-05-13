@@ -9,6 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 import { phoneValidator } from '../../../validators/phoneValidator';
 import { rgValidator } from '../../../validators/rgValidator';
 import { cpfValidator } from '../../../validators/cpfValidator';
+import { CepService } from '../../../services/cep.service';
+import { Cep } from '../../../types/Cep';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { SpinningComponent } from "../../layout/spinning/spinning.component";
 
 @Component({
   selector: 'app-family-form',
@@ -17,12 +21,13 @@ import { cpfValidator } from '../../../validators/cpfValidator';
     AdminMainSearchUserBoxComponent,
     InputErrorMessageComponent,
     ButtonsFormComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SpinningComponent
   ],
   templateUrl: './family-form.component.html',
   styleUrl: './family-form.component.sass'
 })
-export class FamilyFormComponent implements AfterViewInit {
+export class FamilyFormComponent implements AfterViewInit, OnInit {
   form: FormGroup;
   previewUrl: string | ArrayBuffer | null = null;
   titleSearchStudents: string = 'Buscar estudante temp';
@@ -32,6 +37,8 @@ export class FamilyFormComponent implements AfterViewInit {
   stepName: string = 'Etapa familiar : 1';
   firstStep: boolean = true;
   lastEtep: boolean = false;
+  cep: Cep | null = null;
+  isLoading: boolean = false;
 
   rgFileUploaded: boolean = false;
   financialUploaded: boolean = false;
@@ -64,7 +71,8 @@ export class FamilyFormComponent implements AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cepService: CepService
   ) {
     this.form = this.fb.group({
       image: [null],
@@ -92,12 +100,63 @@ export class FamilyFormComponent implements AfterViewInit {
     });
   }
 
+
+  ngOnInit(): void {
+    this.form.get('state')?.valueChanges.subscribe(value => {
+      this.getStateErrors();
+    });
+
+    this.form.get('city')?.valueChanges.subscribe(value => {
+      this.getCityErrors();
+    });
+
+    this.form.get('address')?.valueChanges.subscribe(value => {
+      this.getAddressErrors();
+    });
+
+    this.form.get('neighborhood')?.valueChanges.subscribe(value => {
+      this.getNeighborhoodErrors();
+    });
+
+    this.form.get('homeNumber')?.valueChanges.subscribe(value => {
+      this.getHomeNumberErrors();
+    });
+  }
+
   sendDataFromFatherComponent(): void {
     this.validateForm();
     if (this.hasAnyErrorInInputs()) {
       this.toastr.info("Existem campos com erro! Vefifique-os antes de continuar.")
     }
     console.log(this.form.value);
+  }
+
+  getCep(): void {
+    const cep = this.form.get('cep')?.value;
+    if (cep.length == 8) {
+      this.isLoading = true;
+      this.cepService.getCep(cep).subscribe({
+        next: (response: HttpResponse<Cep>) => {
+          this.form.patchValue({
+            address: response.body?.street,
+            city: response.body?.city,
+            neighborhood: response.body?.neighborhood,
+            state: response.body?.state
+          })
+          this.getStateErrors();
+          this.getCityErrors();
+          this.getAddressErrors();
+          this.getNeighborhoodErrors();
+          this.isLoading = false;
+        },
+        error: (response: HttpErrorResponse) => {
+          this.isLoading = false;
+
+        }
+      })
+    } if (cep.length > 8) {
+      this.toastr.info("O cep deve conter exatamente 8 números!");
+    }
   }
 
   ngAfterViewInit(): void {
@@ -108,6 +167,8 @@ export class FamilyFormComponent implements AfterViewInit {
     this.getNameErrors();
     this.getRgErrors();
     this.getSexErrors();
+    this.getCityErrors();
+    this.getStateErrors();
     this.getDateOfBirthErrors();
     this.getRgDispatchedErrors();
     this.getRgDispatchedDateErrors();
@@ -121,6 +182,7 @@ export class FamilyFormComponent implements AfterViewInit {
     this.getNaturalnessErrors();
     this.getNationalityErrors();
     this.getEmailErrors();
+    this.getTypeErrors();
   }
 
   hasAnyErrorInInputs(): boolean {
@@ -232,6 +294,34 @@ export class FamilyFormComponent implements AfterViewInit {
     if (option == 'cpf') {
       this.cpfErrors = [];
     }
+
+    if (option == 'cep') {
+      this.cepErrors = [];
+    }
+
+    if (option == 'state') {
+      this.stateErrors = [];
+    }
+
+    if (option == 'city') {
+      this.cityErrors = [];
+    }
+
+    if (option == 'address') {
+      this.addressErrors = [];
+    }
+
+    if (option == 'type') {
+      this.typeErrors = [];
+    }
+
+    if (option == 'neighborhood') {
+      this.typeErrors = [];
+    }
+
+    if (option == 'homeNumber') {
+      this.homeNumberErrors = [];
+    }
   }
 
   updateTemplate(): void {
@@ -309,6 +399,18 @@ export class FamilyFormComponent implements AfterViewInit {
     }
   }
 
+  getTypeErrors(): void {
+    const control = this.form.get('type');
+    const errors: string[] = [];
+
+    if (control?.hasError('required')) {
+      errors.push('Obrigatório!');
+      this.typeErrors = errors;
+      console.log(this.typeErrors)
+      return;
+    }
+  }
+
   getRgDispatchedErrors(): void {
     const control = this.form.get('rgDispatched');
     const errors: string[] = [];
@@ -327,6 +429,28 @@ export class FamilyFormComponent implements AfterViewInit {
     if (control?.hasError('required')) {
       errors.push('A data de emissão é obrigatória!');
       this.rgDispatchedDateErrors = errors;
+      return;
+    }
+  }
+
+  getStateErrors(): void {
+    const control = this.form.get('state');
+    const errors: string[] = [];
+
+    if (control?.hasError('required')) {
+      errors.push('O estado é obrigatório!');
+      this.stateErrors = errors;
+      return;
+    }
+  }
+
+  getCityErrors(): void {
+    const control = this.form.get('city');
+    const errors: string[] = [];
+
+    if (control?.hasError('required')) {
+      errors.push('A cidade é obrigatória!');
+      this.cityErrors = errors;
       return;
     }
   }
@@ -400,19 +524,47 @@ export class FamilyFormComponent implements AfterViewInit {
   }
 
   getCepErrors(): void {
+    const control = this.form.get('cep');
+    const errors: string[] = [];
 
+    if (control?.hasError('required')) {
+      errors.push('O cep é obrigatório!');
+      this.cepErrors = errors;
+      return;
+    }
   }
 
   getAddressErrors(): void {
+    const control = this.form.get('address');
+    const errors: string[] = [];
 
+    if (control?.hasError('required')) {
+      errors.push('O endereço é obrigatório!');
+      this.addressErrors = errors;
+      return;
+    }
   }
 
   getHomeNumberErrors(): void {
+    const control = this.form.get('homeNumber');
+    const errors: string[] = [];
 
+    if (control?.hasError('required')) {
+      errors.push('obrigatório!');
+      this.homeNumberErrors = errors;
+      return;
+    }
   }
 
   getNeighborhoodErrors(): void {
+    const control = this.form.get('neighborhood');
+    const errors: string[] = [];
 
+    if (control?.hasError('required')) {
+      errors.push('O bairro é obrigatório!');
+      this.neighborhoodErrors = errors;
+      return;
+    }
   }
 
   getNaturalnessErrors(): void {

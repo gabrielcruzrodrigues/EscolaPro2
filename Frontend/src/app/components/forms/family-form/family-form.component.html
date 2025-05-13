@@ -1,4 +1,5 @@
-<form [formGroup]="form">
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<form [formGroup]="form" autocomplete="off">
      <section class="form">
           <div #step1>
                <div class="image-first_infos">
@@ -31,7 +32,8 @@
                                    placeholder="Digite o Nome do novo familiar" 
                                    name="name"
                                    (input)="clearInputErrors('name')"
-                                   (change)="getNameErrors()">
+                                   (change)="getNameErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
           
                               <label>Email:</label>
@@ -42,7 +44,8 @@
                                    placeholder="Digite o email do novo familiar" 
                                    name="email"
                                    (input)="clearInputErrors('email')"
-                                   (change)="getEmailErrors()">
+                                   (change)="getEmailErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="emailErros"></app-input-error-message>
                          </div>
                     </div>
@@ -57,7 +60,8 @@
                                    formControlName="dateOfBirth" 
                                    name="dateOfBirth"
                                    (input)="clearInputErrors('dateOfBirth')"
-                                   (change)="getDateOfBirthErrors()">
+                                   (change)="getDateOfBirthErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
                     </div> 
                     <div class="inputs-div">
@@ -69,7 +73,8 @@
                                    placeholder="Digite o Telefone/WhatsApp do novo familiar" 
                                    name="phone"
                                    (input)="clearInputErrors('phone')"
-                                   (change)="getPhoneErrors()">
+                                   (change)="getPhoneErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="phoneErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
@@ -77,7 +82,8 @@
                               <select 
                                    formControlName="sex" 
                                    [class.input-error]="sexErrors.length > 0"
-                                   (change)="clearInputErrors('sex')">
+                                   (change)="clearInputErrors('sex')"
+                                   autocomplete="off">
                                    <option value="" selected disabled>Selecione</option>
                                    <option value="0">Maculino</option>
                                    <option value="1">Feminino</option>
@@ -97,7 +103,8 @@
                                    placeholder="Digite o RG do novo familiar" 
                                    name="rg"
                                    (input)="clearInputErrors('rg')"
-                                   (change)="getRgErrors()">
+                                   (change)="getRgErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="rgErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
@@ -110,7 +117,8 @@
                                    placeholder="Ex: SSP" 
                                    name="rgDispatched"
                                    (input)="clearInputErrors('rgDispatched')"
-                                   (change)="getRgDispatchedErrors()">
+                                   (change)="getRgDispatchedErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="rgDispatchedErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
@@ -121,7 +129,8 @@
                                    formControlName="rgDispatchedDate" 
                                    name="rgDispatchedDate"
                                    (input)="clearInputErrors('rgDispatchedDate')"
-                                   (change)="getRgDispatchedDateErrors()">
+                                   (change)="getRgDispatchedDateErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="rgDispatchedDateErrors"></app-input-error-message>
                     </div>
                     
@@ -139,7 +148,8 @@
                                         name="rgFile"
                                         accept=".pdf, .png, .jpeg, .jpg"
                                         (input)="clearInputErrors('rgFile')"
-                                        (change)="onFileSelected($event, 'rg'); getRgFileErrors()">
+                                        (change)="onFileSelected($event, 'rg'); getRgFileErrors()"
+                                        autocomplete="off">
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
@@ -154,7 +164,8 @@
                                    placeholder="Ex: Jequié" 
                                    name="naturalness"
                                    (input)="clearInputErrors('naturalness')"
-                                   (change)="getNaturalnessErrors()">
+                                   (change)="getNaturalnessErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="naturalnessErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
@@ -166,7 +177,8 @@
                                    placeholder="Ex: Brasileiro" 
                                    name="nationality"
                                    (input)="clearInputErrors('nationality')"
-                                   (change)="getNationalityErrors()">
+                                   (change)="getNationalityErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="nationalityErrors"></app-input-error-message>
                     </div> 
                     <div class="inputs-div">
@@ -178,7 +190,8 @@
                                    placeholder="Digite o CPF do novo familiar" 
                                    name="cpf"
                                    (input)="clearInputErrors('cpf')"
-                                   (change)="getCpfErrors()">
+                                   (change)="getCpfErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="cpfErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
@@ -195,7 +208,7 @@
                                         name="rgFile"
                                         accept=".pdf, .png, .jpeg, .jpg"
                                         (input)="clearInputErrors('rgFile')"
-                                        (change)="onFileSelected($event, 'cpf'); getRgFileErrors()">
+                                        (change)="onFileSelected($event, 'cpf'); getRgFileErrors()" autocomplete="off">
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
@@ -209,52 +222,37 @@
                                    formControlName="cep" 
                                    placeholder="Digite o CEP do novo familiar" 
                                    name="cep"
-                                   (input)="clearInputErrors('cep')"
-                                   (change)="getCepErrors()">
+                                   (input)="getCep(); clearInputErrors('cep')"
+                                   (change)="getCepErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="cepErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
                          <label>Estado:</label>
-                         <select id="estado-select" formControlName="state" (change)="findCitiesByState($event)" [class.input-error]="stateErrors.length > 0">
-                              <option value="" disabled selected>Selecione</option>
-                              <option value="AC">Acre</option>
-                              <option value="AL">Alagoas</option>
-                              <option value="AP">Amapá</option>
-                              <option value="AM">Amazonas</option>
-                              <option value="BA">Bahia</option>
-                              <option value="CE">Ceará</option>
-                              <option value="DF">Distrito Federal</option>
-                              <option value="ES">Espírito Santo</option>
-                              <option value="GO">Goiás</option>
-                              <option value="MA">Maranhão</option>
-                              <option value="MT">Mato Grosso</option>
-                              <option value="MS">Mato Grosso do Sul</option>
-                              <option value="MG">Minas Gerais</option>
-                              <option value="PA">Pará</option>
-                              <option value="PB">Paraíba</option>
-                              <option value="PR">Paraná</option>
-                              <option value="PE">Pernambuco</option>
-                              <option value="PI">Piauí</option>
-                              <option value="RJ">Rio de Janeiro</option>
-                              <option value="RN">Rio Grande do Norte</option>
-                              <option value="RS">Rio Grande do Sul</option>
-                              <option value="RO">Rondônia</option>
-                              <option value="RR">Roraima</option>
-                              <option value="SC">Santa Catarina</option>
-                              <option value="SP">São Paulo</option>
-                              <option value="SE">Sergipe</option>
-                              <option value="TO">Tocantins</option>
-                         </select>
+                              <input 
+                                   [class.input-error]="stateErrors.length > 0"
+                                   type="text" 
+                                   formControlName="state" 
+                                   placeholder="Ex: Bahia" 
+                                   name="state"
+                                   (input)="clearInputErrors('state')"
+                                   (change)="getStateErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="stateErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div">
                          <label>Cidade:</label>
-                              <select formControlName="city" (click)="searchCity($event)" [class.input-error]="cityErrors.length > 0">
-                                   <option value="" disabled selected>Selecione</option>
-                                   <option *ngFor="let city of cities" [value]="city">{{ city }}</option> 
-                              </select>
+                              <input 
+                                   [class.input-error]="cityErrors.length > 0"
+                                   type="text" 
+                                   formControlName="city" 
+                                   placeholder="Ex: Jequié" 
+                                   name="city"
+                                   (input)="clearInputErrors('city')"
+                                   (change)="getCityErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="cityErrors"></app-input-error-message>
-                    </div>  
+                    </div>
                     <div class="inputs-div">
                          <label>Cópia digital Comp. Residencial:</label>
                          <div class="upload-box-field" (click)="fileInputFieldFinancial.click()">
@@ -269,7 +267,7 @@
                                         name="rgFile"
                                         accept=".pdf, .png, .jpeg, .jpg"
                                         (input)="clearInputErrors('rgFile')"
-                                        (change)="onFileSelected($event, 'financial'); getRgFileErrors()">
+                                        (change)="onFileSelected($event, 'financial'); getRgFileErrors()" autocomplete="off">
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
@@ -284,7 +282,8 @@
                                    placeholder="Digite o endereço do novo familiar" 
                                    name="address"
                                    (input)="clearInputErrors('address')"
-                                   (change)="getAddressErrors()">
+                                   (change)="getAddressErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="addressErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div homeNumber">
@@ -296,7 +295,8 @@
                                    placeholder="n°" 
                                    name="homeNumber"
                                    (input)="clearInputErrors('homeNumber')"
-                                   (change)="getHomeNumberErrors()">
+                                   (change)="getHomeNumberErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="homeNumberErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div neighborhood">
@@ -308,17 +308,21 @@
                                    placeholder="Digite o nome do bairro" 
                                    name="neighborhood"
                                    (input)="clearInputErrors('neighborhood')"
-                                   (change)="getNeighborhoodErrors()">
+                                   (change)="getNeighborhoodErrors()"
+                                   autocomplete="off">
                               <app-input-error-message [errors]="neighborhoodErrors"></app-input-error-message>
                     </div>
                     <div class="inputs-div homeNumber">
                          <label>Tipo:</label>
-                              <select formControlName="type" [class.input-error]="typeErrors.length > 0">
+                              <select 
+                                   formControlName="type"
+                                   [class.input-error]="typeErrors.length > 0"
+                                   (change)="getTypeErrors(); clearInputErrors('type')">
                                    <option value="" selected disabled>Escolha uma opção</option>
                                    <option value="0">Pai</option>
                                    <option value="1">Mãe</option>
                               </select>
-                              <app-input-error-message [errors]="homeNumberErrors"></app-input-error-message>
+                              <app-input-error-message [errors]="typeErrors"></app-input-error-message>
                     </div>
                </div>
           </div>
