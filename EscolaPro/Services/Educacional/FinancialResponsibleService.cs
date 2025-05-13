@@ -1,8 +1,8 @@
 ﻿using EscolaPro.Extensions;
 using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces.Educacional;
+using EscolaPro.Services.Educacional.Interfaces;
 using EscolaPro.Services.Interfaces;
-using EscolaPro.Services.Interfaces.Educacional;
 using EscolaPro.ViewModels.Educacional;
 
 namespace EscolaPro.Services.Educacional;
@@ -80,7 +80,8 @@ public class FinancialResponsibleService : IFinancialResponsibleService
             LastUpdatedAt = DateTime.UtcNow,
             CivilState = request.CivilState,
             RgDispatched = request.RgDispatched,
-            RgDispatchedDate = request.RgDispatchedDate
+            RgDispatchedDate = request.RgDispatchedDate,
+            HomeNumber = request.HomeNumber
         };
 
         return await _financialResponsibleRepository.CreateAsync(companieName, financialResponsible);

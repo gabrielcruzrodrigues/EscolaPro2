@@ -3,7 +3,7 @@ using EscolaPro.Extensions;
 using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
-using EscolaPro.Services.Interfaces.Educacional;
+using EscolaPro.Services.Educacional.Interfaces;
 using EscolaPro.ViewModels.Educacional;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -257,8 +257,6 @@ public class FamilyController : ControllerBase
         family.Neighborhood = request.Neighborhood ?? family.Neighborhood;
         family.City = request.City ?? family.City;
         family.State = request.State ?? family.State;
-        family.WorkAddress = request.WorkAddress ?? family.WorkAddress;
-        family.Ocupation = request.Ocupation ?? family.Ocupation;
         family.RgDispatched = request.RgDispatched ?? family.RgDispatched;
         family.RgDispatchedDate = request.RgDispatchedDate ?? family.RgDispatchedDate;
 

@@ -23,6 +23,8 @@ namespace EscolaPro.Models
         [StringLength(10, ErrorMessage = "O RG é obrigatório!")]
         public required string Rg { get; set; }
 
+        public string? RgFilePath { get; set; }
+
         [Required]
         public required string RgDispatched { get; set; }
 
@@ -32,6 +34,8 @@ namespace EscolaPro.Models
         [Required]
         [StringLength(11, ErrorMessage = "O Cpf é obrigatório!")]
         public required string Cpf { get; set; }
+
+        public string? CpfFilePath { get; set; }
 
         [Required]
         public required DateTime DateOfBirth { get; set; }
@@ -51,11 +55,15 @@ namespace EscolaPro.Models
 
         public string? Address { get; set; }
 
+        public string? ProofOfResidenceFilePath { get; set; }
+
         [Required]
         [StringLength(11, ErrorMessage = "O Telefone é obrigatório!")]
         public required string Phone { get; set; }
 
         public string? Neighborhood { get; set; }
+
+        public required string HomeNumber { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "A cidade é obrigatória!")]

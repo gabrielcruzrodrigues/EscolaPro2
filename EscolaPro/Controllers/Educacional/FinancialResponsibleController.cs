@@ -2,7 +2,7 @@
 using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
-using EscolaPro.Services.Interfaces.Educacional;
+using EscolaPro.Services.Educacional.Interfaces;
 using EscolaPro.ViewModels.Educacional;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

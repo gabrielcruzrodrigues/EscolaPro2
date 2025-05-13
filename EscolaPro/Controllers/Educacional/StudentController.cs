@@ -3,8 +3,8 @@ using EscolaPro.Models.Educacional;
 using EscolaPro.Repositories;
 using EscolaPro.Repositories.Interfaces;
 using EscolaPro.Repositories.Interfaces.Educacional;
+using EscolaPro.Services.Educacional.Interfaces;
 using EscolaPro.Services.Interfaces;
-using EscolaPro.Services.Interfaces.Educacional;
 using EscolaPro.ViewModels.Educacional;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -200,7 +200,8 @@ public class StudentController : ControllerBase
             FinancialResponsibleId = financialResponsibleId,
             Situation = Enums.StudentSituationEnum.OK,
             RgDispatched = request.RgDispatched,
-            RgDispatchedDate = request.RgDispatchedDate
+            RgDispatchedDate = request.RgDispatchedDate,
+            HomeNumber = request.HomeNumber
         };
 
         if (fatherId != 0)

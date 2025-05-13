@@ -1,7 +1,7 @@
 ﻿using EscolaPro.Models.Educacional;
 using EscolaPro.ViewModels.Educacional;
 
-namespace EscolaPro.Services.Interfaces.Educacional
+namespace EscolaPro.Services.Educacional.Interfaces
 {
     public interface IFamilyService
     {

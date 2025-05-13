@@ -14,12 +14,12 @@ using EscolaPro.Repositories;
 using EscolaPro.Services.Interfaces;
 using EscolaPro.Services;
 using Microsoft.Extensions.FileProviders;
-using EscolaPro.Services.Interfaces.Educacional;
 using EscolaPro.Services.Educacional;
 using EscolaPro.Repositories.Interfaces.Educacional;
 using EscolaPro.Repositories.Educacional;
 using EscolaPro.Enums;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using EscolaPro.Services.Educacional.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -165,6 +165,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IFixedHealthRepository, FixedHealthRepository>();
 builder.Services.AddScoped<IFinancialResponsibleRepository, FinancialResponsibleRepository>();
 builder.Services.AddScoped<IFinancialResponsibleService, FinancialResponsibleService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";
