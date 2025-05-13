@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminMainSearchUserBoxComponent } from "../../layout/admin/admin-main-search-user-box/admin-main-search-user-box.component";
 import { InputErrorMessageComponent } from "../../layout/input-error-message/input-error-message.component";
@@ -13,6 +13,7 @@ import { CepService } from '../../../services/cep.service';
 import { Cep } from '../../../types/Cep';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { SpinningComponent } from "../../layout/spinning/spinning.component";
+import { Family } from '../../../types/Family';
 
 @Component({
   selector: 'app-family-form',
@@ -39,6 +40,7 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
   lastEtep: boolean = false;
   cep: Cep | null = null;
   isLoading: boolean = false;
+  @Output() familyData = new EventEmitter<Family>();
 
   rgFileUploaded: boolean = false;
   financialUploaded: boolean = false;
@@ -126,9 +128,36 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
   sendDataFromFatherComponent(): void {
     this.validateForm();
     if (this.hasAnyErrorInInputs()) {
-      this.toastr.info("Existem campos com erro! Vefifique-os antes de continuar.")
+      this.toastr.info("Existem campos com erro! Vefifique-os antes de continuar.");
+      return;
     }
-    console.log(this.form.value);
+
+    const familyData: Family = {
+      image: this.form.get('image')?.value,
+      rgFile: this.form.get('rgFile')?.value,
+      financialFile: this.form.get('financialFile')?.value,
+      cpfFile: this.form.get('cpfFile')?.value,
+      name: this.form.get('name')?.value,
+      email: this.form.get('email')?.value,
+      dateOfBirth: this.form.get('dateOfBirth')?.value,
+      phone: this.form.get('phone')?.value,
+      sex: this.form.get('sex')?.value,
+      rg: this.form.get('rg')?.value,
+      rgDispatched: this.form.get('rgDispatched')?.value,
+      rgDispatchedDate: this.form.get('rgDispatchedDate')?.value,
+      naturalness: this.form.get('naturalness')?.value,
+      nationality: this.form.get('nationality')?.value,
+      cpf: this.form.get('cpf')?.value,
+      cep: this.form.get('cep')?.value,
+      state: this.form.get('state')?.value,
+      city: this.form.get('city')?.value,
+      address: this.form.get('address')?.value,
+      homeNumber: this.form.get('homeNumber')?.value,
+      neighborhood: this.form.get('neighborhood')?.value,
+      type: this.form.get('type')?.value
+    };
+
+    this.familyData.emit(familyData);
   }
 
   getCep(): void {

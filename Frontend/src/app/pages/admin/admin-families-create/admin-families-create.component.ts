@@ -3,6 +3,7 @@ import { SpinningComponent } from "../../../components/layout/spinning/spinning.
 import { AdminNavbarComponent } from "../../../components/layout/admin/admin-navbar/admin-navbar.component";
 import { InfoTopComponent } from "../../../components/layout/info-top/info-top.component";
 import { FamilyFormComponent } from "../../../components/forms/family-form/family-form.component";
+import { Family } from '../../../types/Family';
 
 @Component({
   selector: 'app-admin-families-create',
@@ -12,4 +13,8 @@ import { FamilyFormComponent } from "../../../components/forms/family-form/famil
 })
 export class AdminFamiliesCreateComponent {
   isLoading: boolean = false;
+
+  onFamilyData(family: Family): void {
+    console.log(family);
+  }
 }

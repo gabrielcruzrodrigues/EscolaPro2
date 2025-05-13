@@ -7,6 +7,8 @@
                <!-- <i class="fa-solid fa-user-plus icon"></i> -->
                <h1>Criar Familiar</h1>
           </div>
-          <app-family-form></app-family-form>
+          <app-family-form
+          (familyData)="onFamilyData($event)">
+          </app-family-form>
      </section>
 </section>

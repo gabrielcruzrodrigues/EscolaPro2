@@ -13,7 +13,7 @@ export class ButtonsFormComponent implements OnChanges {
   @Input() lastStep: boolean = false;
   @Input() firstStep: boolean = true;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['lastEtep']) {
