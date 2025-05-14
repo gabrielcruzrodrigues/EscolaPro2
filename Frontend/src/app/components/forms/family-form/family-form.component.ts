@@ -162,7 +162,7 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
 
   getCep(): void {
     const cep = this.form.get('cep')?.value;
-    if (cep.length == 8) {
+    if (cep && cep.length == 8) {
       this.isLoading = true;
       this.cepService.getCep(cep).subscribe({
         next: (response: HttpResponse<Cep>) => {
@@ -345,7 +345,7 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
     }
 
     if (option == 'neighborhood') {
-      this.typeErrors = [];
+      this.neighborhoodErrors = [];
     }
 
     if (option == 'homeNumber') {
@@ -374,34 +374,16 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
     if (event.match('next')) {
       this.step++;
 
-      if (this.step == 1) {
-        this.firstStep = true;
-      } else {
-        this.firstStep = false;
-      }
-
-      if (this.step == 2) {
-        this.lastEtep = true;
-      } else {
-        this.lastEtep = false;
-      }
+      (this.step == 1) ? this.firstStep = true : this.firstStep = false;
+      (this.step == 2) ? this.lastEtep = true : this.lastEtep = false;
 
       this.updateTemplate();
     } else if (event.match('back')) {
       if (this.step >= 1) {
         this.step--;
 
-        if (this.step == 1) {
-          this.firstStep = true;
-        } else {
-          this.firstStep = false;
-        }
-
-        if (this.step == 2) {
-          this.lastEtep = true;
-        } else {
-          this.lastEtep = false;
-        }
+        (this.step == 1) ? this.firstStep = true : this.firstStep = false;
+        (this.step == 2) ? this.lastEtep = true : this.lastEtep = false;
 
         this.updateTemplate();
       }
