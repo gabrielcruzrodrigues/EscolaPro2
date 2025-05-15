@@ -13,7 +13,6 @@ import { CepService } from '../../../services/cep.service';
 import { Cep } from '../../../types/Cep';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { SpinningComponent } from "../../layout/spinning/spinning.component";
-import { Family } from '../../../types/Family';
 
 @Component({
   selector: 'app-family-form',
@@ -40,7 +39,7 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
   lastEtep: boolean = false;
   cep: Cep | null = null;
   isLoading: boolean = false;
-  @Output() familyData = new EventEmitter<Family>();
+  @Output() familyData = new EventEmitter<FormData>();
 
   rgFileUploaded: boolean = false;
   financialUploaded: boolean = false;
@@ -98,7 +97,8 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
       address: ['', Validators.required],
       homeNumber: ['', Validators.required],
       neighborhood: ['', Validators.required],
-      type: ['', Validators.required]
+      type: ['', Validators.required],
+      role: [100]
     });
   }
 
@@ -132,32 +132,30 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
       return;
     }
 
-    const familyData: Family = {
-      image: this.form.get('image')?.value,
-      rgFile: this.form.get('rgFile')?.value,
-      financialFile: this.form.get('financialFile')?.value,
-      cpfFile: this.form.get('cpfFile')?.value,
-      name: this.form.get('name')?.value,
-      email: this.form.get('email')?.value,
-      dateOfBirth: this.form.get('dateOfBirth')?.value,
-      phone: this.form.get('phone')?.value,
-      sex: this.form.get('sex')?.value,
-      rg: this.form.get('rg')?.value,
-      rgDispatched: this.form.get('rgDispatched')?.value,
-      rgDispatchedDate: this.form.get('rgDispatchedDate')?.value,
-      naturalness: this.form.get('naturalness')?.value,
-      nationality: this.form.get('nationality')?.value,
-      cpf: this.form.get('cpf')?.value,
-      cep: this.form.get('cep')?.value,
-      state: this.form.get('state')?.value,
-      city: this.form.get('city')?.value,
-      address: this.form.get('address')?.value,
-      homeNumber: this.form.get('homeNumber')?.value,
-      neighborhood: this.form.get('neighborhood')?.value,
-      type: this.form.get('type')?.value
-    };
+    const formData = new FormData();
 
-    this.familyData.emit(familyData);
+    formData.append('Name', this.form.get('name')?.value);
+    formData.append('Email', this.form.get('email')?.value);
+    formData.append('Cpf', this.form.get('cpf')?.value);
+    formData.append('Rg', this.form.get('rg')?.value);
+    formData.append('RgDispatched', this.form.get('rgDispatched')?.value);
+    formData.append('RgDispatchedDate', new Date(this.form.get('rgDispatchedDate')?.value).toISOString());
+    formData.append('DateOfBirth', new Date(this.form.get('dateOfBirth')?.value).toISOString());
+    formData.append('Nationality', this.form.get('nationality')?.value);
+    formData.append('Naturalness', this.form.get('naturalness')?.value);
+    formData.append('Sex', this.form.get('sex')?.value.toString()); // enum
+    formData.append('HomeNumber', this.form.get('homeNumber')?.value);
+    formData.append('Phone', this.form.get('phone')?.value);
+    formData.append('City', this.form.get('city')?.value);
+    formData.append('State', this.form.get('state')?.value);
+    formData.append('Type', this.form.get('type')?.value.toString()); // enum
+    formData.append('Role', this.form.get('role')?.value.toString()); // enum
+
+    if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
+    if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
+    if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
+
+    this.familyData.emit(formData);
   }
 
   getCep(): void {

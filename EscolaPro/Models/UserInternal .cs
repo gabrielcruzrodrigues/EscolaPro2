@@ -63,6 +63,7 @@ namespace EscolaPro.Models
 
         public string? Neighborhood { get; set; }
 
+        [Required]
         public required string HomeNumber { get; set; }
 
         [Required]

@@ -21,8 +21,6 @@ namespace EscolaPro.ViewModels.Educacional
 
         public IFormFile? RgFile { get; set; }
 
-        public string? RgFilePath { get; set; }
-
         [Required(ErrorMessage = "O orgão expeditor do RG é obrigatório!")]
         [StringLength(10)]
         public required string RgDispatched { get; set; }//
@@ -35,8 +33,6 @@ namespace EscolaPro.ViewModels.Educacional
         public required string Cpf { get; set; } //
 
         public IFormFile? CpfFile { get; set; }
-
-        public string? RgCpfPath { get; set; }
 
         [Required]
         public required DateTime DateOfBirth { get; set; }//
@@ -57,8 +53,6 @@ namespace EscolaPro.ViewModels.Educacional
         public string? Address { get; set; }//
 
         public IFormFile? ProofOfResidenceFile { get; set; }
-
-        public string? ProofOfResidenceFilePath { get; set; }
 
         [Required(ErrorMessage = "O número do imóvel é obrigatório!")]
         public required string HomeNumber { get; set; }//
