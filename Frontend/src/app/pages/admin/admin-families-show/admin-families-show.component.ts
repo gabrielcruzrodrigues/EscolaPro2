@@ -36,6 +36,7 @@ export class AdminFamiliesShowComponent {
   @ViewChild('emailOrderAZ') emailOrderAZ!: ElementRef;
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.familyService.getAll().subscribe({
       next: (response: HttpResponse<Family[]>) => {
         this.isLoading = false;

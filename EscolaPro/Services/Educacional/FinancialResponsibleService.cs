@@ -28,8 +28,7 @@ public class FinancialResponsibleService : IFinancialResponsibleService
                 throw new HttpResponseException(400, "Arquivo inváido");
             }
 
-            var fileName = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image);
-            financialResponsibleUrl = $"{httpRequest.Scheme}://{httpRequest.Host}/uploads/{fileName}";
+            financialResponsibleUrl = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image, httpRequest);
         }
 
         if (await _financialResponsibleRepository.GetByNameAsync(companieName, request.Name) != null)

@@ -36,21 +36,20 @@ public class FamilyService : IFamilyService
                 throw new HttpResponseException(400, "Arquivo inváido");
             }
 
-            var fileName = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image);
-            imageFamilyUrl = $"{httpRequest.Scheme}://{httpRequest.Host}/uploads/{fileName}";
+            imageFamilyUrl = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image, httpRequest);
         }
 
         string rgFilePath = "";
-        //if (request.RgFile != null)
-        //    rgFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.RgFile);
+        if (request.RgFile != null)
+            rgFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.RgFile, httpRequest);
 
         string cpfFilePath = "";
-        //if (request.CpfFile != null)
-        //    cpfFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.CpfFile);
+        if (request.CpfFile != null)
+            cpfFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.CpfFile, httpRequest);
 
         string proofOfResidenceFilePath = "";
-        //if (request.ProofOfResidenceFile != null)
-        //    proofOfResidenceFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.ProofOfResidenceFile);
+        if (request.ProofOfResidenceFile != null)
+            proofOfResidenceFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.ProofOfResidenceFile, httpRequest);
 
         List<string> duplicateErrorFields = new();
         bool duplicateErrors = false;

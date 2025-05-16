@@ -13,4 +13,5 @@ import { AdminMainSearchUserBoxComponent } from "../../../components/layout/admi
 })
 export class AdminUsersPanelComponent {
   dropdown: boolean = true;
+  placeholder: string = 'Buscar usuários...'
 }

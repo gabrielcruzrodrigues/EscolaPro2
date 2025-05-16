@@ -2,6 +2,6 @@
 {
     public interface IFileService
     {
-        Task<string> SaveFileInDatabaseAndReturnUrlAsync(IFormFile file);
+        Task<string> SaveFileInDatabaseAndReturnUrlAsync(IFormFile file, HttpRequest httpRequest);
     }
 }

@@ -200,6 +200,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
     if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
     if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
+    if (this.form.get('financialFile')?.value) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
 
     this.familyData.emit(formData);
   }

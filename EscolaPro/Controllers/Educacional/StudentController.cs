@@ -139,8 +139,7 @@ public class StudentController : ControllerBase
                 return BadRequest("Arquivo inváido");
             }
 
-            var fileName = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image);
-            studentImageUrl = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+            studentImageUrl = await _imageService.SaveImageInDatabaseAndReturnUrlAsync(request.Image, Request);
         }
 
         long financialResponsibleId = 0L;

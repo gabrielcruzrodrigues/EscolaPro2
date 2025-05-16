@@ -14,7 +14,7 @@ public class ImageService : IImageService
         _env = env;
     }
 
-    public async Task<string> SaveImageInDatabaseAndReturnUrlAsync(IFormFile file)
+    public async Task<string> SaveImageInDatabaseAndReturnUrlAsync(IFormFile file, HttpRequest httpRequest)
     {
         var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
         Directory.CreateDirectory(uploadsPath); // Garante que a pasta exista
@@ -27,6 +27,6 @@ public class ImageService : IImageService
             await file.CopyToAsync(stream);
         }
 
-        return fileName;
+        return $"{httpRequest.Scheme}://{httpRequest.Host}/uploads/{fileName}";
     }
 }
