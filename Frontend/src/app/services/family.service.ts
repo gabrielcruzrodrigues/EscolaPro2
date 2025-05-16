@@ -18,9 +18,6 @@ export class FamilyService {
   ) { }
 
   create(data: FormData): Observable<HttpResponse<Family>> {
-    console.log("=================================================")
-    console.log(data)
-    console.log("=================================================")
     const accessToken = this.authService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.post<Family>(this.url, data, { headers: headers, observe: 'response' });

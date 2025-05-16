@@ -52,29 +52,42 @@ public class FamilyService : IFamilyService
         //if (request.ProofOfResidenceFile != null)
         //    proofOfResidenceFilePath = await _fileService.SaveFileInDatabaseAndReturnUrlAsync(request.ProofOfResidenceFile);
 
+        List<string> duplicateErrorFields = new();
+        bool duplicateErrors = false;
+
         if (await _familyRepository.GetByNameAsync(companieName, request.Name) != null)
         {
-            throw new HttpResponseException(400, "Esse Nome de Familiar já foi cadastrado");
+            duplicateErrorFields.Add("name");
+            duplicateErrors = true;
         }
 
         if (await _familyRepository.GetByEmailAsync(companieName, request.Email) != null)
         {
-            throw new HttpResponseException(400, "Esse email de Familiar já foi cadastrado");
+            duplicateErrorFields.Add("email");
+            duplicateErrors = true;
         }
 
         if (await _familyRepository.GetByRgAsync(companieName, request.Rg) != null)
         {
-            throw new HttpResponseException(400, "Esse RG de Familiar já foi cadastrado");
+            duplicateErrorFields.Add("rg");
+            duplicateErrors = true;
         }
 
         if (await _familyRepository.GetByCpfAsync(companieName, request.Cpf) != null)
         {
-            throw new HttpResponseException(400, "Esse CPF de Familiar já foi cadastrado");
+            duplicateErrorFields.Add("cpf");
+            duplicateErrors = true;
         }
 
         if (await _familyRepository.GetByPhoneAsync(companieName, request.Phone) != null)
         {
-            throw new HttpResponseException(400, "Esse Telefone de Familiar já foi cadastrado");
+            duplicateErrorFields.Add("phone");
+            duplicateErrors = true;
+        }
+
+        if (duplicateErrors)
+        {
+            throw new HttpResponseException(409, "Campos duplicados", duplicateErrorFields);
         }
 
         var family = new Family

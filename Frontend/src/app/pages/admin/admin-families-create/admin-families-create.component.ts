@@ -18,6 +18,13 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminFamiliesCreateComponent {
   isLoading: boolean = false;
 
+  //duplicate fields - 409
+  nameDuplicate: boolean = false;
+  emailDuplicate: boolean = false;
+  phoneDuplicate: boolean = false;
+  rgDuplicate: boolean = false;
+  cpfDuplicate: boolean = false;
+
   constructor(
     private familyService: FamilyService,
     private router: Router,
@@ -25,6 +32,12 @@ export class AdminFamiliesCreateComponent {
   ) { }
 
   onFamilyData(family: FormData): void {
+    this.nameDuplicate = false;
+    this.emailDuplicate = false;
+    this.phoneDuplicate = false;
+    this.rgDuplicate = false;
+    this.cpfDuplicate = false;
+
     this.isLoading = true;
     this.familyService.create(family).subscribe({
       next: (response: HttpResponse<Family>) => {
@@ -41,12 +54,36 @@ export class AdminFamiliesCreateComponent {
       error: (error: HttpErrorResponse) => {
         this.isLoading = false;
         console.log(error);
+
         if (error.status === 500) {
           this.toastr.error("Um erro desconhecido aconteceu, contate o suporte técnico!");
           this.router.navigate(['/admin/families-panel']);
           return;
         }
+
+        if (error.status === 409) {
+          (error.error.fields as string[]).forEach((field: string) => {
+            switch (field) {
+              case 'name':
+                this.nameDuplicate = true;
+                break;
+              case 'email':
+                this.emailDuplicate = true;
+                break;
+              case 'phone':
+                this.phoneDuplicate = true;
+                break;
+              case 'rg':
+                this.rgDuplicate = true;
+                break;
+              case 'cpf':
+                this.cpfDuplicate = true;
+                break;
+            }
+          })
+        }
       }
     })
   }
 }
+

@@ -18,7 +18,13 @@ namespace EscolaPro.Extensions
                     {
                         context.Response.StatusCode = httpResponseException.StatusCode;
                         context.Response.ContentType = "application/json";
-                        await context.Response.WriteAsJsonAsync(httpResponseException.Value);
+
+                        await context.Response.WriteAsJsonAsync(new
+                        {
+                            message = ((dynamic)httpResponseException.Value).message,
+                            fields = httpResponseException.Fields,
+                            timestamp = httpResponseException.TimeStamp
+                        });
                     }
                     else
                     {

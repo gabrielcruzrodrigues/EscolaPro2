@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminMainSearchUserBoxComponent } from "../../layout/admin/admin-main-search-user-box/admin-main-search-user-box.component";
 import { InputErrorMessageComponent } from "../../layout/input-error-message/input-error-message.component";
@@ -27,7 +27,7 @@ import { SpinningComponent } from "../../layout/spinning/spinning.component";
   templateUrl: './family-form.component.html',
   styleUrl: './family-form.component.sass'
 })
-export class FamilyFormComponent implements AfterViewInit, OnInit {
+export class FamilyFormComponent implements AfterViewInit, OnChanges {
   form: FormGroup;
   previewUrl: string | ArrayBuffer | null = null;
   titleSearchStudents: string = 'Buscar estudante temp';
@@ -48,6 +48,14 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
   //view childs
   @ViewChild('step1') step1!: ElementRef;
   @ViewChild('step2') step2!: ElementRef;
+
+  //409 duplicates fields
+  @Input() nameDuplicate: boolean = false;
+  @Input() emailDuplicate: boolean = false;
+  @Input() phoneDuplicate: boolean = false;
+  @Input() rgDuplicate: boolean = false;
+  @Input() cpfDuplicate: boolean = false;
+  showDuplicatedErrorMessage: boolean = false;
 
   //arrays with errors 
   nameErrors: string[] = [];
@@ -102,27 +110,66 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['nameDuplicate']) {
+      this.duplicateFields('name');
+    }
 
-  ngOnInit(): void {
-    this.form.get('state')?.valueChanges.subscribe(value => {
-      this.getStateErrors();
-    });
+    if (changes['emailDuplicate']) {
+      this.duplicateFields('email');
+      // alert('email')
+    }
 
-    this.form.get('city')?.valueChanges.subscribe(value => {
-      this.getCityErrors();
-    });
+    if (changes['phoneDuplicate']) {
+      this.duplicateFields('phone');
+      // alert('phone')
+    }
 
-    this.form.get('address')?.valueChanges.subscribe(value => {
-      this.getAddressErrors();
-    });
+    if (changes['rgDuplicate']) {
+      this.duplicateFields('rg');
+      // alert('rg')
+    }
 
-    this.form.get('neighborhood')?.valueChanges.subscribe(value => {
-      this.getNeighborhoodErrors();
-    });
+    if (changes['cpfDuplicate']) {
+      this.duplicateFields('cpf');
+      this.toastr.info("Existem campos com erro! Vefifique-os antes de continuar.");
+      // alert('cpf')
+    }
+  }
 
-    this.form.get('homeNumber')?.valueChanges.subscribe(value => {
-      this.getHomeNumberErrors();
-    });
+  duplicateFields(option: string): void {
+    switch (option) {
+      case 'name':
+        if (this.nameDuplicate) {
+          this.nameErrors.push('Esse nome já foi cadastrado!');
+          this.nameDuplicate = false;
+        }
+        break;
+      case 'email':
+        if (this.emailDuplicate) {
+          this.emailErros.push('Esse email já foi cadastrado!');
+          this.emailDuplicate = false;
+        }
+        break;
+      case 'phone':
+        if (this.phoneDuplicate) {
+          this.phoneErrors.push('Esse telefone já foi cadastrado!');
+          this.phoneDuplicate = false;
+        }
+        break;
+      case 'rg':
+        if (this.rgDuplicate) {
+          this.rgErrors.push('Esse RG já foi cadastrado!');
+          this.rgDuplicate = false;
+        }
+        break;
+      case 'cpf':
+        if (this.cpfDuplicate) {
+          this.cpfErrors.push('Esse CPF já foi cadastrado!');
+          this.cpfDuplicate = false;
+        }
+        break;
+    }
   }
 
   sendDataFromFatherComponent(): void {
@@ -415,7 +462,6 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
     if (control?.hasError('required')) {
       errors.push('Obrigatório!');
       this.typeErrors = errors;
-      console.log(this.typeErrors)
       return;
     }
   }
@@ -636,6 +682,5 @@ export class FamilyFormComponent implements AfterViewInit, OnInit {
       this.nameErrors = errors;
       return;
     }
-    console.log(this.nameErrors);
   }
 }

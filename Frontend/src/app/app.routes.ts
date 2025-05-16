@@ -35,6 +35,11 @@ export const routes: Routes = [
           component: AuthLoadingComponent,
           pathMatch: 'full'
      },
+     {
+          path: '',
+          component: AuthLoadingComponent,
+          pathMatch: 'full'
+     },
 
      //admin/master
 
