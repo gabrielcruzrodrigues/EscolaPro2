@@ -132,7 +132,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
 
     if (changes['cpfDuplicate']) {
       this.duplicateFields('cpf');
-      this.toastr.info("Existem campos com erro! Vefifique-os antes de continuar.");
       // alert('cpf')
     }
   }
@@ -225,6 +224,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         },
         error: (response: HttpErrorResponse) => {
           this.isLoading = false;
+          this.toastr.info("Este cep não foi encontrado ou é inválido!")
 
         }
       })
