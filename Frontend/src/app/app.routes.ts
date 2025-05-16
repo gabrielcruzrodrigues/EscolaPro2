@@ -26,6 +26,7 @@ import { AdminStudentsPanelComponent } from './pages/admin/admin-students-panel/
 import { AdminUsersEditComponent } from './pages/admin/admin-users-edit/admin-users-edit.component';
 import { AdminFamiliesPanelComponent } from './pages/admin/admin-families-panel/admin-families-panel.component';
 import { AdminFamiliesCreateComponent } from './pages/admin/admin-families-create/admin-families-create.component';
+import { AdminFamiliesShowComponent } from './pages/admin/admin-families-show/admin-families-show.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -179,6 +180,11 @@ export const routes: Routes = [
      {
           path: 'admin/families-create',
           component: AdminFamiliesCreateComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/families-show',
+          component: AdminFamiliesShowComponent,
           canActivate: [masterGuard]
      },
 

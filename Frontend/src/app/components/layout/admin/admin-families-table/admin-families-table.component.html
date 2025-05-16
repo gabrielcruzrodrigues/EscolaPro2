@@ -1,0 +1,57 @@
+<div class="table-case">
+     <table class="custom-table">
+          <thead>
+               <tr>
+                    <th>Perfil</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Aluno</th>
+                    <th>Data de criação</th>
+                    <th>Ações</th>
+               </tr>
+          </thead>
+          <tbody>
+               <tr *ngFor="let family of families" (click)="openUserDetails(family.id)">
+                    <th class="col-image"><img src="{{ imageProfile }}"></th>
+                    <td>{{ family.name }}</td>
+                    <td>{{ family.email }}</td>
+                    <td>Nome do aluno</td>
+                    <td>{{ family.createdAt }}</td>
+
+                    <th *ngIf="typeActions == 'default'" class="actions">
+                         <button 
+                              class="edit action" 
+                              (click)="goToEditPage(family.id); $event.stopPropagation()">
+                              <i class="fa-solid fa-pen-to-square"></i>
+                         </button>
+                         <button 
+                              (click)="openModal(family.id); $event.stopPropagation()" 
+                              class="trash action">
+                              <i class="fa-solid fa-trash"></i>
+                         </button>
+                    </th>
+                    <th *ngIf="typeActions == 'edit'" class="actions">
+                         <button 
+                              class="edit action" 
+                              (click)="goToEditPage(family.id); $event.stopPropagation()">
+                              <i class="fa-solid fa-pen-to-square"></i>
+                         </button>
+                    </th>
+                    <th *ngIf="typeActions == 'trash'" class="actions">
+                         <button 
+                              (click)="openModal(family.id); $event.stopPropagation()" 
+                              class="trash action">
+                              <i class="fa-solid fa-trash"></i>
+                         </button>
+                    </th>
+               </tr>
+          </tbody>
+     </table>
+     <app-modal-confirm 
+          *ngIf="isModalOpen" 
+          [message]="modalDeleteMessage"
+          (confirm)="onConfirmDelete($event)">
+     </app-modal-confirm>
+</div>
+<app-spinning [isLoading]="isLoading"></app-spinning>
+

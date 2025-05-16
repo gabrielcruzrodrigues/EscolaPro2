@@ -21,7 +21,9 @@ export type Family = {
      rgFile: null
      sex: string
      state: string
-     type: string
+     type: string,
+     createdAt: string
+     studentName: string
 }
 
 export type CreateFamily = {

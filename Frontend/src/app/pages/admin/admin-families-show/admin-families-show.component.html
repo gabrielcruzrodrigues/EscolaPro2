@@ -1,0 +1,17 @@
+<app-admin-navbar></app-admin-navbar>
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <div class="full-div">
+          <div class="title">
+               <p>Lista de Familiares</p>
+          </div>
+          <div class="full-div buttons-options">
+               <button (click)="orderListAZ('name')" #nameOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ nameButtonOrderListAZ }}</button>
+               <button (click)="orderListAZ('email')" #emailOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ emailButtonOrderListAZ }}</button>
+          </div>
+
+           <app-admin-families-table [families]="families"></app-admin-families-table>
+     </div>
+
+</section>

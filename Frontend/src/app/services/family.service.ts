@@ -22,4 +22,17 @@ export class FamilyService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.post<Family>(this.url, data, { headers: headers, observe: 'response' });
   }
+
+  delete(id: number): Observable<any> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/${id}`;
+    return this.http.delete(urlForRequest, { headers: headers, observe: 'response' });
+  }
+
+  getAll(): Observable<HttpResponse<Family[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    return this.http.get<Family[]>(this.url, { headers: headers, observe: 'response' });
+  }
 }
