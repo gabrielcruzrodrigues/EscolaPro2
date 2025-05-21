@@ -34,6 +34,8 @@ atualizar bancos de dados internos: <br>
 * JWT_SECRET_KEY = "MinhaChaveRSASuperSegura@2025"
 * JWT_ISSUER = "http://localhost:7151"
 * JWT_AUDIENCE = "http://localhost:4200"
+* JWT_TOKEN_VALIDITY_IN_MINUTES = 604800
+* JWT_REFRESH_TOKEN_VALIDITY_IN_MINUTES = 86400
 ### Variáveis relacionadas ao banco de dados geral (Exemplos)
 * SERVER = "localhost"
 * DATABASE_NAME = "general"

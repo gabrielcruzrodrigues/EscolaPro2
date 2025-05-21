@@ -1,6 +1,6 @@
 export const environment = {
      production: false,
-     apiUrl: 'https://localhost:7248/api',
-     sinalRBackendUrl: 'https://localhost:7248/callHub',
+     apiUrl: 'http://localhost:5086/api',
+     sinalRBackendUrl: 'http://localhost:5086/callHub',
      featureFlag: true,
 };
