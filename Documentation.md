@@ -28,3 +28,14 @@ atualizar bancos de dados internos: <br>
 
 1. ``` admin ``` - Controle total do sistema, acesso a todas as funcionalidades do sistema.
 2. ``` admin_internal ``` - Administrador geral de cada empresa específica, acesso a todos os dados e funcionalidades de cada empresa específica.
+
+## Variáveis de ambiente
+### Variáveis relacionadas ao token JWT (Exemplos)
+* JWT_SECRET_KEY = "MinhaChaveRSASuperSegura@2025"
+* JWT_ISSUER = "http://localhost:7151"
+* JWT_AUDIENCE = "http://localhost:4200"
+### Variáveis relacionadas ao banco de dados geral (Exemplos)
+* SERVER = "localhost"
+* DATABASE_NAME = "general"
+* USER = "sa"
+* PASSWORD = "12345678"
