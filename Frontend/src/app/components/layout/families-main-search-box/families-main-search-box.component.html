@@ -1,0 +1,39 @@
+<section class="search-student">
+     <div class="title">
+          <p>{{ title }}</p>
+     </div>
+
+     <form *ngIf="dropdown" (submit)="search($event)">
+          <div class="input">
+               <input type="text" id="searchInput" name="student-name"
+                    placeholder="{{ placeholder }}"
+               (input)="search($event)"
+               autocomplete="off">
+               <button class="input-button" type="submit">Pesquisar</button>
+          </div>
+     </form>
+
+     <form *ngIf="dropdown == false" (submit)="search($event)">
+          <div class="input">
+               <input type="text" id="searchInput" name="student-name"
+                    placeholder="{{ placeholder }}">
+               <button class="input-button" type="submit">Pesquisar</button>
+          </div>
+     </form>
+
+     @if (families.length > 0 && dropdown) {
+          <div class="input-container">
+               <!-- <input ... /> -->
+               <ul class="results-list">
+                    <li *ngFor="let families of families" (click)="openFamiliesDetails(families.id)">
+                         <img src="/perfil-photo.png">
+                         <p>{{ families.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{ families.email }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            {{ families.studentName }}
+                    </li>
+               </ul>
+          </div>
+     }
+
+</section>
+<app-spinning [isLoading]="isLoading"></app-spinning>

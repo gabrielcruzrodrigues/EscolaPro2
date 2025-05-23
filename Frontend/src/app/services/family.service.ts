@@ -35,4 +35,11 @@ export class FamilyService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.get<Family[]>(this.url, { headers: headers, observe: 'response' });
   }
+
+  search(param: string): Observable<HttpResponse<Family[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/search/${param}`;
+    return this.http.get<Family[]>(urlForRequest, { headers: headers, observe: 'response' });
+  }
 }
