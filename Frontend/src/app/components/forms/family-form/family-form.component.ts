@@ -15,6 +15,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { SpinningComponent } from "../../layout/spinning/spinning.component";
 import { Family } from '../../../types/Family';
 import { formatDate } from '../../../utils/FormatDate';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-family-form',
@@ -44,8 +45,13 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   @Output() familyData = new EventEmitter<FormData>();
 
   rgFileUploaded: boolean = false;
+  isHoveringRg: boolean = false;
+
   financialUploaded: boolean = false;
+  isHoveringFinancial: boolean = false;
+
   cpfUploaded: boolean = false;
+  isHoveringCpf: boolean = false;
 
   //view childs
   @ViewChild('step1') step1!: ElementRef;
@@ -87,7 +93,8 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private cepService: CepService
+    private cepService: CepService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       image: [null],
@@ -170,6 +177,18 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         neighborhood: data.neighborhood,
         type: data.type,
       });
+    }
+  }
+
+  downloadFile(option: string): void {
+    switch(option) {
+      case 'rg':
+        this.router.navigate([`${this.familyForEditData?.rgFilePath}`]);
+        break;
+      case 'cpf': 
+        break;
+      case 'finance':
+        break;
     }
   }
 

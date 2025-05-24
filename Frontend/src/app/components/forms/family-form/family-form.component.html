@@ -136,10 +136,14 @@
                     
                     <div class="inputs-div">
                          <label>Cópia digital do RG:</label>
-                         <div class="upload-box-field" (click)="fileInputField.click()">
+                         <div class="upload-box-field" 
+                              (click)="fileInputField.click()"
+                              (mouseenter)="isHoveringRg = true"
+                              (mouseleave)="isHoveringRg = false">
+
                                    <i *ngIf="!rgFileUploaded" class="fa-solid fa-upload"></i>
      
-                                   <i *ngIf="rgFileUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   <i *ngIf="rgFileUploaded && !isHoveringRg" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
                                    
                                    <input
                                         hidden
@@ -150,6 +154,11 @@
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'rg'); getRgFileErrors()"
                                         autocomplete="off">
+
+                                   <div *ngIf="rgFileUploaded && isHoveringRg" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash"></i>
+                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('rg')"></i>
+                                   </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
@@ -196,10 +205,13 @@
                     </div>
                     <div class="inputs-div">
                          <label>Cópia digital do CPF:</label>
-                         <div class="upload-box-field" (click)="fileInputFieldCpf.click()">
+                         <div class="upload-box-field" 
+                              (click)="fileInputFieldCpf.click()"
+                              (mouseenter)="isHoveringCpf = true"
+                              (mouseleave)="isHoveringCpf = false">
                                    <i *ngIf="!cpfUploaded" class="fa-solid fa-upload"></i>
      
-                                   <i *ngIf="cpfUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   <i *ngIf="cpfUploaded && !isHoveringCpf" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
                                    
                                    <input
                                         hidden
@@ -209,6 +221,11 @@
                                         accept=".pdf, .png, .jpeg, .jpg"
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'cpf'); getRgFileErrors()" autocomplete="off">
+
+                                   <div *ngIf="cpfUploaded && isHoveringCpf" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash"></i>
+                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('cpf')"></i>
+                                   </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
@@ -255,10 +272,14 @@
                     </div>
                     <div class="inputs-div">
                          <label>Cópia digital Comp. Residencial:</label>
-                         <div class="upload-box-field" (click)="fileInputFieldFinancial.click()">
+                         <div class="upload-box-field" 
+                              (click)="fileInputFieldFinancial.click()"
+                              (mouseenter)="isHoveringFinancial = true"
+                              (mouseleave)="isHoveringFinancial = false">
+
                                    <i *ngIf="!financialUploaded" class="fa-solid fa-upload"></i>
      
-                                   <i *ngIf="financialUploaded" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   <i *ngIf="financialUploaded && !isHoveringFinancial" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
                                    
                                    <input
                                         hidden
@@ -268,6 +289,11 @@
                                         accept=".pdf, .png, .jpeg, .jpg"
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'financial'); getRgFileErrors()" autocomplete="off">
+
+                                   <div *ngIf="financialUploaded && isHoveringFinancial" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash"></i>
+                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('finance')"></i>
+                                   </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
                     </div>
