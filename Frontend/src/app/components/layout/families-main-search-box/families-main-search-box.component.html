@@ -27,9 +27,8 @@
                <ul class="results-list">
                     <li *ngFor="let families of families" (click)="openFamiliesDetails(families.id)">
                          <img src="/perfil-photo.png">
-                         <p>{{ families.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                         <p>|&nbsp;&nbsp;{{ families.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
                             {{ families.email }}&nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{ families.studentName }}
                     </li>
                </ul>
           </div>

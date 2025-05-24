@@ -84,7 +84,7 @@ public class FamilyRepository : IFamilyRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Families
-                .Where(u => u.Status.Equals(true) && u.Name.Equals(familyName))
+                .Where(u => u.Name.Equals(familyName))
                 .FirstOrDefaultAsync();
     }
 
@@ -93,7 +93,7 @@ public class FamilyRepository : IFamilyRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Families
-                .Where(u => u.Status.Equals(true) && u.Email.Equals(familyEmail))
+                .Where(u =>  u.Email.Equals(familyEmail))
                 .FirstOrDefaultAsync();
     }
 
@@ -111,7 +111,7 @@ public class FamilyRepository : IFamilyRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Families
-                .Where(u => u.Status.Equals(true) && u.Cpf.Equals(familyCpf))
+                .Where(u => u.Cpf.Equals(familyCpf))
                 .FirstOrDefaultAsync();
     }
 
@@ -120,7 +120,7 @@ public class FamilyRepository : IFamilyRepository
         using var _context = _contextFactory.Create(companieName);
 
         return await _context.Families
-                .Where(u => u.Status.Equals(true) && u.Phone.Equals(familyPhone))
+                .Where(u => u.Phone.Equals(familyPhone))
                 .FirstOrDefaultAsync();
     }
 

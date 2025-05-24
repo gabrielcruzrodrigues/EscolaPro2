@@ -1,0 +1,18 @@
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <div class="div">
+          <app-families-main-search-box
+               [title]="titleUsersSearchInput"
+               (searchFamily)="onSearchFamily($event)"
+               [placeholder]="placeholder">
+          </app-families-main-search-box>
+     
+          @if (familiesSearched) {
+               <app-admin-families-table
+                    [families]="families"
+                    [typeActions]="typeActions">
+               </app-admin-families-table>
+          }
+     </div>
+</section>

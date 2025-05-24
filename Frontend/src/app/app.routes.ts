@@ -27,6 +27,8 @@ import { AdminUsersEditComponent } from './pages/admin/admin-users-edit/admin-us
 import { AdminFamiliesPanelComponent } from './pages/admin/admin-families-panel/admin-families-panel.component';
 import { AdminFamiliesCreateComponent } from './pages/admin/admin-families-create/admin-families-create.component';
 import { AdminFamiliesShowComponent } from './pages/admin/admin-families-show/admin-families-show.component';
+import { AdminFamiliesSearchEditComponent } from './pages/admin/admin-families-search-edit/admin-families-search-edit.component';
+import { AdminFamiliesSearchDeleteComponent } from './pages/admin/admin-families-search-delete/admin-families-search-delete.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -185,6 +187,16 @@ export const routes: Routes = [
      {
           path: 'admin/families-show',
           component: AdminFamiliesShowComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/families-search-edit',
+          component: AdminFamiliesSearchEditComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/families-search-delete',
+          component: AdminFamiliesSearchDeleteComponent,
           canActivate: [masterGuard]
      },
 
