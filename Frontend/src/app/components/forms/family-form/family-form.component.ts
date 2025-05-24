@@ -143,7 +143,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
 
     if (this.forEdit && changes['familyForEditData'] && changes['familyForEditData'].currentValue) {
       const data = changes['familyForEditData'].currentValue as Family;
-      console.log(data);
       this.form.patchValue({
         image: data.image,
         rgFile: data.rgFile,
@@ -151,12 +150,12 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         cpfFile: data.cpfFile,
         name: data.name,
         email: data.email,
-        dateOfBirth: data.dateOfBirth,
+        dateOfBirth: data.dateOfBirth.split('T')[0],
         phone: data.phone,
         sex: data.sex,
         rg: data.rg,
         rgDispatched: data.rgDispatched,
-        rgDispatchedDate: data.rgDispatchedDate,
+        rgDispatchedDate: data.rgDispatchedDate.split('T')[0],
         naturalness: data.naturalness,
         nationality: data.nationality,
         cpf: data.cpf,
@@ -168,6 +167,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         neighborhood: data.neighborhood,
         type: data.type,
       });
+      console.log(data.dateOfBirth.split(' ')[0]);
     }
   }
 
