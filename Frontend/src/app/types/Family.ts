@@ -5,9 +5,11 @@ export type Family = {
      city: string,
      cpf: string,
      cpfFile: null,
+     cpfFilePath: string,
      dateOfBirth: string
      email: string
-     financialFile: null
+     financialFile: null,
+     proofOfResidenceFilePath: string,
      homeNumber: string
      image: null
      name: string
@@ -18,7 +20,8 @@ export type Family = {
      rg: string
      rgDispatched: string
      rgDispatchedDate: string
-     rgFile: null
+     rgFile: null,
+     rgFilePath: string
      sex: string
      state: string
      type: string,

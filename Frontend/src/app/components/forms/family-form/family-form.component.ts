@@ -144,6 +144,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     if (this.forEdit && changes['familyForEditData'] && changes['familyForEditData'].currentValue) {
       const data = changes['familyForEditData'].currentValue as Family;
       this.previewUrl = data.image;
+      this.FileForShowOfTheFamily(data);
 
       this.form.patchValue({
         image: data.image,
@@ -340,8 +341,21 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  renderProfileImage(): void {
+  FileForShowOfTheFamily(family: Family) {
+    if (family.rgFilePath != null) {
+      this.form.patchValue({ rgFile: family.rgFilePath });
+      this.rgFileUploaded = true;
+    }
 
+    if (family.cpfFilePath != null) {
+      this.form.patchValue({ rgFile: family.cpfFilePath });
+      this.cpfUploaded = true;
+    }
+
+    if (family.proofOfResidenceFilePath != null) {
+      this.form.patchValue({ rgFile: family.proofOfResidenceFilePath });
+      this.financialUploaded = true;
+    }
   }
 
   onFileSelected(event: Event, option: string): void {
