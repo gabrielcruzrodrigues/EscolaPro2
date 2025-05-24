@@ -143,6 +143,8 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
 
     if (this.forEdit && changes['familyForEditData'] && changes['familyForEditData'].currentValue) {
       const data = changes['familyForEditData'].currentValue as Family;
+      this.previewUrl = data.image;
+
       this.form.patchValue({
         image: data.image,
         rgFile: data.rgFile,
@@ -167,7 +169,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         neighborhood: data.neighborhood,
         type: data.type,
       });
-      console.log(data.dateOfBirth.split(' ')[0]);
     }
   }
 
@@ -337,6 +338,10 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  renderProfileImage(): void {
+
   }
 
   onFileSelected(event: Event, option: string): void {
