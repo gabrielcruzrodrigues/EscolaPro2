@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminDashboardComponent } from "../admin-dashboard/admin-dashboard.component";
 import { AdminNavbarComponent } from "../../../components/layout/admin/admin-navbar/admin-navbar.component";
 import { SpinningComponent } from "../../../components/layout/spinning/spinning.component";
@@ -29,7 +29,7 @@ import { filterRoles } from '../../../utils/FilterRoles';
   templateUrl: './admin-users-edit.component.html',
   styleUrl: './admin-users-edit.component.sass'
 })
-export class AdminUsersEditComponent {
+export class AdminUsersEditComponent implements OnInit {
   userForm: FormGroup;
   title: string = 'Users';
   roles: Role[] = [];

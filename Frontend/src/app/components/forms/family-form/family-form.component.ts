@@ -13,6 +13,8 @@ import { CepService } from '../../../services/cep.service';
 import { Cep } from '../../../types/Cep';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { SpinningComponent } from "../../layout/spinning/spinning.component";
+import { Family } from '../../../types/Family';
+import { formatDate } from '../../../utils/FormatDate';
 
 @Component({
   selector: 'app-family-form',
@@ -48,6 +50,10 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   //view childs
   @ViewChild('step1') step1!: ElementRef;
   @ViewChild('step2') step2!: ElementRef;
+
+  //config for form to edit
+  @Input() forEdit: boolean = false;
+  @Input() familyForEditData: Family | null = null;
 
   //409 duplicates fields
   @Input() nameDuplicate: boolean = false;
@@ -134,6 +140,35 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
       this.duplicateFields('cpf');
       // alert('cpf')
     }
+
+    if (this.forEdit && changes['familyForEditData'] && changes['familyForEditData'].currentValue) {
+      const data = changes['familyForEditData'].currentValue as Family;
+      console.log(data);
+      this.form.patchValue({
+        image: data.image,
+        rgFile: data.rgFile,
+        financialFile: data.financialFile,
+        cpfFile: data.cpfFile,
+        name: data.name,
+        email: data.email,
+        dateOfBirth: data.dateOfBirth,
+        phone: data.phone,
+        sex: data.sex,
+        rg: data.rg,
+        rgDispatched: data.rgDispatched,
+        rgDispatchedDate: data.rgDispatchedDate,
+        naturalness: data.naturalness,
+        nationality: data.nationality,
+        cpf: data.cpf,
+        cep: data.cep,
+        state: data.state,
+        city: data.city,
+        address: data.address,
+        homeNumber: data.homeNumber,
+        neighborhood: data.neighborhood,
+        type: data.type,
+      });
+    }
   }
 
   duplicateFields(option: string): void {
@@ -196,6 +231,9 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     formData.append('State', this.form.get('state')?.value);
     formData.append('Type', this.form.get('type')?.value.toString()); // enum
     formData.append('Role', this.form.get('role')?.value.toString()); // enum
+    formData.append('Cep', this.form.get('cep')?.value.toString());
+    formData.append('Address', this.form.get('address')?.value.toString());
+    formData.append('Neighborhood', this.form.get('neighborhood')?.value.toString());
 
     if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
     if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);

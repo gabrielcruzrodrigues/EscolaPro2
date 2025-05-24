@@ -1,0 +1,21 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <section class="full-div">
+          <div class="title">
+               <h1>Editar Familiar</h1>
+          </div>
+          <app-family-form
+               [nameDuplicate]="nameDuplicate"
+               [emailDuplicate]="emailDuplicate"
+               [phoneDuplicate]="phoneDuplicate"
+               [rgDuplicate]="rgDuplicate"
+               [cpfDuplicate]="cpfDuplicate"
+               [forEdit]="true"
+               [familyForEditData]="familyForEditData"
+               (familyData)="onFamilyData($event)">
+          </app-family-form>
+     </section>
+</section>
+

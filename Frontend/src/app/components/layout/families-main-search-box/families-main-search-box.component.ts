@@ -63,6 +63,6 @@ export class FamiliesMainSearchBoxComponent {
   }
 
   openFamiliesDetails(familyId: number): void {
-    this.router.navigate([`/admin/families-details/${familyId}`]);
+    this.router.navigate([`admin/families-details/${familyId}`]);
   }
 }

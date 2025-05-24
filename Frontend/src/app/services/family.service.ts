@@ -42,4 +42,11 @@ export class FamilyService {
     const urlForRequest = this.url + `/search/${param}`;
     return this.http.get<Family[]>(urlForRequest, { headers: headers, observe: 'response' });
   }
+
+  getById(id: string): Observable<HttpResponse<Family>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/${id}`;
+    return this.http.get<Family>(urlForRequest, { headers: headers, observe: 'response' });
+  }
 }
