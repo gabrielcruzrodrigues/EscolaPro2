@@ -34,9 +34,9 @@ export class AdminFamiliesTableComponent {
     private router: Router
   ) { }
 
-  openModal(userId: number): void {
+  openModal(familyId: number): void {
     this.isModalOpen = true;
-    this.familyId = userId;
+    this.familyId = familyId;
   }
 
   onConfirmDelete(confirm: boolean): void {

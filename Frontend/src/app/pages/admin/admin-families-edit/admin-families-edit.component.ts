@@ -14,12 +14,12 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-admin-families-edit',
   imports: [
-    SpinningComponent, 
-    AdminNavbarComponent, 
-    InfoTopComponent, 
+    SpinningComponent,
+    AdminNavbarComponent,
+    InfoTopComponent,
     FamilyFormComponent,
     CommonModule
-  ],
+],
   templateUrl: './admin-families-edit.component.html',
   styleUrl: './admin-families-edit.component.sass'
 })

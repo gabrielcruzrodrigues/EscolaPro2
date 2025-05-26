@@ -142,7 +142,6 @@
                               (mouseleave)="isHoveringRg = false">
 
                                    <i *ngIf="!rgFileUploaded" class="fa-solid fa-upload"></i>
-     
                                    <i *ngIf="rgFileUploaded && !isHoveringRg" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
                                    
                                    <input
@@ -155,9 +154,28 @@
                                         (change)="onFileSelected($event, 'rg'); getRgFileErrors()"
                                         autocomplete="off">
 
-                                   <div *ngIf="rgFileUploaded && isHoveringRg" class="files-options">
-                                        <i class="fa-solid fa-trash option option-trash"></i>
-                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('rg')"></i>
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="rgFileUploaded && isHoveringRg && !rgDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="rgFileUploaded && isHoveringRg && rgDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
                                    </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
@@ -222,9 +240,28 @@
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'cpf'); getRgFileErrors()" autocomplete="off">
 
-                                   <div *ngIf="cpfUploaded && isHoveringCpf" class="files-options">
-                                        <i class="fa-solid fa-trash option option-trash"></i>
-                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('cpf')"></i>
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="cpfUploaded && isHoveringCpf && !cpfDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="cpfUploaded && isHoveringCpf && cpfDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
                                    </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
@@ -290,9 +327,28 @@
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'financial'); getRgFileErrors()" autocomplete="off">
 
-                                   <div *ngIf="financialUploaded && isHoveringFinancial" class="files-options">
-                                        <i class="fa-solid fa-trash option option-trash"></i>
-                                        <i class="fa-solid fa-eye option option-show" (click)="downloadFile('finance')"></i>
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="financialUploaded && isHoveringFinancial && !financialDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="financialUploaded && isHoveringFinancial && financialDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
                                    </div>
                                    <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
                          </div>
@@ -359,4 +415,9 @@
                [firstStep]="firstStep">
           </app-buttons-form>
      </section>
+     <app-modal-confirm 
+          *ngIf="isModalOpen" 
+          [message]="modalDeleteMessage"
+          (confirm)="onConfirmDelete($event)">
+     </app-modal-confirm>
 </form>     

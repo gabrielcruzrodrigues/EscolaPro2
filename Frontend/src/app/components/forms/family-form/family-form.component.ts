@@ -16,6 +16,7 @@ import { SpinningComponent } from "../../layout/spinning/spinning.component";
 import { Family } from '../../../types/Family';
 import { formatDate } from '../../../utils/FormatDate';
 import { Router } from '@angular/router';
+import { ModalConfirmComponent } from "../../layout/modal-confirm/modal-confirm.component";
 
 @Component({
   selector: 'app-family-form',
@@ -25,7 +26,8 @@ import { Router } from '@angular/router';
     InputErrorMessageComponent,
     ButtonsFormComponent,
     ReactiveFormsModule,
-    SpinningComponent
+    SpinningComponent,
+    ModalConfirmComponent
   ],
   templateUrl: './family-form.component.html',
   styleUrl: './family-form.component.sass'
@@ -44,14 +46,18 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   isLoading: boolean = false;
   @Output() familyData = new EventEmitter<FormData>();
 
+  //files filds
   rgFileUploaded: boolean = false;
   isHoveringRg: boolean = false;
-
+  rgDeletedConfirm: boolean = false;
+  
   financialUploaded: boolean = false;
   isHoveringFinancial: boolean = false;
-
+  financialDeletedConfirm: boolean = false;
+  
   cpfUploaded: boolean = false;
   isHoveringCpf: boolean = false;
+  cpfDeletedConfirm: boolean = false;
 
   //view childs
   @ViewChild('step1') step1!: ElementRef;
@@ -90,6 +96,11 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   sexErrors: string[] = [];
   typeErrors: string[] = [];
 
+  //modal configs
+  isModalOpen: boolean = false;
+  modalDeleteMessage: string = "Deseja deletar este documento do registro do usuário?"
+  documentOptionForDelete: string = '';
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -121,6 +132,41 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
       type: ['', Validators.required],
       role: [100]
     });
+  }
+
+  onConfirmDelete(verify: boolean): void {
+    if (verify) {
+      console.log(this.documentOptionForDelete)
+      switch (this.documentOptionForDelete) {
+        case 'rg':
+          if (this.familyForEditData)
+            this.familyForEditData.rgFilePath = '';
+            this.rgFileUploaded = false;
+            this.rgDeletedConfirm = true;
+          break;
+        case 'cpf':
+          if (this.familyForEditData)
+            this.familyForEditData.cpfFilePath = '';
+            this.cpfUploaded = false;
+            this.cpfDeletedConfirm = true;
+          break;
+        case 'financial':
+          if (this.familyForEditData)
+            this.familyForEditData.proofOfResidenceFilePath = '';
+            this.financialUploaded = false;
+            this.financialDeletedConfirm = true;
+          break;
+
+      }
+      this.isModalOpen = false;
+    } else {
+      this.isModalOpen = false;
+    }
+  }
+
+  openModalForDeleteDocuments(option: string): void {
+    this.isModalOpen = true;
+    this.documentOptionForDelete = option;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -181,15 +227,31 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   }
 
   downloadFile(option: string): void {
-    switch(option) {
+    let link = document.createElement('a');
+
+    switch (option) {
       case 'rg':
-        this.router.navigate([`${this.familyForEditData?.rgFilePath}`]);
+        if (this.familyForEditData) {
+          link.href = this.familyForEditData.rgFilePath;
+        }
         break;
-      case 'cpf': 
+      case 'cpf':
+        if (this.familyForEditData) {
+          link.href = this.familyForEditData.cpfFilePath;
+        }
         break;
-      case 'finance':
+      case 'financial':
+        if (this.familyForEditData) {
+          link.href = this.familyForEditData.proofOfResidenceFilePath;
+        }
         break;
     }
+
+    link.download = '';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   duplicateFields(option: string): void {
