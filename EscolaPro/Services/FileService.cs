@@ -1,4 +1,5 @@
 ﻿using EscolaPro.Services.Interfaces;
+using EscolaPro.Extensions;
 
 namespace EscolaPro.Services
 {
@@ -27,6 +28,37 @@ namespace EscolaPro.Services
             }
 
             return $"{httpRequest.Scheme}://{httpRequest.Host}/uploads/{fileName}";
+        }
+
+        public async Task<string> UpdateESaveANewFileInDatabaseAndDeleteTheLastFileAndReturnTheNewUrlAsync(IFormFile file, HttpRequest httpRequest, string lastFilePath)
+        {
+            //string filename = GetFileNameFromFullUrlPath(lastFilePath);
+            return  await SaveFileInDatabaseAndReturnUrlAsync(file, httpRequest);
+        }
+
+        public string GetFileNameFromFullUrlPath(string fullUrlPath)
+        {
+            string[] parts = fullUrlPath.Split("/uploads/");
+            string fileName = "";
+
+            if (parts.Length > 1)
+            {
+                fileName = parts[1];
+            }
+
+            return fileName;
+        }
+
+        public bool DeleteFileFromFileName(string fileName)
+        {
+            string filePath = Path.Combine(_env.ContentRootPath, "uploads", fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -141,7 +141,7 @@ public class FamilyController : ControllerBase
 
     [HttpPut]
     [Authorize(policy: Policies.ADMINISTRACAO)]
-    public async Task<ActionResult> Update(UpdateFamilyViewModel request)
+    public async Task<ActionResult> Update([FromForm] UpdateFamilyViewModel request)
     {
         // ============= Início validação de empresa e adquirimento do nome da empresa =============
 
@@ -156,111 +156,7 @@ public class FamilyController : ControllerBase
 
         // ============= Fim validação de empresa e adquirimento do nome da empresa =============
 
-        var family = await _familyRepository.GetByIdAsync(userCompanie.Name, request.Id);
-
-        //Validar alteração de imagem aqui
-
-        if (!request.Name.IsNullOrEmpty())
-        {
-            if (await _familyRepository.GetByNameAsync(userCompanie.Name, request.Name) == null)
-            {
-                family.Name = request.Name;
-            }
-            else
-            {
-                return BadRequest("Este Nome já está cadastrado no banco de dados!");
-            }
-        }
-
-        if (!request.Email.IsNullOrEmpty())
-        {
-            if (await _familyRepository.GetByEmailAsync(userCompanie.Name, request.Email) == null)
-            {
-                family.Email = request.Email;
-            }
-            else
-            {
-                return BadRequest("Este Email já está cadastrado no banco de dados!");
-            }
-        }
-
-
-        if (!request.Rg.IsNullOrEmpty())
-        {
-            if (await _familyRepository.GetByRgAsync(userCompanie.Name, request.Rg) == null)
-            {
-                family.Rg = request.Rg;
-            }
-            else
-            {
-                return BadRequest("Este RG já está cadastrado no banco de dados!");
-            }
-        }
-
-        if (!request.Cpf.IsNullOrEmpty())
-        {
-            if (await _familyRepository.GetByCpfAsync(userCompanie.Name, request.Cpf) == null)
-            {
-                family.Cpf = request.Cpf;
-            }
-            else
-            {
-                return BadRequest("Este CPF já está cadastrado no banco de dados!");
-            }
-        }
-
-
-        if (!request.Phone.IsNullOrEmpty())
-        {
-            if (await _familyRepository.GetByPhoneAsync(userCompanie.Name, request.Phone) == null)
-            {
-                family.Phone = request.Phone;
-            }
-            else
-            {
-                return BadRequest("Este Telefone já está cadastrado no banco de dados!");
-            }
-        }
-
-
-        if (request.Role != null)
-        {
-            if (Enum.IsDefined(typeof(RolesEnum), request.Role))
-            {
-                family.Role = request.Role.Value;
-            }
-            else
-            {
-                return BadRequest("Essa Role não está cadastrada no banco de dados!");
-            }
-        }
-
-
-        if (request.Type != null)
-        {
-            if (Enum.IsDefined(typeof(Type), request.Type))
-            {
-                family.Type = request.Type.Value;
-            }
-            else
-            {
-                return BadRequest("Esse tipo não está cadastrado no banco de dados!");
-            }
-        }
-
-        family.DateOfBirth = request.DateOfBirth ?? family.DateOfBirth;
-        family.Nationality = request.Nationality ?? family.Nationality;
-        family.Naturalness = request.Naturalness ?? family.Naturalness;
-        family.Sex = request.Sex ?? family.Sex;
-        family.Cep = request.Cep ?? family.Cep;
-        family.Address = request.Address ?? family.Address;
-        family.Neighborhood = request.Neighborhood ?? family.Neighborhood;
-        family.City = request.City ?? family.City;
-        family.State = request.State ?? family.State;
-        family.RgDispatched = request.RgDispatched ?? family.RgDispatched;
-        family.RgDispatchedDate = request.RgDispatchedDate ?? family.RgDispatchedDate;
-
-        await _familyRepository.Update(userCompanie.Name, family);
+        await _familyService.UpdateAsync(request, Request, userCompanie.Name);
         return NoContent();
     }
 

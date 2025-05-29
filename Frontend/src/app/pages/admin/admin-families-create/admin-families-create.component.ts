@@ -19,7 +19,6 @@ export class AdminFamiliesCreateComponent {
   isLoading: boolean = false;
 
   //duplicate fields - 409
-  nameDuplicate: boolean = false;
   emailDuplicate: boolean = false;
   phoneDuplicate: boolean = false;
   rgDuplicate: boolean = false;
@@ -32,7 +31,6 @@ export class AdminFamiliesCreateComponent {
   ) { }
 
   onFamilyData(family: FormData): void {
-    this.nameDuplicate = false;
     this.emailDuplicate = false;
     this.phoneDuplicate = false;
     this.rgDuplicate = false;
@@ -64,9 +62,6 @@ export class AdminFamiliesCreateComponent {
         if (error.status === 409) {
           (error.error.fields as string[]).forEach((field: string) => {
             switch (field) {
-              case 'name':
-                this.nameDuplicate = true;
-                break;
               case 'email':
                 this.emailDuplicate = true;
                 break;

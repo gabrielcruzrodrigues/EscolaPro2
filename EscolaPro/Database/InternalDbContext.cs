@@ -17,7 +17,6 @@ namespace EscolaPro.Database
         {
             modelBuilder.Entity<Family>(entity =>
             {
-                entity.HasIndex(f => f.Name).IsUnique();
                 entity.HasIndex(f => f.Email).IsUnique();
                 entity.HasIndex(f => f.Rg).IsUnique();
                 entity.HasIndex(f => f.Cpf).IsUnique();
@@ -26,7 +25,6 @@ namespace EscolaPro.Database
 
             modelBuilder.Entity<FinancialResponsible>(entity =>
             {
-                entity.HasIndex(f => f.Name).IsUnique();
                 entity.HasIndex(f => f.Email).IsUnique();
                 entity.HasIndex(f => f.Rg).IsUnique();
                 entity.HasIndex(f => f.Cpf).IsUnique();
@@ -35,7 +33,6 @@ namespace EscolaPro.Database
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasIndex(f => f.Name).IsUnique();
                 entity.HasIndex(f => f.Email).IsUnique();
                 entity.HasIndex(f => f.Rg).IsUnique();
                 entity.HasIndex(f => f.Cpf).IsUnique();

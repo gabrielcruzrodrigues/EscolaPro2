@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
     InfoTopComponent,
     FamilyFormComponent,
     CommonModule
-],
+  ],
   templateUrl: './admin-families-edit.component.html',
   styleUrl: './admin-families-edit.component.sass'
 })
@@ -28,7 +28,6 @@ export class AdminFamiliesEditComponent implements OnInit {
   familyForEditData: Family | null = null;
 
   //duplicate fields - 409
-  nameDuplicate: boolean = false;
   emailDuplicate: boolean = false;
   phoneDuplicate: boolean = false;
   rgDuplicate: boolean = false;
@@ -45,34 +44,37 @@ export class AdminFamiliesEditComponent implements OnInit {
     this.isLoading = true;
     const familyId = this.activatedRoute.snapshot.paramMap.get('familyId') ?? '0';
     this.familyService.getById(familyId).pipe(map(response => response.body))
-    .subscribe({
-      next: (family: Family | null) => {
-        this.familyForEditData = family;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        if (error.status === 500) {
-          this.toastr.error("Houve um erro ao buscar os dados do familiar, contate um administrador do sistema!");
+      .subscribe({
+        next: (family: Family | null) => {
+          this.familyForEditData = family;
           this.isLoading = false;
-          this.router.navigate(['/admin/families-panel']); 
-        } 
-      }
-    })
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.toastr.error("Houve um erro ao buscar os dados do familiar, contate um administrador do sistema!");
+            this.isLoading = false;
+            this.router.navigate(['/admin/families-panel']);
+          }
+        }
+      })
   }
 
   onFamilyData(family: FormData): void {
-    this.nameDuplicate = false;
+    // family.forEach((value, key) => {
+    //   console.log(`Chave: ${key}, Valor:`, value);
+    // });
+
     this.emailDuplicate = false;
     this.phoneDuplicate = false;
     this.rgDuplicate = false;
     this.cpfDuplicate = false;
 
     this.isLoading = true;
-    this.familyService.create(family).subscribe({
+    this.familyService.update(family).subscribe({
       next: (response: HttpResponse<Family>) => {
         this.isLoading = false;
-        if (response.status === 201) {
-          this.toastr.success("Familiar criado com sucesso!");
+        if (response.status === 204) {
+          this.toastr.success("Familiar atualizado com sucesso!");
           this.router.navigate(['/admin/families-panel']);
           return;
         }
@@ -91,11 +93,9 @@ export class AdminFamiliesEditComponent implements OnInit {
         }
 
         if (error.status === 409) {
+          this.toastr.info("Existem campos duplicados! Resolva os problemas antes de continuar!");
           (error.error.fields as string[]).forEach((field: string) => {
             switch (field) {
-              case 'name':
-                this.nameDuplicate = true;
-                break;
               case 'email':
                 this.emailDuplicate = true;
                 break;

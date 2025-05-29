@@ -59,6 +59,8 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   isHoveringCpf: boolean = false;
   cpfDeletedConfirm: boolean = false;
 
+  imageProfileChange: boolean = false;
+
   //view childs
   @ViewChild('step1') step1!: ElementRef;
   @ViewChild('step2') step2!: ElementRef;
@@ -68,7 +70,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   @Input() familyForEditData: Family | null = null;
 
   //409 duplicates fields
-  @Input() nameDuplicate: boolean = false;
   @Input() emailDuplicate: boolean = false;
   @Input() phoneDuplicate: boolean = false;
   @Input() rgDuplicate: boolean = false;
@@ -170,10 +171,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['nameDuplicate']) {
-      this.duplicateFields('name');
-    }
-
     if (changes['emailDuplicate']) {
       this.duplicateFields('email');
       // alert('email')
@@ -198,6 +195,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
       const data = changes['familyForEditData'].currentValue as Family;
       this.previewUrl = data.image;
       this.FileForShowOfTheFamily(data);
+      console.log(data);
 
       this.form.patchValue({
         image: data.image,
@@ -256,12 +254,6 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
 
   duplicateFields(option: string): void {
     switch (option) {
-      case 'name':
-        if (this.nameDuplicate) {
-          this.nameErrors.push('Esse nome já foi cadastrado!');
-          this.nameDuplicate = false;
-        }
-        break;
       case 'email':
         if (this.emailDuplicate) {
           this.emailErros.push('Esse email já foi cadastrado!');
@@ -298,6 +290,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
 
     const formData = new FormData();
 
+    formData.append('Id', String(this.familyForEditData?.id));
     formData.append('Name', this.form.get('name')?.value);
     formData.append('Email', this.form.get('email')?.value);
     formData.append('Cpf', this.form.get('cpf')?.value);
@@ -318,10 +311,26 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     formData.append('Address', this.form.get('address')?.value.toString());
     formData.append('Neighborhood', this.form.get('neighborhood')?.value.toString());
 
-    if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
-    if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
-    if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
-    if (this.form.get('financialFile')?.value) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
+    // if (this.forEdit) {
+    //   if (this.form.get('image')?.value && this.imageProfileChange) formData.append('Image', this.form.get('image')?.value);
+    //   if (this.form.get('rgFile')?.value && this.rgDeletedConfirm) formData.append('RgFile', this.form.get('rgFile')?.value);
+    //   if (this.form.get('cpfFile')?.value && this.cpfDeletedConfirm) formData.append('CpfFile', this.form.get('cpfFile')?.value);
+    //   if (this.form.get('financialFile')?.value && this.financialDeletedConfirm) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
+    // } else {
+      if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
+      if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
+      if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
+      if (this.form.get('financialFile')?.value) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
+    // }
+
+    if (this.rgDeletedConfirm) formData.append('RgFileDeleted', "true");
+    if (this.cpfDeletedConfirm) formData.append('CpfFileDeleted', "true");
+    if (this.financialDeletedConfirm) formData.append('ProofOfResidenceFileDeleted', "true");
+
+    // formData.forEach((value, key) => {
+    //   console.log(`Chave: ${key}, Valor:`, value);
+    // });
+    // console.log(this.form.value);
 
     this.familyData.emit(formData);
   }
@@ -413,6 +422,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     if (file) {
       this.form.patchValue({ image: file });
       this.form.get('image')?.updateValueAndValidity();
+      this.imageProfileChange = true;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -423,17 +433,17 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   }
 
   FileForShowOfTheFamily(family: Family) {
-    if (family.rgFilePath != null) {
+    if (family.rgFilePath != "") {
       this.form.patchValue({ rgFile: family.rgFilePath });
       this.rgFileUploaded = true;
     }
 
-    if (family.cpfFilePath != null) {
+    if (family.cpfFilePath != "") {
       this.form.patchValue({ rgFile: family.cpfFilePath });
       this.cpfUploaded = true;
     }
 
-    if (family.proofOfResidenceFilePath != null) {
+    if (family.proofOfResidenceFilePath != "") {
       this.form.patchValue({ rgFile: family.proofOfResidenceFilePath });
       this.financialUploaded = true;
     }

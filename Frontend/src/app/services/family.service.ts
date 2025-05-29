@@ -49,4 +49,11 @@ export class FamilyService {
     const urlForRequest = this.url + `/${id}`;
     return this.http.get<Family>(urlForRequest, { headers: headers, observe: 'response' });
   }
+
+  update(family: FormData): Observable<HttpResponse<any>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url;
+    return this.http.put(urlForRequest, family, { headers: headers, observe: 'response' });
+  }
 }
