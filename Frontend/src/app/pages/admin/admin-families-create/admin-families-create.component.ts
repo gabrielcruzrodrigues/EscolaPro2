@@ -60,6 +60,7 @@ export class AdminFamiliesCreateComponent {
         }
 
         if (error.status === 409) {
+          this.toastr.info("Existem campos duplicados! Resolva os problemas antes de continuar!");
           (error.error.fields as string[]).forEach((field: string) => {
             switch (field) {
               case 'email':

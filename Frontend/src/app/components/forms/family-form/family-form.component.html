@@ -149,7 +149,7 @@
                                         #fileInputField 
                                         type="file" 
                                         name="rgFile"
-                                        accept=".pdf, .png, .jpeg, .jpg"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'rg'); getRgFileErrors()"
                                         autocomplete="off">
@@ -236,7 +236,7 @@
                                         #fileInputFieldCpf 
                                         type="file" 
                                         name="rgFile"
-                                        accept=".pdf, .png, .jpeg, .jpg"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'cpf'); getRgFileErrors()" autocomplete="off">
 
@@ -323,7 +323,7 @@
                                         #fileInputFieldFinancial 
                                         type="file" 
                                         name="rgFile"
-                                        accept=".pdf, .png, .jpeg, .jpg"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
                                         (input)="clearInputErrors('rgFile')"
                                         (change)="onFileSelected($event, 'financial'); getRgFileErrors()" autocomplete="off">
 
@@ -350,7 +350,7 @@
                                              $event.stopPropagation()">
                                         </i>
                                    </div>
-                                   <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                                   <app-input-error-message [errors]="financialFileErrors"></app-input-error-message>
                          </div>
                     </div>
                </div>

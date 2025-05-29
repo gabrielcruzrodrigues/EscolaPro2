@@ -50,11 +50,11 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   rgFileUploaded: boolean = false;
   isHoveringRg: boolean = false;
   rgDeletedConfirm: boolean = false;
-  
+
   financialUploaded: boolean = false;
   isHoveringFinancial: boolean = false;
   financialDeletedConfirm: boolean = false;
-  
+
   cpfUploaded: boolean = false;
   isHoveringCpf: boolean = false;
   cpfDeletedConfirm: boolean = false;
@@ -96,6 +96,7 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
   nationalityErrors: string[] = [];
   sexErrors: string[] = [];
   typeErrors: string[] = [];
+  financialFileErrors: string[] = [];
 
   //modal configs
   isModalOpen: boolean = false;
@@ -142,20 +143,20 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
         case 'rg':
           if (this.familyForEditData)
             this.familyForEditData.rgFilePath = '';
-            this.rgFileUploaded = false;
-            this.rgDeletedConfirm = true;
+          this.rgFileUploaded = false;
+          this.rgDeletedConfirm = true;
           break;
         case 'cpf':
           if (this.familyForEditData)
             this.familyForEditData.cpfFilePath = '';
-            this.cpfUploaded = false;
-            this.cpfDeletedConfirm = true;
+          this.cpfUploaded = false;
+          this.cpfDeletedConfirm = true;
           break;
         case 'financial':
           if (this.familyForEditData)
             this.familyForEditData.proofOfResidenceFilePath = '';
-            this.financialUploaded = false;
-            this.financialDeletedConfirm = true;
+          this.financialUploaded = false;
+          this.financialDeletedConfirm = true;
           break;
 
       }
@@ -311,26 +312,14 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     formData.append('Address', this.form.get('address')?.value.toString());
     formData.append('Neighborhood', this.form.get('neighborhood')?.value.toString());
 
-    // if (this.forEdit) {
-    //   if (this.form.get('image')?.value && this.imageProfileChange) formData.append('Image', this.form.get('image')?.value);
-    //   if (this.form.get('rgFile')?.value && this.rgDeletedConfirm) formData.append('RgFile', this.form.get('rgFile')?.value);
-    //   if (this.form.get('cpfFile')?.value && this.cpfDeletedConfirm) formData.append('CpfFile', this.form.get('cpfFile')?.value);
-    //   if (this.form.get('financialFile')?.value && this.financialDeletedConfirm) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
-    // } else {
-      if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
-      if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
-      if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
-      if (this.form.get('financialFile')?.value) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
-    // }
+    if (this.form.get('image')?.value) formData.append('Image', this.form.get('image')?.value);
+    if (this.form.get('rgFile')?.value) formData.append('RgFile', this.form.get('rgFile')?.value);
+    if (this.form.get('cpfFile')?.value) formData.append('CpfFile', this.form.get('cpfFile')?.value);
+    if (this.form.get('financialFile')?.value) formData.append('ProofOfResidenceFile', this.form.get('financialFile')?.value);
 
     if (this.rgDeletedConfirm) formData.append('RgFileDeleted', "true");
     if (this.cpfDeletedConfirm) formData.append('CpfFileDeleted', "true");
     if (this.financialDeletedConfirm) formData.append('ProofOfResidenceFileDeleted', "true");
-
-    // formData.forEach((value, key) => {
-    //   console.log(`Chave: ${key}, Valor:`, value);
-    // });
-    // console.log(this.form.value);
 
     this.familyData.emit(formData);
   }
@@ -454,6 +443,15 @@ export class FamilyFormComponent implements AfterViewInit, OnChanges {
     const file = input.files?.[0];
 
     if (file) {
+      const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+      const fileType = file.type;
+
+      if (!allowedTypes.includes(fileType)) {
+        this.toastr.error('Tipo de arquivo inválido. Envie um PDF ou imagem (.png, .jpeg, .jpg).');
+        input.value = '';
+        return;
+      }
+
       switch (option) {
         case 'rg':
           this.form.patchValue({ rgFile: file });

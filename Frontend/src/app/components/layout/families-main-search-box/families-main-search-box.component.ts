@@ -42,7 +42,6 @@ export class FamiliesMainSearchBoxComponent {
     if (inputElement.value) {
       this.familyService.search(inputElement.value).subscribe({
         next: (response: HttpResponse<Family[]>) => {
-          console.log(response)
           if (response.body) {
             response.body.forEach(family => {
               family.createdAt = formatDate(family.createdAt);
