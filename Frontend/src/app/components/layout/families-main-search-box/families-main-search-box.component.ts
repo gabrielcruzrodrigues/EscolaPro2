@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { formatDate } from '../../../utils/FormatDate';
+import { familyTypeConvertInString } from '../../../utils/FamilyTypeConvertInString';
 
 @Component({
   selector: 'app-families-main-search-box',
@@ -40,6 +42,14 @@ export class FamiliesMainSearchBoxComponent {
     if (inputElement.value) {
       this.familyService.search(inputElement.value).subscribe({
         next: (response: HttpResponse<Family[]>) => {
+          console.log(response)
+          if (response.body) {
+            response.body.forEach(family => {
+              family.createdAt = formatDate(family.createdAt);
+              family.type = familyTypeConvertInString(Number(family.type));
+            });
+          }
+            
           const families = response.body ?? [];
           this.families = families;
 
