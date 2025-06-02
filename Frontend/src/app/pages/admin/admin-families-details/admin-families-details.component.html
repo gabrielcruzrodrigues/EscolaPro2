@@ -1,0 +1,116 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="main-section appear">
+     <app-info-top></app-info-top>
+
+     <div class="full-div">
+          <div class="title">
+               <p>Informações básicas do familiar</p>
+          </div>
+
+          <div class="image-first_infos">
+               <div class="image">
+                    <img src="{{ family?.image }}">
+               </div>
+               <div class="first_infos">
+                    <div class="info">
+                         <label>Nome:</label>
+                         <p>{{ family?.name }}</p>
+                         <label>Email:</label>
+                         <p>{{ family?.email }}</p>
+                         <label>Tipo:</label>
+                         <p>{{ type }}</p>
+                    </div>
+                    <div class="info">
+                         <label>Data de cadastro:</label>
+                         <p>{{ createdAt }}</p>
+                         <label>Responsável por:</label>
+                         <p>{{ family?.studentName ?? "Ainda não definido" }}</p>
+                         <label>Cargo:</label>
+                         <p>Familiar</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <div class="full-div">
+          <div class="title">
+               <p>Informações pessoais do familiar</p>
+          </div>
+          <div class="default-infos">
+
+               <div class="info">
+                    <div class="info-block">
+                         <label>Rg:</label>
+                         <p>{{ rg }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Cpf:</label>
+                         <p>{{ cpf }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Endereço:</label>
+                         <p>{{ family?.address }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Cep:</label>
+                         <p>{{ family?.cep }}</p>
+                    </div>
+               </div>
+               <div class="info">
+                    <div class="info-block">
+                         <label>Copia digital do Rg:</label>
+                         <app-view-document-button [filePath]="rgFilePath"></app-view-document-button>
+                    </div>
+                    <div class="info-block">
+                         <label>Copia digital do Cpf:</label>
+                         <app-view-document-button [filePath]="cpfFilePath"></app-view-document-button>
+                    </div>
+                    <div class="info-block">
+                         <label>Copia digital do Com. residência:</label>
+                         <app-view-document-button [filePath]="proofOfResidenceFilePath"></app-view-document-button>
+                    </div>
+                    <div class="info-block">
+                         <label>Sexo:</label>
+                         <p>{{ sex }}</p>
+                    </div>
+               </div>
+               <div class="info">
+                    <div class="info-block">
+                         <label>Data de nascimento:</label>
+                         <p>{{ dateOfBirth }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Telefone</label>
+                         <p>{{ family?.phone }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>N° da residência</label>
+                         <p>{{ family?.homeNumber }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Cidade:</label>
+                         <p>{{ family?.city }}</p>
+                    </div>
+               </div>
+               <div class="info">
+                    <div class="info-block">
+                         <label>Estado:</label>
+                         <p>{{ family?.state }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Naturalidade:</label>
+                         <p>{{ family?.naturalness }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Nacionalidade:</label>
+                         <p>{{ family?.nationality }}</p>
+                    </div>
+                    <div class="info-block">
+                         <label>Bairro:</label>
+                         <p>{{ family?.neighborhood }}</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <div class="div-space"></div>
+</div>

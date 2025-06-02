@@ -30,6 +30,7 @@ import { AdminFamiliesShowComponent } from './pages/admin/admin-families-show/ad
 import { AdminFamiliesSearchEditComponent } from './pages/admin/admin-families-search-edit/admin-families-search-edit.component';
 import { AdminFamiliesSearchDeleteComponent } from './pages/admin/admin-families-search-delete/admin-families-search-delete.component';
 import { AdminFamiliesEditComponent } from './pages/admin/admin-families-edit/admin-families-edit.component';
+import { AdminFamiliesDetailsComponent } from './pages/admin/admin-families-details/admin-families-details.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -203,6 +204,11 @@ export const routes: Routes = [
      {
           path: 'admin/families-edit/:familyId',
           component: AdminFamiliesEditComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/families-details/:familyId',
+          component: AdminFamiliesDetailsComponent,
           canActivate: [masterGuard]
      },
 

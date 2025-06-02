@@ -1,32 +1,32 @@
 export type Family = {
      id: number,
-     address: string,
-     cep: string,
-     city: string,
-     cpf: string,
+     address: string, //
+     cep: string, //
+     city: string, //
+     cpf: string, //
      cpfFile: null,
      cpfFilePath: string,
-     dateOfBirth: string
-     email: string
+     dateOfBirth: string //
+     email: string //
      financialFile: null,
      proofOfResidenceFilePath: string,
-     homeNumber: string
+     homeNumber: string //
      image: null
-     name: string
-     nationality: string
-     naturalness: string
+     name: string //
+     nationality: string //
+     naturalness: string //
      neighborhood: string
-     phone: string
-     rg: string
+     phone: string //
+     rg: string //
      rgDispatched: string
      rgDispatchedDate: string
      rgFile: null,
      rgFilePath: string
-     sex: string
-     state: string
-     type: string,
-     createdAt: string
-     studentName: string
+     sex: string //
+     state: string //
+     type: string, //
+     createdAt: string //
+     studentName: string //
 }
 
 export type CreateFamily = {
