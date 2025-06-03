@@ -1,0 +1,58 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-admin-navbar></app-admin-navbar>
+<section class="main-section appear">
+     <app-info-top></app-info-top>
+     <section class="full-div">
+          <div class="title">
+               <h1>{{ title }}</h1>
+          </div>
+          <app-students-form *ngIf="studentFormShow" 
+               [emailDuplicate]="emailDuplicate" 
+               [phoneDuplicate]="phoneDuplicate"
+               [rgDuplicate]="rgDuplicate" 
+               [cpfDuplicate]="cpfDuplicate" 
+               (studentData)="onStudentData($event)"
+               [studentForMainCreateStudent]="student">
+          </app-students-form>
+
+          <section *ngIf="familyCreateOrSelectOptionPageShow" class="familyCreateOrSelectOptionPageShow">
+               <app-families-main-search-box (familyIdSearchedMainStudentForm)="searchESelectFamily($event)"
+                    [dropdown]="true" [placeholder]="'Digite algo para iniciar a busca por familiares...'"
+                    [mainStudentFormCreateOption]="true">
+               </app-families-main-search-box>
+
+               <div class="full-div" *ngIf="fatherSelected || motherSelected">
+                    <app-user-selected-down-main-search-box 
+                         *ngIf="motherSelected" 
+                         [family]="motherSelected"
+                         (deleteFamily)="deleteFamilySelected($event)">
+                    </app-user-selected-down-main-search-box>
+
+                    <app-user-selected-down-main-search-box 
+                         *ngIf="fatherSelected" 
+                         [family]="fatherSelected"
+                         (deleteFamily)="deleteFamilySelected($event)">
+                    </app-user-selected-down-main-search-box>
+               </div>
+
+               <p *ngIf="!fatherSelected && !motherSelected">Use o campo de busca acima para selecionar um familiar para o estudante, se não encontrar um familiar,
+                    clique em criar um familiar no botão a baixo!</p>
+
+               <div class="button-div-register" *ngIf="!fatherSelected || !motherSelected">
+                    <button>Cadastrar um novo familiar</button>
+               </div>
+
+               <div class="button-div-selected" *ngIf="fatherSelected || motherSelected">
+                    <button class="back"
+                         (click)="returnStudentForm()">
+                         <i class="fa-solid fa-backward icon">
+                         </i>&nbsp;Anterior
+                    </button>
+                    <button class="next">Próximo&nbsp;
+                         <i class="fa-solid fa-forward icon">
+                         </i>
+                    </button>
+               </div>
+          </section>
+     </section>
+</section>

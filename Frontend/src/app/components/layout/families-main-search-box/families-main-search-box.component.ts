@@ -24,8 +24,10 @@ export class FamiliesMainSearchBoxComponent {
   @Input() isLoading: boolean = false;
   @Input() dropdown: boolean = false;
   @Output() searchFamily = new EventEmitter<Family[]>();
+  @Output() familyIdSearchedMainStudentForm = new EventEmitter<number>();
   families: Family[] = [];
   @Input() placeholder: string = "";
+  @Input() mainStudentFormCreateOption: boolean = false;
 
   constructor(
     private familyService: FamilyService,
@@ -48,7 +50,7 @@ export class FamiliesMainSearchBoxComponent {
               family.type = familyTypeConvertInString(Number(family.type));
             });
           }
-            
+
           const families = response.body ?? [];
           this.families = families;
 
@@ -72,6 +74,15 @@ export class FamiliesMainSearchBoxComponent {
   }
 
   openFamiliesDetails(familyId: number): void {
-    this.router.navigate([`admin/families-details/${familyId}`]);
+    if (this.mainStudentFormCreateOption) {
+      const inputElement = document.getElementById('searchInput') as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = '';
+      }
+      this.families = [];
+      this.familyIdSearchedMainStudentForm.emit(familyId);
+    } else {
+      this.router.navigate([`admin/families-details/${familyId}`]);
+    }
   }
 }

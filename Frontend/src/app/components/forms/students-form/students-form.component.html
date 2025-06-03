@@ -1,0 +1,414 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<form [formGroup]="form" autocomplete="off">
+     <section class="form">
+          <div #step1>
+               <div class="image-first_infos">
+                    <div class="image">
+                         <div class="upload-box" (click)="fileInput.click()">
+                              <ng-container *ngIf="previewUrl; else uploadIcon">
+                                   <img [src]="previewUrl" alt="Preview" />
+                              </ng-container>
+               
+                              <ng-template #uploadIcon>
+                                   <i class="fa-solid fa-upload"></i>
+                              </ng-template>
+               
+                              <input type="file" accept="image/*" (change)="onImageSelected($event)" #fileInput hidden />
+                         </div>
+                    </div>
+                    <div class="first_infos">
+                         <div class="fields">
+                              <label>Nome completo:</label>
+                              <input 
+                                   [class.input-error]="nameErrors.length > 0"
+                                   type="text" 
+                                   formControlName="name" 
+                                   placeholder="Digite o Nome do novo estudante" 
+                                   name="name"
+                                   (input)="clearInputErrors('name')"
+                                   (change)="getNameErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+          
+                              <label>Email:</label>
+                              <input 
+                                   [class.input-error]="emailErros.length > 0"
+                                   type="email" 
+                                   formControlName="email" 
+                                   placeholder="Digite o email do novo estudante" 
+                                   name="email"
+                                   (input)="clearInputErrors('email')"
+                                   (change)="getEmailErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="emailErros"></app-input-error-message>
+                              <label>Telefone/WhatsApp:</label>
+                              <input 
+                                   [class.input-error]="phoneErrors.length > 0"
+                                   type="number" 
+                                   formControlName="phone" 
+                                   placeholder="Digite o Telefone/WhatsApp do novo estudante" 
+                                   name="phone"
+                                   (input)="clearInputErrors('phone')"
+                                   (change)="getPhoneErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="phoneErrors"></app-input-error-message>
+                         </div>
+                    </div>
+               </div>
+          
+               <div class="three-input-fields">     
+                    <div class="inputs-div">
+                         <label>Data de nascimento:</label>
+                              <input 
+                                   [class.input-error]="dateOfBirthErrors.length > 0"
+                                   type="date" 
+                                   formControlName="dateOfBirth" 
+                                   name="dateOfBirth"
+                                   (input)="clearInputErrors('dateOfBirth')"
+                                   (change)="getDateOfBirthErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="dateOfBirthErrors"></app-input-error-message>
+                    </div> 
+                    <div class="inputs-div">
+                         <label>Sexo:</label>
+                              <select 
+                                   formControlName="sex" 
+                                   [class.input-error]="sexErrors.length > 0"
+                                   (change)="clearInputErrors('sex')"
+                                   autocomplete="off">
+                                   <option value="" selected disabled>Selecione</option>
+                                   <option value="0">Maculino</option>
+                                   <option value="1">Feminino</option>
+                              </select>
+                    </div>
+                    <div class="inputs-div">
+                         <label>O estudante é o responsável financeiro?:</label>
+                              <select 
+                                   formControlName="studentFinancialResponsible" 
+                                   [class.input-error]="studentFinancialResponsibleErrors.length > 0"
+                                   (change)="clearInputErrors('studentFinancialResponsible')"
+                                   autocomplete="off">
+                                   <option value="" selected disabled>Selecione</option>
+                                   <option value="0">Não</option>
+                                   <option value="1">Sim</option>
+                              </select>
+                    </div>
+               </div>
+          </div>
+          <div #step2 class="disable">
+               <div class="four-input-fields">
+                    <div class="inputs-div">
+                         <label>RG:</label>
+                              <input 
+                                   [class.input-error]="rgErrors.length > 0"
+                                   type="number" 
+                                   formControlName="rg" 
+                                   placeholder="Digite o RG do novo estudante" 
+                                   name="rg"
+                                   (input)="clearInputErrors('rg')"
+                                   (change)="getRgErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="rgErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Emissor do RG:</label>
+                              <input 
+                                   class="upperInput"
+                                   [class.input-error]="rgDispatchedErrors.length > 0"
+                                   type="text" 
+                                   formControlName="rgDispatched" 
+                                   placeholder="Ex: SSP" 
+                                   name="rgDispatched"
+                                   (input)="clearInputErrors('rgDispatched')"
+                                   (change)="getRgDispatchedErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="rgDispatchedErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Data de emissão:</label>
+                              <input 
+                                   [class.input-error]="rgDispatchedDateErrors.length > 0"
+                                   type="date" 
+                                   formControlName="rgDispatchedDate" 
+                                   name="rgDispatchedDate"
+                                   (input)="clearInputErrors('rgDispatchedDate')"
+                                   (change)="getRgDispatchedDateErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="rgDispatchedDateErrors"></app-input-error-message>
+                    </div>
+                    
+                    <div class="inputs-div">
+                         <label>Cópia digital do RG:</label>
+                         <div class="upload-box-field" 
+                              (click)="fileInputField.click()"
+                              (mouseenter)="isHoveringRg = true"
+                              (mouseleave)="isHoveringRg = false">
+
+                                   <i *ngIf="!rgFileUploaded" class="fa-solid fa-upload"></i>
+                                   <i *ngIf="rgFileUploaded && !isHoveringRg" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   
+                                   <input
+                                        hidden
+                                        #fileInputField 
+                                        type="file" 
+                                        name="rgFile"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
+                                        (input)="clearInputErrors('rgFile')"
+                                        (change)="onFileSelected($event, 'rg'); getRgFileErrors()"
+                                        autocomplete="off">
+
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="rgFileUploaded && isHoveringRg && !rgDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="rgFileUploaded && isHoveringRg && rgDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('rg');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+                                   <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                         </div>
+                    </div>
+               </div>
+     <div class="four-input-fields">
+                    <div class="inputs-div">
+                         <label>Naturalidade:</label>
+                              <input 
+                                   [class.input-error]="naturalnessErrors.length > 0"
+                                   type="text" 
+                                   formControlName="naturalness" 
+                                   placeholder="Ex: Jequié" 
+                                   name="naturalness"
+                                   (input)="clearInputErrors('naturalness')"
+                                   (change)="getNaturalnessErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="naturalnessErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Naturalidade:</label>
+                              <input 
+                                   [class.input-error]="nationalityErrors.length > 0"
+                                   type="text" 
+                                   formControlName="nationality" 
+                                   placeholder="Ex: Brasileiro" 
+                                   name="nationality"
+                                   (input)="clearInputErrors('nationality')"
+                                   (change)="getNationalityErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="nationalityErrors"></app-input-error-message>
+                    </div> 
+                    <div class="inputs-div">
+                         <label>CPF:</label>
+                              <input 
+                                   [class.input-error]="cpfErrors.length > 0"
+                                   type="text" 
+                                   formControlName="cpf" 
+                                   placeholder="Digite o CPF do novo estudante" 
+                                   name="cpf"
+                                   (input)="clearInputErrors('cpf')"
+                                   (change)="getCpfErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="cpfErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Cópia digital do CPF:</label>
+                         <div class="upload-box-field" 
+                              (click)="fileInputFieldCpf.click()"
+                              (mouseenter)="isHoveringCpf = true"
+                              (mouseleave)="isHoveringCpf = false">
+                                   <i *ngIf="!cpfUploaded" class="fa-solid fa-upload"></i>
+     
+                                   <i *ngIf="cpfUploaded && !isHoveringCpf" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   
+                                   <input
+                                        hidden
+                                        #fileInputFieldCpf 
+                                        type="file" 
+                                        name="rgFile"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
+                                        (input)="clearInputErrors('rgFile')"
+                                        (change)="onFileSelected($event, 'cpf'); getRgFileErrors()" autocomplete="off">
+
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="cpfUploaded && isHoveringCpf && !cpfDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="cpfUploaded && isHoveringCpf && cpfDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('cpf');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+                                   <app-input-error-message [errors]="rgFileErrors"></app-input-error-message>
+                         </div>
+                    </div>
+               </div>
+               <div class="four-input-fields">
+                    <div class="inputs-div">
+                         <label>CEP:</label>
+                              <input 
+                                   [class.input-error]="cepErrors.length > 0"
+                                   type="text" 
+                                   formControlName="cep" 
+                                   placeholder="Digite o CEP do novo estudante" 
+                                   name="cep"
+                                   (input)="getCep(); clearInputErrors('cep')"
+                                   (change)="getCepErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="cepErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Estado:</label>
+                              <input 
+                                   [class.input-error]="stateErrors.length > 0"
+                                   type="text" 
+                                   formControlName="state" 
+                                   placeholder="Ex: Bahia" 
+                                   name="state"
+                                   (input)="clearInputErrors('state')"
+                                   (change)="getStateErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="stateErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Cidade:</label>
+                              <input 
+                                   [class.input-error]="cityErrors.length > 0"
+                                   type="text" 
+                                   formControlName="city" 
+                                   placeholder="Ex: Jequié" 
+                                   name="city"
+                                   (input)="clearInputErrors('city')"
+                                   (change)="getCityErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="cityErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div">
+                         <label>Cópia digital Comp. Residencial:</label>
+                         <div class="upload-box-field" 
+                              (click)="fileInputFieldFinancial.click()"
+                              (mouseenter)="isHoveringFinancial = true"
+                              (mouseleave)="isHoveringFinancial = false">
+
+                                   <i *ngIf="!financialUploaded" class="fa-solid fa-upload"></i>
+     
+                                   <i *ngIf="financialUploaded && !isHoveringFinancial" class="fa-solid fa-circle-check" style="color: #63E6BE;"></i>
+                                   
+                                   <input
+                                        hidden
+                                        #fileInputFieldFinancial 
+                                        type="file" 
+                                        name="rgFile"
+                                        accept=".pdf, .png, .jpeg, .jpg, .pdf"
+                                        (input)="clearInputErrors('rgFile')"
+                                        (change)="onFileSelected($event, 'financial'); getRgFileErrors()" autocomplete="off">
+
+                                   <!-- Opções para o arquivo original do usuário -->
+                                   <div *ngIf="financialUploaded && isHoveringFinancial && !financialDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-eye option option-show" 
+                                             (click)="downloadFile('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+
+                                   <!-- Opções para quando o usuário já deletou o arquivo original e subiu outro arquivo no input -->
+                                   <div *ngIf="financialUploaded && isHoveringFinancial && financialDeletedConfirm" class="files-options">
+                                        <i class="fa-solid fa-trash option option-trash" 
+                                             (click)="openModalForDeleteDocuments('financial');
+                                             $event.stopPropagation()">
+                                        </i>
+                                        <i class="fa-solid fa-upload option option-show" 
+                                             (click)="fileInputField.click();
+                                             $event.stopPropagation()">
+                                        </i>
+                                   </div>
+                                   <app-input-error-message [errors]="financialFileErrors"></app-input-error-message>
+                         </div>
+                    </div>
+               </div>
+               <div class="three-input-fields address-homeNumber-neighborhood">             
+                    <div class="inputs-div address">
+                         <label>Endereço:</label>
+                              <input 
+                                   [class.input-error]="addressErrors.length > 0"
+                                   type="text" 
+                                   formControlName="address" 
+                                   placeholder="Digite o endereço do novo estudante" 
+                                   name="address"
+                                   (input)="clearInputErrors('address')"
+                                   (change)="getAddressErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="addressErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div homeNumber">
+                         <label>N°:</label>
+                              <input 
+                                   [class.input-error]="homeNumberErrors.length > 0"
+                                   type="text" 
+                                   formControlName="homeNumber" 
+                                   placeholder="n°" 
+                                   name="homeNumber"
+                                   (input)="clearInputErrors('homeNumber')"
+                                   (change)="getHomeNumberErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="homeNumberErrors"></app-input-error-message>
+                    </div>
+                    <div class="inputs-div neighborhood">
+                         <label>Bairro:</label>
+                              <input 
+                                   [class.input-error]="neighborhoodErrors.length > 0"
+                                   type="text" 
+                                   formControlName="neighborhood" 
+                                   placeholder="Digite o nome do bairro" 
+                                   name="neighborhood"
+                                   (input)="clearInputErrors('neighborhood')"
+                                   (change)="getNeighborhoodErrors()"
+                                   autocomplete="off">
+                              <app-input-error-message [errors]="neighborhoodErrors"></app-input-error-message>
+                    </div>
+               </div>
+          </div>
+          <app-buttons-form 
+               (stepButton)="onStepChange($event)" 
+               [step]="stepName" 
+               [lastStep]="lastStep"
+               [firstStep]="firstStep">
+          </app-buttons-form>
+     </section>
+     <app-modal-confirm 
+          *ngIf="isModalOpen" 
+          [message]="modalDeleteMessage"
+          (confirm)="onConfirmDelete($event)">
+     </app-modal-confirm>
+</form>     

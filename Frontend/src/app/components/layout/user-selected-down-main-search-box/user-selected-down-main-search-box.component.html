@@ -1,0 +1,12 @@
+<div class="box">
+     <img src="{{family?.image}}">
+     <p>|&nbsp;NOME: &nbsp;{{ family?.name }}&nbsp;|
+          TIPO: &nbsp;{{ family?.type }}&nbsp;|
+          CPF: &nbsp;{{ family?.cpf }} |
+          EMAIL: &nbsp;{{ family?.email }}
+     </p>
+          <i class="fa-solid fa-circle-xmark icon" 
+             style="color: #dd4c39;"
+             (click)="deleteFamilySelected(family?.type)"
+          ></i>
+</div>

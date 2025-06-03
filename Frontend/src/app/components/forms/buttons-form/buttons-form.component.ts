@@ -8,7 +8,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, S
   styleUrl: './buttons-form.component.sass'
 })
 export class ButtonsFormComponent implements OnChanges {
-  @Input() step: string = 'etapa familiar : 1';
+  @Input() step: string = 'estasd';
   @Output() stepButton = new EventEmitter<string>();
   @Input() lastStep: boolean = false;
   @Input() firstStep: boolean = true;
@@ -16,7 +16,7 @@ export class ButtonsFormComponent implements OnChanges {
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['lastEtep']) {
+    if (changes['lastStep']) {
       this.cdr.detectChanges();
     }
   }

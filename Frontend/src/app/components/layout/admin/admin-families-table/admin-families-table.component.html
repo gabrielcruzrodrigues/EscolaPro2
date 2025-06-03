@@ -12,7 +12,7 @@
           </thead>
           <tbody>
                <tr *ngFor="let family of families" (click)="openUserDetails(family.id)">
-                    <th class="col-image"><img src="{{ imageProfile }}"></th>
+                    <th class="col-image"><img src="{{ family?.image }}"></th>
                     <td>{{ family.name }}</td>
                     <td>{{ family.email }}</td>
                     <td>Nome do aluno</td>

@@ -23,7 +23,6 @@ export class AdminFamiliesTableComponent {
   @Input() families: Family[] = [];
   @Input() typeActions: string = 'default';
   modalDeleteMessage: string = "Tem certeza de que deseja desativar este familiar?";
-  imageProfile: string = '/perfil-photo.png';
   familyId: number = 0;
 
   isModalOpen: boolean = false;

@@ -31,6 +31,7 @@ import { AdminFamiliesSearchEditComponent } from './pages/admin/admin-families-s
 import { AdminFamiliesSearchDeleteComponent } from './pages/admin/admin-families-search-delete/admin-families-search-delete.component';
 import { AdminFamiliesEditComponent } from './pages/admin/admin-families-edit/admin-families-edit.component';
 import { AdminFamiliesDetailsComponent } from './pages/admin/admin-families-details/admin-families-details.component';
+import { AdminStudentsCreateComponent } from './pages/admin/admin-students-create/admin-students-create.component';
 
 export const routes: Routes = [
      // === Public config ===
@@ -171,6 +172,11 @@ export const routes: Routes = [
      {
           path: 'admin/students-panel',
           component: AdminStudentsPanelComponent,
+          canActivate: [masterGuard]
+     },
+     {
+          path: 'admin/students-create',
+          component: AdminStudentsCreateComponent,
           canActivate: [masterGuard]
      },
 

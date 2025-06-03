@@ -26,12 +26,10 @@
                <!-- <input ... /> -->
                <ul class="results-list">
                     <li *ngFor="let family of families" (click)="openFamiliesDetails(family.id)">
-                         <img src="/perfil-photo.png">
-                         <p>|&nbsp;&nbsp;{{ family.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{ family.type }}&nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{ family.email }}&nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{ family.createdAt }}&nbsp;&nbsp;|&nbsp;&nbsp;
-                            {{ family.phone }}
+                         <img src="{{ family?.image }}">
+                         <p>|&nbsp;&nbsp; Nome: &nbsp;{{ family.name }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            tipo: &nbsp;{{ family.type }}&nbsp;&nbsp;|&nbsp;&nbsp;
+                            email: &nbsp;{{ family.email }}
                          </p>
                     </li>
                </ul>
