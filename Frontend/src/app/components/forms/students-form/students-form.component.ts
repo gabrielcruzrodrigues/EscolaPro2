@@ -209,15 +209,24 @@ export class StudentsFormComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-
     if (this.studentForMainCreateStudent != null) {
+      
       const formDataObj: any = {};
       this.studentForMainCreateStudent.forEach((value, key) => {
         const lowerKey = key.charAt(0).toLowerCase() + key.slice(1);
         formDataObj[lowerKey] = value;
+        
+        Object.entries(formDataObj).forEach(([key, value]) => {
+          console.log(key, value);
+        })
+
       });
 
       this.form.patchValue(formDataObj);
+
+      if (formDataObj['image']) {
+        this.loadPreviewFile(formDataObj['image']);
+      }
     } else {
       console.log("O objeto está vindo nulo")
     }
@@ -465,12 +474,16 @@ export class StudentsFormComponent implements AfterViewInit, OnChanges, OnInit {
       this.form.get('image')?.updateValueAndValidity();
       this.imageProfileChange = true;
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewUrl = reader.result;
-      };
-      reader.readAsDataURL(file);
+      this.loadPreviewFile(file);
     }
+  }
+
+  loadPreviewFile(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrl = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   FileForShowOfTheStudent(student: Student) {
