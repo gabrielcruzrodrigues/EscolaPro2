@@ -13,7 +13,6 @@ import { Student } from '../../../types/Student';
 import { ButtonsFormComponent } from "../buttons-form/buttons-form.component";
 import { ModalConfirmComponent } from "../../layout/modal-confirm/modal-confirm.component";
 import { InputErrorMessageComponent } from "../../layout/input-error-message/input-error-message.component";
-import { AdminMainSearchUserBoxComponent } from "../../layout/admin/admin-main-search-user-box/admin-main-search-user-box.component";
 import { SpinningComponent } from "../../layout/spinning/spinning.component";
 import { CommonModule } from '@angular/common';
 
@@ -68,7 +67,7 @@ export class StudentsFormComponent implements AfterViewInit, OnChanges, OnInit {
   @Input() studentForEditData: Student | null = null;
 
   //config to main form create
-  @Input() studentForMainCreateStudent: Student | null = null;
+  @Input() studentForMainCreateStudent: FormData | null = null;
 
   //409 duplicates fields
   @Input() emailDuplicate: boolean = false;
@@ -210,9 +209,17 @@ export class StudentsFormComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+
     if (this.studentForMainCreateStudent != null) {
-      alert('oi')
-      this.form = this.createStudentFormGroupFromStudent(this.studentForMainCreateStudent);
+      const formDataObj: any = {};
+      this.studentForMainCreateStudent.forEach((value, key) => {
+        const lowerKey = key.charAt(0).toLowerCase() + key.slice(1);
+        formDataObj[lowerKey] = value;
+      });
+
+      this.form.patchValue(formDataObj);
+    } else {
+      console.log("O objeto está vindo nulo")
     }
   }
 
